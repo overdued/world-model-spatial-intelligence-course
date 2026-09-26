@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" font-family="Inter, -apple-system, 'Segoe UI', sans-serif">
+  <defs>
+    <marker id="ai" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4F46E5"/></marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#10B981"/></marker>
+    <marker id="am" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#F59E0B"/></marker>
+  </defs>
+  <rect width="1280" height="720" fill="#FFFFFF"/>
+  <text x="60" y="52" font-size="30" font-weight="700" fill="#334155">State-Space Model (SSM)</text>
+  <text x="60" y="82" font-size="17" fill="#64748B">A latent state evolves under actions and generates observations</text>
+
+  <!-- latent chain -->
+  <g>
+    <circle cx="240" cy="340" r="44" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2.5"/>
+    <text x="240" y="348" font-size="22" font-weight="700" fill="#4F46E5" text-anchor="middle">z<tspan dy="5" font-size="14">1</tspan></text>
+    <circle cx="640" cy="340" r="44" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2.5"/>
+    <text x="640" y="348" font-size="22" font-weight="700" fill="#4F46E5" text-anchor="middle">z<tspan dy="5" font-size="14">2</tspan></text>
+    <circle cx="1040" cy="340" r="44" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2.5"/>
+    <text x="1040" y="348" font-size="22" font-weight="700" fill="#4F46E5" text-anchor="middle">z<tspan dy="5" font-size="14">3</tspan></text>
+  </g>
+  <!-- dynamics arrows -->
+  <g stroke="#4F46E5" stroke-width="2.5" fill="none">
+    <path d="M284,340 L592,340" marker-end="url(#ai)"/>
+    <path d="M684,340 L992,340" marker-end="url(#ai)"/>
+  </g>
+  <text x="440" y="322" font-size="16" font-weight="600" fill="#4F46E5" text-anchor="middle">dynamics p(z<tspan dy="4" font-size="11">t</tspan><tspan dy="-4"> | z</tspan><tspan dy="4" font-size="11">t−1</tspan><tspan dy="-4">, a</tspan><tspan dy="4" font-size="11">t</tspan><tspan dy="-4">)</tspan></text>
+  <text x="840" y="322" font-size="16" font-weight="600" fill="#4F46E5" text-anchor="middle">dynamics p(z<tspan dy="4" font-size="11">t</tspan><tspan dy="-4"> | z</tspan><tspan dy="4" font-size="11">t−1</tspan><tspan dy="-4">, a</tspan><tspan dy="4" font-size="11">t</tspan><tspan dy="-4">)</tspan></text>
+
+  <!-- actions injected from top -->
+  <g>
+    <rect x="360" y="150" width="90" height="46" rx="12" fill="#FFFBEB" stroke="#F59E0B" stroke-width="2"/>
+    <text x="405" y="179" font-size="17" font-weight="700" fill="#F59E0B" text-anchor="middle">a<tspan dy="4" font-size="12">2</tspan></text>
+    <rect x="830" y="150" width="90" height="46" rx="12" fill="#FFFBEB" stroke="#F59E0B" stroke-width="2"/>
+    <text x="875" y="179" font-size="17" font-weight="700" fill="#F59E0B" text-anchor="middle">a<tspan dy="4" font-size="12">3</tspan></text>
+  </g>
+  <g stroke="#F59E0B" stroke-width="2" fill="none">
+    <path d="M405,196 L438,336" marker-end="url(#am)"/>
+    <path d="M875,196 L838,336" marker-end="url(#am)"/>
+  </g>
+  <text x="360" y="230" font-size="13" fill="#F59E0B">actions steer the transition</text>
+
+  <!-- emissions -->
+  <g>
+    <rect x="185" y="500" width="110" height="56" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="2"/>
+    <text x="240" y="534" font-size="18" font-weight="700" fill="#10B981" text-anchor="middle">x<tspan dy="4" font-size="12">1</tspan></text>
+    <rect x="585" y="500" width="110" height="56" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="2"/>
+    <text x="640" y="534" font-size="18" font-weight="700" fill="#10B981" text-anchor="middle">x<tspan dy="4" font-size="12">2</tspan></text>
+    <rect x="985" y="500" width="110" height="56" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="2"/>
+    <text x="1040" y="534" font-size="18" font-weight="700" fill="#10B981" text-anchor="middle">x<tspan dy="4" font-size="12">3</tspan></text>
+  </g>
+  <g stroke="#10B981" stroke-width="2" fill="none">
+    <path d="M240,384 L240,496" marker-end="url(#ag)"/>
+    <path d="M640,384 L640,496" marker-end="url(#ag)"/>
+    <path d="M1040,384 L1040,496" marker-end="url(#ag)"/>
+  </g>
+  <text x="295" y="450" font-size="15" font-weight="600" fill="#10B981">emission p(x<tspan dy="4" font-size="11">t</tspan><tspan dy="-4"> | z</tspan><tspan dy="4" font-size="11">t</tspan><tspan dy="-4">)</tspan></text>
+
+  <!-- annotations -->
+  <text x="240" y="640" font-size="14" fill="#64748B" text-anchor="middle">latent state (hidden, Markov)</text>
+  <text x="1040" y="640" font-size="14" fill="#64748B" text-anchor="middle">observation (what we measure)</text>
+  <text x="640" y="690" font-size="14" fill="#64748B" text-anchor="middle">Learning an SSM = fitting transition, emission, and (for control) action-conditioned dynamics from data.</text>
+</svg>

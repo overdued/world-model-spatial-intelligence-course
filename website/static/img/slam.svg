@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" font-family="Inter, -apple-system, 'Segoe UI', sans-serif">
+  <defs>
+    <marker id="as" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#64748B"/></marker>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#EF4444"/></marker>
+  </defs>
+  <rect width="1280" height="720" fill="#FFFFFF"/>
+  <text x="60" y="52" font-size="30" font-weight="700" fill="#334155">SLAM — Simultaneous Localization and Mapping</text>
+  <text x="60" y="82" font-size="17" fill="#64748B">Estimate the robot's trajectory and the map together, as one joint factor graph</text>
+
+  <!-- top: robot trajectory in the world -->
+  <text x="320" y="140" font-size="17" font-weight="700" fill="#334155">Robot moving through the world</text>
+  <g stroke="#334155" stroke-width="2.5" fill="none">
+    <path d="M120,240 C220,180 320,200 420,170 S560,150 620,190"/>
+  </g>
+  <g fill="#EEF2FF" stroke="#334155" stroke-width="2">
+    <circle cx="120" cy="240" r="22"/><circle cx="420" cy="170" r="22"/><circle cx="620" cy="190" r="22"/>
+  </g>
+  <g font-size="16" font-weight="700" fill="#334155" text-anchor="middle">
+    <text x="120" y="246">x₁</text><text x="420" y="176">x₂</text><text x="620" y="196">x₃</text>
+  </g>
+  <!-- landmarks -->
+  <g fill="#FFFBEB" stroke="#F59E0B" stroke-width="2">
+    <rect x="230" y="120" width="30" height="30" rx="6"/>
+    <rect x="500" y="240" width="30" height="30" rx="6"/>
+    <rect x="640" y="90" width="30" height="30" rx="6"/>
+  </g>
+  <g font-size="14" font-weight="700" fill="#F59E0B" text-anchor="middle">
+    <text x="245" y="140">L1</text><text x="515" y="260">L2</text><text x="655" y="110">L3</text>
+  </g>
+  <!-- observation links -->
+  <g stroke="#64748B" stroke-width="1.5" stroke-dasharray="4 4">
+    <line x1="140" y1="228" x2="232" y2="150"/><line x1="402" y1="168" x2="260" y2="142"/>
+    <line x1="428" y1="190" x2="500" y2="248"/><line x1="618" y1="172" x2="652" y2="122"/>
+    <line x1="620" y1="208" x2="534" y2="252"/>
+  </g>
+  <!-- loop closure -->
+  <path d="M620,212 C560,300 260,320 140,262" stroke="#EF4444" stroke-width="2" stroke-dasharray="6 4" fill="none" marker-end="url(#ar)"/>
+  <text x="400" y="312" font-size="14" font-weight="600" fill="#EF4444" text-anchor="middle">loop closure: revisit L1 → correct accumulated drift</text>
+
+  <!-- bottom: factor graph -->
+  <text x="900" y="140" font-size="17" font-weight="700" fill="#334155" text-anchor="middle">Factor graph formulation</text>
+  <rect x="700" y="160" width="520" height="340" rx="12" fill="#FAFAFC" stroke="#E2E8F0" stroke-width="1.5"/>
+  <!-- pose nodes (circles) -->
+  <g fill="#EEF2FF" stroke="#4F46E5" stroke-width="2">
+    <circle cx="780" cy="420" r="24"/><circle cx="940" cy="420" r="24"/><circle cx="1100" cy="420" r="24"/>
+  </g>
+  <g font-size="15" font-weight="700" fill="#4F46E5" text-anchor="middle">
+    <text x="780" y="426">x₁</text><text x="940" y="426">x₂</text><text x="1100" y="426">x₃</text>
+  </g>
+  <!-- landmark nodes (squares) -->
+  <g fill="#FFFBEB" stroke="#F59E0B" stroke-width="2">
+    <rect x="756" y="200" width="48" height="48" rx="8"/>
+    <rect x="916" y="200" width="48" height="48" rx="8"/>
+    <rect x="1076" y="200" width="48" height="48" rx="8"/>
+  </g>
+  <g font-size="15" font-weight="700" fill="#F59E0B" text-anchor="middle">
+    <text x="780" y="230">L1</text><text x="940" y="230">L2</text><text x="1100" y="230">L3</text>
+  </g>
+  <!-- odometry edges -->
+  <g stroke="#334155" stroke-width="2">
+    <line x1="804" y1="420" x2="916" y2="420"/><line x1="964" y1="420" x2="1076" y2="420"/>
+  </g>
+  <text x="860" y="408" font-size="12" fill="#64748B" text-anchor="middle">odometry</text>
+  <text x="1020" y="408" font-size="12" fill="#64748B" text-anchor="middle">odometry</text>
+  <!-- measurement edges (bipartite) -->
+  <g stroke="#64748B" stroke-width="1.5">
+    <line x1="780" y1="248" x2="780" y2="396"/>
+    <line x1="804" y1="236" x2="916" y2="404"/>
+    <line x1="940" y1="248" x2="940" y2="396"/>
+    <line x1="964" y1="236" x2="1076" y2="404"/>
+    <line x1="1100" y1="248" x2="1100" y2="396"/>
+  </g>
+  <!-- loop closure edge -->
+  <path d="M1100,444 C1000,500 820,500 780,446" stroke="#EF4444" stroke-width="2" stroke-dasharray="6 4" fill="none" marker-end="url(#ar)"/>
+  <text x="940" y="492" font-size="13" font-weight="600" fill="#EF4444" text-anchor="middle">loop-closure factor</text>
+  <text x="940" y="540" font-size="14" fill="#64748B" text-anchor="middle">joint optimization: maximize likelihood of all constraints at once</text>
+
+  <!-- bottom caption -->
+  <rect x="60" y="560" width="560" height="80" rx="12" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.5"/>
+  <text x="340" y="592" font-size="18" font-weight="700" fill="#4F46E5" text-anchor="middle">map + localization, simultaneously</text>
+  <text x="340" y="620" font-size="14" fill="#64748B" text-anchor="middle">the map is needed to localize; localization is needed to build the map</text>
+</svg>

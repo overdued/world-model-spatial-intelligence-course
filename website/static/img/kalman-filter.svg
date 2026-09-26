@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" font-family="Inter, -apple-system, 'Segoe UI', sans-serif">
+  <defs>
+    <marker id="ai" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4F46E5"/></marker>
+  </defs>
+  <rect width="1280" height="720" fill="#FFFFFF"/>
+  <text x="60" y="52" font-size="30" font-weight="700" fill="#334155">Kalman Filter: predict–update cycle</text>
+  <text x="60" y="82" font-size="17" fill="#64748B">Optimal recursive state estimation for linear-Gaussian systems</text>
+
+  <!-- Left: cycle -->
+  <rect x="80" y="200" width="260" height="90" rx="12" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2"/>
+  <text x="210" y="238" font-size="20" font-weight="700" fill="#4F46E5" text-anchor="middle">Predict</text>
+  <text x="210" y="264" font-size="13" fill="#64748B" text-anchor="middle">x̂⁻ = F x̂ + B u,  P⁻ grows</text>
+  <rect x="80" y="420" width="260" height="90" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="2"/>
+  <text x="210" y="458" font-size="20" font-weight="700" fill="#10B981" text-anchor="middle">Update</text>
+  <text x="210" y="484" font-size="13" fill="#64748B" text-anchor="middle">fuse obs z via Kalman gain K</text>
+
+  <path d="M340,245 C420,245 420,465 344,465" stroke="#4F46E5" stroke-width="2" fill="none" marker-end="url(#ai)"/>
+  <text x="430" y="300" font-size="14" fill="#64748B">prior</text>
+  <path d="M80,465 C10,465 10,245 76,245" stroke="#4F46E5" stroke-width="2" fill="none" marker-end="url(#ai)"/>
+  <text x="18" y="360" font-size="14" fill="#64748B">posterior</text>
+  <text x="18" y="380" font-size="14" fill="#64748B">(next step)</text>
+
+  <!-- observation input -->
+  <rect x="400" y="420" width="150" height="60" rx="12" fill="#FAFAFC" stroke="#64748B" stroke-width="1.5"/>
+  <text x="475" y="446" font-size="15" font-weight="600" fill="#334155" text-anchor="middle">measurement</text>
+  <text x="475" y="468" font-size="15" font-weight="600" fill="#334155" text-anchor="middle">z (noisy)</text>
+  <path d="M400,450 L344,450" stroke="#64748B" stroke-width="2" fill="none"/>
+  <path d="M344,450 L341,458" stroke="#64748B" stroke-width="2" fill="none"/>
+
+  <!-- Right: plot -->
+  <rect x="600" y="140" width="620" height="480" rx="12" fill="#FAFAFC" stroke="#E2E8F0" stroke-width="1.5"/>
+  <!-- axes -->
+  <line x1="660" y1="560" x2="1180" y2="560" stroke="#94A3B8" stroke-width="1.5"/>
+  <line x1="660" y1="560" x2="660" y2="180" stroke="#94A3B8" stroke-width="1.5"/>
+  <text x="1180" y="590" font-size="14" fill="#64748B" text-anchor="end">time →</text>
+  <text x="650" y="172" font-size="14" fill="#64748B" text-anchor="end">state</text>
+
+  <!-- uncertainty band (around filtered line) -->
+  <path d="M680,330 L740,305 L800,345 L860,300 L920,335 L980,295 L1040,330 L1100,300 L1160,325
+           L1160,375 L1100,350 L1040,380 L980,345 L920,385 L860,350 L800,395 L740,355 L680,380 Z"
+        fill="#4F46E5" opacity="0.12"/>
+  <!-- ground truth -->
+  <path d="M680,340 L740,318 L800,352 L860,308 L920,342 L980,300 L1040,338 L1100,308 L1160,332"
+        stroke="#10B981" stroke-width="3" fill="none"/>
+  <!-- noisy observations -->
+  <g fill="#94A3B8">
+    <circle cx="700" cy="372" r="4.5"/><circle cx="740" cy="290" r="4.5"/><circle cx="780" cy="380" r="4.5"/>
+    <circle cx="820" cy="330" r="4.5"/><circle cx="860" cy="272" r="4.5"/><circle cx="900" cy="368" r="4.5"/>
+    <circle cx="940" cy="318" r="4.5"/><circle cx="980" cy="330" r="4.5"/><circle cx="1020" cy="362" r="4.5"/>
+    <circle cx="1060" cy="300" r="4.5"/><circle cx="1100" cy="336" r="4.5"/><circle cx="1140" cy="292" r="4.5"/>
+  </g>
+  <!-- filtered estimate -->
+  <path d="M680,352 L740,326 L800,366 L860,322 L920,356 L980,318 L1040,352 L1100,322 L1160,346"
+        stroke="#4F46E5" stroke-width="2.5" fill="none"/>
+
+  <!-- legend -->
+  <g font-size="15" fill="#334155">
+    <line x1="700" y1="470" x2="740" y2="470" stroke="#10B981" stroke-width="3"/>
+    <text x="750" y="475">ground truth</text>
+    <circle cx="720" cy="505" r="4.5" fill="#94A3B8"/>
+    <text x="750" y="510">noisy observation</text>
+    <line x1="940" y1="470" x2="980" y2="470" stroke="#4F46E5" stroke-width="2.5"/>
+    <text x="990" y="475">filtered estimate</text>
+    <rect x="940" y="495" width="40" height="16" fill="#4F46E5" opacity="0.15"/>
+    <text x="990" y="510">uncertainty (±1σ)</text>
+  </g>
+
+  <text x="60" y="660" font-size="15" fill="#64748B">Prediction spreads belief (P grows); each measurement sharpens it (P shrinks). The filter balances model trust vs sensor trust via gain K.</text>
+</svg>

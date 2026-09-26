@@ -1,0 +1,80 @@
+---
+title: Spatial Memory
+sidebar_label: 08 · Spatial Memory
+description: 智能体的空间记忆——持久场景表示、位置识别与语义地图。
+---
+
+<ModuleProgress id="b08" label="Spatial Memory" />
+
+## Why this matters
+
+没有记忆的智能体每帧都从零开始理解世界。空间记忆——记住"世界长什么样、我到过哪里"——是长期自主的前提，也是世界模型在开放世界中的存储层。
+
+## Visual Intuition
+
+![空间记忆](/img/spatial-memory.svg)
+
+空间记忆的三层结构：**度量层**（点云/占据栅格，精确但脆弱）、**拓扑层**（地点节点 + 边，鲁棒可扩展）、**语义层**（物体与场景标签，支持任务查询）。位置识别是跨层检索机制——看到熟悉的画面，唤醒对应的地图区域。
+
+## Core Idea
+
+**位置识别（place recognition）** 是空间记忆的经典核心：把当前观测检索到历史地图中最相似的位置。经典方法是 Bag of (Binary) Words——图像被编码为视觉词袋向量，DBoW2 做到毫秒级检索；FAB-MAP 用概率外观模型处理感知混叠。难点是**外观变化**（光照、季节、视角）下的召回率，与误检回环的灾难性代价（一次错误回环可以毁掉整张地图）之间的权衡。
+
+**持久场景表示**回答"记忆存成什么格式"：占据栅格/OctoMap 直接服务避障；神经场与高斯（模块 04–05）支持渲染查询；scene graph（物体节点 + 关系边）是语义层的结构化记忆，支持"杯子在桌上"式的符号查询。增量更新与遗忘是工程关键——地图不可能无限增长，变化检测与地图维护是开放问题。
+
+认知科学的对照视角值得了解：人类的空间记忆是**认知地图**（cognitive map）——拓扑为主、度量为辅、海马体的 place cell 提供位置编码。Columbia Spatial AI 的寻路（way-finding）研究提示：机器地图的可读性在人机共处的空间（导览机器人、AR 导航）同样重要。这呼应模块 01 的人本视角。
+
+## Key Concepts
+
+- **Place recognition**：外观检索唤醒地图记忆，回环检测的前端。
+- **BoW / DBoW2**：视觉词袋的快速位置识别。
+- **度量 vs 拓扑地图**：精确几何 vs 鲁棒连通性的表示权衡。
+- **Scene graph**：物体 + 关系的结构化语义记忆。
+- **遗忘与地图维护**：变化检测、增量更新、容量管理。
+
+## Core Equations
+
+词袋检索的相似度打分（TF-IDF 加权）：
+
+$$s(q, d) = \frac{q^\top d}{\|q\| \|d\|}, \qquad q, d \in \mathbb{R}^{|\mathcal{V}|}$$
+
+## University Lecture
+
+| 课程 | Lecture | 链接 |
+|---|---|---|
+| MIT 16.485 VNAV | L21–L22 Place Recognition / Bag of Visual Words + Lab 8 | [课程主页](https://vnav.mit.edu/) |
+| UPenn CIS 6280 World Models | L15 Spatial World Models I（持久场景表示选项） | [课程主页](https://jiataogu.me/cis6280-world-models/) |
+
+## Papers
+
+- **Must Read**：Gálvez-López & Tardós (2012), *Bags of Binary Words for Fast Place Recognition in Image Sequences*（DBoW2，IEEE T-RO，搜索论文名）。
+- **Recommended**：Cummins & Newman (2008), *FAB-MAP*（搜索论文名）；Hornung et al. (2013), *OctoMap: An Efficient Probabilistic 3D Mapping Framework*（[arXiv:1204.3116](https://arxiv.org/abs/1204.3116)）。
+- **Optional**：Wayne et al. (2018), *Unsupervised Predictive Memory in a Goal-Directed Agent*（MERLIN，[arXiv:1803.10760](https://arxiv.org/abs/1803.10760)）——神经侧的空间记忆对照。
+
+## Hands-on
+
+Lab 8（开发中）的导航管线包含位置识别组件；现阶段可用 DBoW3 开源库在 EuRoC 序列上亲手做一次回环检测实验。
+
+## Check Your Understanding
+
+1. 为什么错误回环比漏检回环更危险？
+2. 拓扑地图相对度量地图的优势与代价是什么？
+3. scene graph 为什么适合作为语义层记忆？
+
+<details>
+<summary>显示答案</summary>
+
+1. 漏检只是漂移继续累积（可恢复）；错误回环把两个不同地点强行对齐，向因子图注入矛盾约束，整张地图可能被撕裂且难以修复。因此回环验证（几何一致性校验）必须极保守。
+2. 拓扑地图只存"地点间的连通关系"，对光照/季节变化与几何误差鲁棒、内存常数级可扩展、规划直接可用（图搜索）；代价是丢失精确几何，无法支撑避障级精度。工程系统通常两层并存。
+3. scene graph 把场景压成物体节点与关系边：存储紧凑、支持符号查询（"找所有椅子"）、变化只需更新对应节点、且与语言接口天然兼容（VLA 与导航指令的接地层）。
+</details>
+
+## Takeaway
+
+- 空间记忆三层：度量（几何）、拓扑（连通）、语义（物体），各有不可替代的用途。
+- 位置识别是记忆的检索机制，其精度-召回权衡决定回环检测的安全性。
+- 持久表示需要增量更新与遗忘机制——记忆工程与建模同样重要。
+
+## Next Module
+
+[模块 09：Affordance](./09-affordance.mdx)——从"世界是什么"到"世界允许我做什么"。

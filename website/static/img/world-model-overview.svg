@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" font-family="Inter, -apple-system, 'Segoe UI', sans-serif">
+  <defs>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#10B981"/></marker>
+    <marker id="am" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#F59E0B"/></marker>
+    <marker id="ai" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4F46E5"/></marker>
+  </defs>
+  <rect width="1280" height="720" fill="#FFFFFF"/>
+  <text x="60" y="52" font-size="30" font-weight="700" fill="#334155">World Models: the agent–environment loop</text>
+  <text x="60" y="82" font-size="17" fill="#64748B">An agent that learns a model of the world can imagine before it acts</text>
+
+  <!-- Environment -->
+  <rect x="80" y="280" width="280" height="170" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="2"/>
+  <text x="220" y="318" font-size="22" font-weight="700" fill="#334155" text-anchor="middle">Environment</text>
+  <text x="220" y="348" font-size="16" fill="#64748B" text-anchor="middle">true state s<tspan dy="4" font-size="12">t</tspan></text>
+  <circle cx="150" cy="400" r="16" fill="#10B981" opacity="0.35"/>
+  <circle cx="220" cy="410" r="22" fill="#10B981" opacity="0.5"/>
+  <circle cx="290" cy="396" r="14" fill="#10B981" opacity="0.35"/>
+
+  <!-- Agent -->
+  <rect x="640" y="150" width="560" height="430" rx="12" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2"/>
+  <text x="920" y="188" font-size="22" font-weight="700" fill="#334155" text-anchor="middle">Agent</text>
+
+  <!-- World Model inside agent -->
+  <rect x="690" y="220" width="460" height="180" rx="12" fill="#FFFFFF" stroke="#4F46E5" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="920" y="252" font-size="19" font-weight="700" fill="#4F46E5" text-anchor="middle">World Model</text>
+  <text x="920" y="280" font-size="15" fill="#64748B" text-anchor="middle">learned transition &amp; observation model</text>
+  <path d="M760,330 L850,330" stroke="#4F46E5" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#ai)"/>
+  <text x="805" y="318" font-size="14" fill="#4F46E5" text-anchor="middle">(s<tspan dy="3" font-size="10">t</tspan><tspan dy="-3">, a</tspan><tspan dy="3" font-size="10">t</tspan><tspan dy="-3">)</tspan></text>
+  <rect x="860" y="305" width="240" height="52" rx="12" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.5"/>
+  <text x="980" y="326" font-size="14" fill="#334155" text-anchor="middle">predicted next state /</text>
+  <text x="980" y="346" font-size="14" fill="#334155" text-anchor="middle">observation ŝ<tspan dy="3" font-size="10">t+1</tspan><tspan dy="-3">, ô</tspan><tspan dy="3" font-size="10">t+1</tspan></text>
+
+  <!-- Policy -->
+  <rect x="760" y="440" width="320" height="70" rx="12" fill="#FFFFFF" stroke="#F59E0B" stroke-width="2"/>
+  <text x="920" y="470" font-size="18" font-weight="700" fill="#334155" text-anchor="middle">Policy π</text>
+  <text x="920" y="494" font-size="14" fill="#64748B" text-anchor="middle">chooses action a<tspan dy="3" font-size="10">t</tspan></text>
+  <path d="M920,400 L920,436" stroke="#4F46E5" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#ai)"/>
+  <text x="985" y="424" font-size="14" fill="#4F46E5">imagine outcomes</text>
+
+  <!-- observation arrow -->
+  <path d="M360,315 L640,315" stroke="#10B981" stroke-width="2.5" marker-end="url(#ag)"/>
+  <text x="500" y="300" font-size="17" font-weight="600" fill="#10B981" text-anchor="middle">observation o<tspan dy="4" font-size="12">t</tspan></text>
+
+  <!-- action arrow -->
+  <path d="M640,420 L360,420" stroke="#F59E0B" stroke-width="2.5" marker-end="url(#am)"/>
+  <text x="500" y="410" font-size="17" font-weight="600" fill="#F59E0B" text-anchor="middle">action a<tspan dy="4" font-size="12">t</tspan></text>
+
+  <!-- learn from real data -->
+  <path d="M420,450 C500,560 640,590 700,580" stroke="#64748B" stroke-width="2" stroke-dasharray="6 4" fill="none" marker-end="url(#ai)"/>
+  <text x="480" y="560" font-size="15" fill="#64748B">real experience trains the model</text>
+
+  <!-- learn / imagine / act -->
+  <g font-size="18" font-weight="700">
+    <rect x="200" y="630" width="180" height="48" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="1.5"/>
+    <text x="290" y="661" fill="#10B981" text-anchor="middle">learn</text>
+    <rect x="550" y="630" width="180" height="48" rx="12" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.5"/>
+    <text x="640" y="661" fill="#4F46E5" text-anchor="middle">imagine</text>
+    <rect x="900" y="630" width="180" height="48" rx="12" fill="#FFFBEB" stroke="#F59E0B" stroke-width="1.5"/>
+    <text x="990" y="661" fill="#F59E0B" text-anchor="middle">act</text>
+  </g>
+</svg>

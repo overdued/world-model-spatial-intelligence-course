@@ -1,0 +1,83 @@
+---
+title: Dreamer
+sidebar_label: 08 · Dreamer
+description: 潜空间 imagination 的标杆——DreamerV1 到 V3 的演进与 actor-critic in imagination。
+---
+
+<ModuleProgress id="a08" label="Dreamer" />
+
+## Why this matters
+
+Dreamer 系列证明了"在学到的潜空间里想象并训练策略"可以通吃 Atari、DM Control、机器人到 Minecraft。它是 MBRL 的工程巅峰，也是理解"世界模型如何服务决策"绕不开的系统。
+
+## Visual Intuition
+
+![Dreamer 架构](/img/dreamer.svg)
+
+三个循环同时运转：**世界模型**从回放数据学习 RSSM；**actor-critic** 完全在 RSSM 的 imagination rollout 上训练；**真实环境**只在采集数据时被触碰。真实交互与策略学习被 imagination 解耦。
+
+## Core Idea
+
+DreamerV1（*Dream to Control*, 2020）的关键一步：不再用规划器（PlaNet 的 CEM）而是**在 imagination 中训练 actor-critic**。imagination rollout 完全可微（RSSM 是神经网络），value 梯度可以直接穿过动力学反向传播给 actor——策略学习效率远超无梯度的进化或采样规划。
+
+DreamerV2 把随机状态换成离散 categorical，并以 Atari 200M 帧预算内达到人类水平证明了离散潜变量的威力。DreamerV3（2023）则解决"通用性"：symlog 预测（统一不同尺度的 reward）、百分位 return 归一化、free bits 与 unimix 等技巧，让**同一套超参**在 150+ 任务上无需调参工作——世界模型第一次表现出"基础模型"式的迁移能力。
+
+把三代连起来看，演进主线是：imagination 中的策略学习（V1）→ 潜变量形式与鲁棒性（V2）→ 跨域通用超参与规模化（V3）。这条线也是世界模型领域"从 demo 到系统"的缩影。
+
+## Key Concepts
+
+- **Actor-critic in imagination**：策略与价值完全在模型内 rollout 上训练。
+- **可微 imagination**：value 梯度穿过 RSSM 反传给 actor。
+- **离散潜变量**：DreamerV2 的关键改动（见模块 06）。
+- **Symlog 与 return 归一化**：DreamerV3 跨域免调参的核心技巧。
+- **$\lambda$-return**：imagination 中多步 value 目标，平衡偏差与方差。
+
+## Core Equations
+
+$\lambda$-return（imagination 中 value 的目标）：
+
+$$G_t^\lambda = (1-\lambda)\sum_{n=1}^{H-1} \lambda^{n-1} G_t^{(n)} + \lambda^{H-1} G_t^{(H)}, \quad G_t^{(n)} = \sum_{k=0}^{n-1}\gamma^k r_{t+k} + \gamma^n V(s_{t+n})$$
+
+symlog 变换（DreamerV3）：
+
+$$\mathrm{symlog}(x) = \mathrm{sign}(x)\ln(|x|+1)$$
+
+## University Lecture
+
+| 课程 | Lecture | 链接 |
+|---|---|---|
+| UPenn CIS 6280 World Models | L10 Policy & Value Learning with World Models（Dreamer、TD-MPC、model bias） | [课程主页](https://jiataogu.me/cis6280-world-models/)（L10 slides 随学期发布） |
+
+## Papers
+
+- **Must Read**：Hafner et al. (2023), *Mastering Diverse Domains through World Models*（DreamerV3，[arXiv:2301.04104](https://arxiv.org/abs/2301.04104)）。
+- **Recommended**：Hafner et al. (2020), *Dream to Control*（[arXiv:1912.01603](https://arxiv.org/abs/1912.01603)）；Hafner et al. (2021), *Mastering Atari with Discrete World Models*（[arXiv:2010.02193](https://arxiv.org/abs/2010.02193)）。
+- **Optional**：Hansen et al. (2024), *TD-MPC2: Scalable, Robust World Models for Continuous Control*（[arXiv:2310.16828](https://arxiv.org/abs/2310.16828)）——平行路线的对照。
+
+## Hands-on
+
+Lab 3（开发中）：tiny RSSM 是 Dreamer 的骨架。完整 MBRL 闭环（imagination + actor-critic）在 Lab 9（开发中）。
+
+## Check Your Understanding
+
+1. Dreamer 与 PlaNet 的决策方式有何本质区别？
+2. 为什么 imagination 可微对策略学习很重要？
+3. DreamerV3 的 symlog 解决了什么问题？
+
+<details>
+<summary>显示答案</summary>
+
+1. PlaNet 决策时规划（decision-time planning）：每个真实步都跑 CEM 搜索动作；Dreamer 后台学习一个 actor-critic，决策时一次前向即出动作。前者灵活但慢，后者部署快且能把"规划经验"蒸馏进网络。
+2. 可微意味着 value 关于动作的梯度可以穿过 RSSM 的 rollout 精确反传，actor 得到的是解析梯度而非采样估计，样本效率与收敛速度都显著优于无梯度方法。
+3. 不同任务的 reward 尺度差异巨大（0–1 到数千），单一 value 网络难以同时拟合。symlog 把大数值对数压缩、小数值保持线性，统一了尺度，是"一套超参跨 150 个任务"的关键之一。
+</details>
+
+## Takeaway
+
+- Dreamer = RSSM 世界模型 + imagination 中的 actor-critic，真实交互只为采集数据。
+- V1 解决"怎么在梦里学策略"，V2 解决潜变量形式，V3 解决跨域通用性。
+- DreamerV3 的免调参跨域表现，是世界模型走向"基础模型"的标志性一步。
+
+## Next Module
+
+[模块 09：Planning with World Models](./09-planning-with-world-models.mdx)——不训策略，直接用模型做规划的另一条决策路线。

@@ -1,0 +1,39 @@
+---
+title: Deep Learning
+sidebar_label: Deep Learning
+description: 表征学习的基本构件：MLP/CNN、优化、VAE 入门，按需回查。
+---
+
+# Deep Learning（深度学习基础）
+
+> 本页是**回查手册**。世界模型是"会预测的深度学习系统"，本页只补主线真正用到的构件。
+
+## 最小知识集
+
+- **MLP / CNN**：全连接与卷积的归纳偏置差异；encoder 为什么用 CNN、潜动力学为什么用 MLP/GRU。
+- **反向传播与优化**：链式法则；SGD 与 Adam 的区别；学习率与 warmup 的直觉。
+- **归一化与初始化**：BatchNorm/LayerNorm、 Xavier/He 初始化——训练不稳时先查这里。
+- **过拟合与正则化**：weight decay、dropout、数据增强；世界模型的 OOD 问题（Track A 模块 12）是其序贯版本。
+- **VAE 与 ELBO 入门**：$\log p(x) \geq \mathbb{E}_q[\log p(x\mid z)] - D_{KL}(q \| p)$——Lab 2 与 RSSM 的数学地基，务必看懂。
+
+## 何时回查
+
+| 主线模块 | 用到的深度学习能力 |
+|---|---|
+| Track A 04 Representation Learning | CNN encoder、归一化、SSL 训练技巧 |
+| Track A 05–08 | VAE/ELBO、GRU、训练稳定性 |
+| Track B 03–04 | CNN 特征、可微渲染的梯度流 |
+
+## 最佳外部资源
+
+- **Stanford CS231n**（[cs231n.github.io](https://cs231n.github.io/)）：CNN 与反向传播的最经典公开课笔记。
+- **《Dive into Deep Learning》**（[d2l.ai](https://d2l.ai/)）：免费、可运行、PyTorch 版；VAE 一章直接对应本课程需求。
+- **CIS6280 L07 Latent-Variable and Adversarial Models**（[PDF](https://jiataogu.me/cis6280-world-models/lectures/lecture-07-generative-models-i.pdf)）：VAE/ELBO 的世界模型语境版。
+
+## 自查
+
+能手推一层 MLP 的反向传播、能解释 ELBO 两项各自的作用、能说出训练 loss 不降时的前三条排查路径，即达标。
+
+## Next
+
+回到主线：[Track A 模块 04](../scientist/04-representation-learning.mdx)

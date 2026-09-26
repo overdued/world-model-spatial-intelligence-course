@@ -1,0 +1,84 @@
+---
+title: Planning with World Models
+sidebar_label: 09 · Planning with World Models
+description: MPC、CEM、MPPI 与潜空间规划——有模型就能规划的最朴素范式。
+---
+
+<ModuleProgress id="a09" label="Planning with World Models" />
+
+## Why this matters
+
+有了世界模型，决策可以不需要策略网络：每一步在模型内搜索动作序列、执行第一个动作、再重新规划。MPC 范式简单、灵活、可解释，是 latent planning 的标配，也是检验世界模型质量最直接的试金石。
+
+## Visual Intuition
+
+![MPC 循环](/img/mpc.svg)
+
+MPC 每步做三件事：从当前状态出发在模型内 rollout 多条候选动作序列（分支树），按累计奖励选最优序列，但**只执行第一个动作**——下一真实观测到达后从头再规划（receding horizon）。
+
+## Core Idea
+
+**模型预测控制（MPC）** 的核心是 receding horizon：规划 $H$ 步但只执行一步，用最新观测不断校正模型误差。这个"开环规划 + 闭环执行"的结构，让 MPC 对模型误差天然比纯开环 rollout 鲁棒——误差每步都被真实观测重置。
+
+世界模型学到的动力学通常不可微、高维、随机，梯度规划不适用，于是**零阶采样规划器**成为标配。**CEM（交叉熵方法）** 维护一个动作序列的高斯分布：采样 → 模型内评估 → 取 elite 更新分布，迭代几轮收敛。**MPPI** 用信息论推导给出软加权更新（指数权重而非硬 elite 截断），GPU 并行友好，机器人实时控制常用。
+
+**TD-MPC** 代表了第三条路：MPC + 学习到的 value 函数。短 horizon 内用 CEM/MPPI 在潜空间 rollout，horizon 末端挂上 value 函数 $V(s_{t+H})$ 兜底——规划深度与模型误差的权衡被 value 学习自动化解。这也是从"规划"平滑过渡到"策略学习"（模块 11）的桥梁。
+
+## Key Concepts
+
+- **Receding horizon**：规划 H 步、执行 1 步、重新规划。
+- **CEM**：分布迭代的零阶规划器，elite 选择 + 重采样。
+- **MPPI**：指数重要性加权的采样 MPC，实时性好。
+- **Latent planning**：在 RSSM/encoder 的潜空间里 rollout，而非像素或真实状态。
+- **Value expansion（TD-MPC）**：规划 horizon 末端接 value 函数，短规划长视野。
+
+## Core Equations
+
+MPC 的每步优化问题：
+
+$$a_t^* = \arg\max_{a_{t:t+H}} \sum_{k=0}^{H-1} \gamma^k\, r_\theta(s_{t+k}, a_{t+k}), \qquad s_{t+k+1} \sim p_\theta(s_{t+k+1} \mid s_{t+k}, a_{t+k})$$
+
+MPPI 的权重更新：
+
+$$a_t \leftarrow \frac{\sum_i w_i\, a_t^{(i)}}{\sum_i w_i}, \qquad w_i = \exp\big(R^{(i)}/\lambda\big)$$
+
+## University Lecture
+
+| 课程 | Lecture | 链接 |
+|---|---|---|
+| UPenn CIS 6280 World Models | L09 Planning and Control with World Models（MPC/CEM/MPPI） | [slides](https://jiataogu.me/cis6280-world-models/lectures/lecture-09-planning-control-world-models.pdf) |
+| MIT 16.485 VNAV | L08–L10 Trajectory Optimization（连续空间规划的经典对照） | [课程主页](https://vnav.mit.edu/) |
+
+## Papers
+
+- **Must Read**：Hansen, Wang & Su (2022), *Temporal Difference Learning for Model Predictive Control*（TD-MPC，[arXiv:2203.04955](https://arxiv.org/abs/2203.04955)）。
+- **Recommended**：Williams et al. (2017), *Information Theoretic MPC for Model-Based Reinforcement Learning*（MPPI，[arXiv:1707.02342](https://arxiv.org/abs/1707.02342)）；Chua et al. (2018), *Deep RL in a Handful of Trials*（PETS，[arXiv:1805.12114](https://arxiv.org/abs/1805.12114)）——概率 ensemble + CEM 的经典组合。
+- **Optional**：Schrittwieser et al. (2020), *Mastering Atari, Go, Chess and Shogi by Planning with a Learned Model*（MuZero，[arXiv:1911.08265](https://arxiv.org/abs/1911.08265)）——树搜索路线的巅峰。
+
+## Hands-on
+
+Lab 4（开发中）：在 Lab 2/3 的潜动力学上实现 CEM 与 MPPI，系统比较 horizon 与采样数对回报的影响。
+
+## Check Your Understanding
+
+1. MPC 为什么对模型误差比开环 rollout 鲁棒？
+2. CEM 与 MPPI 的更新规则有何区别？
+3. TD-MPC 为什么能用更短的规划 horizon？
+
+<details>
+<summary>显示答案</summary>
+
+1. 因为每执行一个动作就用真实观测重新锚定状态再规划，模型误差没有机会沿时间复合；开环 rollout 的误差会一路累积，horizon 越长越离谱。
+2. CEM 取回报最高的 elite 子集重估高斯分布（硬截断）；MPPI 用 $\exp(R/\lambda)$ 给全部样本软加权，温度 $\lambda$ 控制探索程度。MPPI 信息利用更充分、无需选 elite 比例，实证上更平滑。
+3. 因为 horizon 末端的 value 函数 $V(s_{t+H})$ 把"之后的长期回报"压缩进一个估计：规划只需覆盖短期细节，长期由学习到的 value 兜底。规划深度与模型误差的矛盾由此缓解。
+</details>
+
+## Takeaway
+
+- MPC = 模型内规划 + 只执行第一步 + 用真实观测不断重置——模型误差的天然解药。
+- CEM/MPPI 是 learned dynamics 上的标配零阶规划器，向量化实现后 GPU 极快。
+- TD-MPC 用 value 函数弥合规划与策略学习，是通往模块 11 的桥。
+
+## Next Module
+
+[模块 10：Video World Models](./10-video-world-models.mdx)——把"预测未来"升级为"生成未来"。

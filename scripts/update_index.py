@@ -89,7 +89,16 @@ def course_section(c: dict) -> list:
 
 
 def build_index(courses: list) -> str:
+    from datetime import datetime, timezone, timedelta
+
+    now = datetime.now(timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M %z")
     lines = [
+        "<!-- AUTO-GENERATED — DO NOT EDIT",
+        f"     generated_at: {now}",
+        "     data_source: metadata/courses.json ← courses/*/metadata.json",
+        "     regenerate:  python3 scripts/extract_course_metadata.py && python3 scripts/update_index.py",
+        "-->",
+        "",
         "# 课程索引：World Models & Spatial Intelligence",
         "",
         f"共收录 {len(courses)} 门课程。本文件由 `scripts/update_index.py` "

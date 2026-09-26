@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" font-family="Inter, -apple-system, 'Segoe UI', sans-serif">
+  <defs>
+    <marker id="ai" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4F46E5"/></marker>
+  </defs>
+  <rect width="1280" height="720" fill="#FFFFFF"/>
+  <text x="60" y="52" font-size="30" font-weight="700" fill="#334155">A Taxonomy of World Models</text>
+  <text x="60" y="82" font-size="17" fill="#64748B">Four research branches, unified by one idea: a model that predicts how the world evolves</text>
+
+  <!-- Root -->
+  <rect x="60" y="310" width="210" height="100" rx="12" fill="#4F46E5"/>
+  <text x="165" y="352" font-size="22" font-weight="700" fill="#FFFFFF" text-anchor="middle">World</text>
+  <text x="165" y="382" font-size="22" font-weight="700" fill="#FFFFFF" text-anchor="middle">Models</text>
+
+  <!-- Branch connectors -->
+  <g stroke="#4F46E5" stroke-width="2" fill="none">
+    <path d="M270,360 C330,360 330,160 400,160" marker-end="url(#ai)"/>
+    <path d="M270,360 C330,360 330,300 400,300" marker-end="url(#ai)"/>
+    <path d="M270,360 C330,360 330,440 400,440" marker-end="url(#ai)"/>
+    <path d="M270,360 C330,360 330,580 400,580" marker-end="url(#ai)"/>
+  </g>
+
+  <!-- Branch 1: Latent WM -->
+  <rect x="400" y="110" width="280" height="100" rx="12" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2"/>
+  <text x="540" y="148" font-size="19" font-weight="700" fill="#4F46E5" text-anchor="middle">Latent World Models</text>
+  <text x="540" y="176" font-size="14" fill="#64748B" text-anchor="middle">compact state, learned dynamics</text>
+  <g font-size="14" font-weight="600" fill="#334155" text-anchor="middle">
+    <rect x="720" y="120" width="120" height="36" rx="12" fill="#FFFFFF" stroke="#4F46E5" stroke-width="1.5"/>
+    <text x="780" y="143">RSSM</text>
+    <rect x="860" y="120" width="130" height="36" rx="12" fill="#FFFFFF" stroke="#4F46E5" stroke-width="1.5"/>
+    <text x="925" y="143">Dreamer</text>
+    <rect x="1010" y="120" width="120" height="36" rx="12" fill="#FFFFFF" stroke="#4F46E5" stroke-width="1.5"/>
+    <text x="1070" y="143">PlaNet</text>
+  </g>
+  <g stroke="#64748B" stroke-width="1.5" fill="none">
+    <path d="M680,150 C700,150 700,138 718,138"/>
+    <path d="M680,160 C760,160 780,138 858,138"/>
+    <path d="M680,170 C840,170 930,138 1008,138"/>
+  </g>
+
+  <!-- Branch 2: Generative & Video WM -->
+  <rect x="400" y="250" width="280" height="100" rx="12" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2"/>
+  <text x="540" y="288" font-size="19" font-weight="700" fill="#4F46E5" text-anchor="middle">Generative &amp; Video WM</text>
+  <text x="540" y="316" font-size="14" fill="#64748B" text-anchor="middle">predict pixels, simulate futures</text>
+  <g font-size="14" font-weight="600" fill="#334155" text-anchor="middle">
+    <rect x="720" y="260" width="120" height="36" rx="12" fill="#FFFFFF" stroke="#4F46E5" stroke-width="1.5"/>
+    <text x="780" y="283">Sora</text>
+    <rect x="860" y="260" width="130" height="36" rx="12" fill="#FFFFFF" stroke="#4F46E5" stroke-width="1.5"/>
+    <text x="925" y="283">Genie</text>
+    <rect x="1010" y="260" width="120" height="36" rx="12" fill="#FFFFFF" stroke="#4F46E5" stroke-width="1.5"/>
+    <text x="1070" y="283">GAIA</text>
+  </g>
+  <g stroke="#64748B" stroke-width="1.5" fill="none">
+    <path d="M680,290 C700,290 700,278 718,278"/>
+    <path d="M680,300 C760,300 780,278 858,278"/>
+    <path d="M680,310 C840,310 930,278 1008,278"/>
+  </g>
+
+  <!-- Branch 3: Spatial & Physical WM -->
+  <rect x="400" y="390" width="280" height="100" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="2"/>
+  <text x="540" y="428" font-size="19" font-weight="700" fill="#10B981" text-anchor="middle">Spatial &amp; Physical WM</text>
+  <text x="540" y="456" font-size="14" fill="#64748B" text-anchor="middle">3D geometry, physics, dynamics</text>
+  <g font-size="14" font-weight="600" fill="#334155" text-anchor="middle">
+    <rect x="720" y="400" width="120" height="36" rx="12" fill="#FFFFFF" stroke="#10B981" stroke-width="1.5"/>
+    <text x="780" y="423">NeRF</text>
+    <rect x="860" y="400" width="130" height="36" rx="12" fill="#FFFFFF" stroke="#10B981" stroke-width="1.5"/>
+    <text x="925" y="423">3DGS / 4D</text>
+    <rect x="1010" y="400" width="120" height="36" rx="12" fill="#FFFFFF" stroke="#10B981" stroke-width="1.5"/>
+    <text x="1070" y="423">Phys. sim</text>
+  </g>
+  <g stroke="#64748B" stroke-width="1.5" fill="none">
+    <path d="M680,430 C700,430 700,418 718,418"/>
+    <path d="M680,440 C760,440 780,418 858,418"/>
+    <path d="M680,450 C840,450 930,418 1008,418"/>
+  </g>
+
+  <!-- Branch 4: Agentic WM -->
+  <rect x="400" y="530" width="280" height="100" rx="12" fill="#FFFBEB" stroke="#F59E0B" stroke-width="2"/>
+  <text x="540" y="568" font-size="19" font-weight="700" fill="#F59E0B" text-anchor="middle">Agentic World Models</text>
+  <text x="540" y="596" font-size="14" fill="#64748B" text-anchor="middle">models used for decisions</text>
+  <g font-size="14" font-weight="600" fill="#334155" text-anchor="middle">
+    <rect x="720" y="540" width="150" height="36" rx="12" fill="#FFFFFF" stroke="#F59E0B" stroke-width="1.5"/>
+    <text x="795" y="563">LLM-as-WM</text>
+    <rect x="890" y="540" width="130" height="36" rx="12" fill="#FFFFFF" stroke="#F59E0B" stroke-width="1.5"/>
+    <text x="955" y="563">MPC agents</text>
+    <rect x="1040" y="540" width="120" height="36" rx="12" fill="#FFFFFF" stroke="#F59E0B" stroke-width="1.5"/>
+    <text x="1100" y="563">VLA</text>
+  </g>
+  <g stroke="#64748B" stroke-width="1.5" fill="none">
+    <path d="M680,570 C700,570 700,558 718,558"/>
+    <path d="M680,580 C780,580 800,558 888,558"/>
+    <path d="M680,590 C860,590 950,558 1038,558"/>
+  </g>
+
+  <text x="60" y="680" font-size="14" fill="#64748B">Branches overlap: modern systems combine latent dynamics, video generation, 3D structure, and decision-making.</text>
+</svg>

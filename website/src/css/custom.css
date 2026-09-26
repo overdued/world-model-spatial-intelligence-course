@@ -1,0 +1,39 @@
+/**
+ * Custom theme styles. Infima CSS variables are overridden here.
+ */
+
+:root {
+  --ifm-color-primary: #2e5fa3;
+  --ifm-color-primary-dark: #295693;
+  --ifm-color-primary-darker: #26508a;
+  --ifm-color-primary-darkest: #1f4271;
+  --ifm-color-primary-light: #4472b5;
+  --ifm-color-primary-lighter: #527dbc;
+  --ifm-color-primary-lightest: #6d90c6;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #7fa8dd;
+  --ifm-color-primary-dark: #6898d6;
+  --ifm-color-primary-darker: #598fd1;
+  --ifm-color-primary-darkest: #3d7cc6;
+  --ifm-color-primary-light: #96b8e4;
+  --ifm-color-primary-lighter: #a5c1e9;
+  --ifm-color-primary-lightest: #c1d4f0;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+/* Mermaid diagrams: give them breathing room and center them. */
+.docusaurus-mermaid-container {
+  margin: 1.5rem 0;
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+}
+
+.docusaurus-mermaid-container svg {
+  max-width: 100%;
+  height: auto;
+}

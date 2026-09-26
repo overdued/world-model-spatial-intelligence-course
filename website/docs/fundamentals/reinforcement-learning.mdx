@@ -1,0 +1,40 @@
+---
+title: Reinforcement Learning
+sidebar_label: Reinforcement Learning
+description: 世界模型用于决策的最小 RL 背景：这不是一门 RL 课，按需回查。
+---
+
+# Reinforcement Learning（强化学习）
+
+> 本页是**回查手册**。借用 CIS6280 的官方声明：**这不是一门 RL 课**。你只需要能听懂"世界模型如何服务决策"所需的词汇。
+
+## 最小知识集
+
+- **MDP**：五元组 $(\mathcal{S}, \mathcal{A}, P, R, \gamma)$；POMDP 是其部分可观测版本（Track A 模块 02 展开）。
+- **Bellman 方程**：$V^\pi(s) = \mathbb{E}_\pi[r + \gamma V^\pi(s')]$——value 函数的递归定义。
+- **Value / Policy**：$V(s)$、$Q(s,a)$、$\pi(a \mid s)$ 三者的关系；TD-MPC 的"模型 + 值函数"组合就靠这个区分。
+- **Model-free vs Model-based**：本课程的全部内容都属于 model-based 一侧；理解对照即可。
+- **Policy gradient 与 actor-critic**：Dreamer 在 imagination 中训练 actor-critic，只需知道结构不需要会推导。
+
+## 何时回查
+
+| 主线模块 | 用到的 RL |
+|---|---|
+| Track A 02 | MDP/POMDP 形式化 |
+| Track A 08 Dreamer | actor-critic、return 估计 |
+| Track A 09 Planning | 回报最大化的轨迹优化视角 |
+| Track A 11 World Model + Policy | Dyna 架构、model bias |
+
+## 最佳外部资源
+
+- **Sutton & Barto《Reinforcement Learning: An Introduction》**（[免费 PDF](http://incompleteideas.net/book/the-book.html)）：第 1–6 章 + 第 8 章（Dyna）即覆盖全部所需。
+- **OpenAI Spinning Up**（[spinningup.openai.com](https://spinningup.openai.com/)）：policy gradient 与 actor-critic 的最友好入门。
+- **CIS6280 L09–L10**（[课程主页](https://jiataogu.me/cis6280-world-models/)）：RL 机制在"使用世界模型"语境下的精讲。
+
+## 自查
+
+能写出 Bellman 方程并解释每一项、能说清 model-free 与 model-based 的样本效率差异来源、能画出 actor-critic 的两个网络各输出什么，即达标。
+
+## Next
+
+回到主线：[Track A 模块 02](../scientist/02-observation-state-pomdp.mdx)

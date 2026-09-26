@@ -1,0 +1,92 @@
+---
+title: State Space Models
+sidebar_label: 03 · State Space Models
+description: 经典状态-观测框架与 Kalman filter——learned world model 的基准与先驱。
+---
+
+<ModuleProgress id="a03" label="State Space Models" />
+
+## Why this matters
+
+在深度学习之前，"世界模型"已经以状态空间模型的形式存在了六十年。Kalman filter 的预测-更新循环是 belief state 的闭式最优解，也是评判一切 learned dynamics 的经典基准。
+
+## Visual Intuition
+
+![状态空间模型](/img/state-space-model.svg)
+
+隐藏状态 $x_t$ 沿转移方程演化，观测 $z_t$ 沿观测方程生成。学习/推断的任务是倒过来：从观测序列反推状态轨迹。
+
+![Kalman filter](/img/kalman-filter.svg)
+
+KF 的每步分两半：**预测**（用动力学把 belief 向前推，不确定性膨胀）与**更新**（用观测把 belief 拉回，不确定性收缩）。椭圆代表协方差——不确定性在两类操作间呼吸。
+
+## Core Idea
+
+状态空间模型（SSM）由两个方程构成：**转移方程**描述状态如何演化，**观测方程**描述状态如何被看到。在线性高斯情形（LGSSM）下，belief $p(x_t \mid z_{1:t})$ 始终是高斯分布，均值与协方差可以被 Kalman filter 闭式递归计算——这就是上模块 bayes filter 在高斯假设下的精确解。
+
+KF 的精髓是 **Kalman gain**：它按"预测不确定性与观测不确定性的相对大小"自动权衡信任模型还是信任观测。观测噪声大就多信模型，模型不准就多信观测——这个思想在模块 12 的不确定性评估中会反复出现。
+
+现实中动力学几乎都不是线性高斯的：EKF（局部线性化）、UKF（无迹变换）、粒子滤波（蒙特卡洛逼近）是三条经典推广路线；而再往前走一步——"干脆用神经网络学转移与观测"——就是模块 05 的 latent dynamics。
+
+## Key Concepts
+
+- **LGSSM**：线性转移 + 线性观测 + 高斯噪声，唯一有闭式最优推断的情形。
+- **Filtering / Smoothing / Prediction**：用过去估现在 / 用全程估过去 / 用现在估未来。
+- **Kalman gain**：模型信任与观测信任的自适应权重。
+- **EKF / UKF**：非线性动力学的两种经典近似。
+- **从 LGSSM 到 learned SSM**：把已知矩阵 $A, C$ 换成神经网络，是本课程的主线剧情。
+
+## Core Equations
+
+LGSSM：
+
+$$x_t = A x_{t-1} + B a_t + w_t, \qquad z_t = C x_t + v_t$$
+
+Kalman filter 预测-更新：
+
+$$\hat{x}_{t|t-1} = A \hat{x}_{t-1|t-1} + B a_t, \qquad P_{t|t-1} = A P_{t-1|t-1} A^\top + Q$$
+
+$$K_t = P_{t|t-1} C^\top (C P_{t|t-1} C^\top + R)^{-1}, \qquad \hat{x}_{t|t} = \hat{x}_{t|t-1} + K_t (z_t - C\hat{x}_{t|t-1})$$
+
+## University Lecture
+
+| 课程 | Lecture | 链接 |
+|---|---|---|
+| UPenn CIS 6280 World Models | L04 State-Space Models（含手写推导笔记） | [slides](https://jiataogu.me/cis6280-world-models/lectures/lecture-04-state-space-models.pdf) |
+| Stanford CS231A | L14–L15 Optimal Estimation（KF/EKF/UKF） | [课程主页](https://web.stanford.edu/class/cs231a/) |
+
+## Papers
+
+- **Must Read**：Kalman (1960), *A New Approach to Linear Filtering and Prediction Problems*（经典论文，搜索论文名获取 PDF）——只读 §1–4 也能感受到"递归"思想的简洁。
+- **Recommended**：Gu, Goel & Ré (2022), *Efficiently Modeling Long Sequences with Structured State Spaces*（S4，[arXiv:2111.00396](https://arxiv.org/abs/2111.00396)）——SSM 在深度学习侧的复兴，Mamba 的先声。
+- **Optional**：[dynamax](https://github.com/probml/dynamax) 库的 Kalman tracking notebook——把公式变成 30 行 JAX 代码。
+
+## Hands-on
+
+<ColabBadge lab="lab01_kalman_filter" />
+
+Lab 1 要求你手写 KF 的预测-更新循环跟踪 2D 运动目标，并与 dynamax 的实现对比 RMSE——亲手调一次 $Q$ 和 $R$，你对 Kalman gain 的理解会超过读十遍推导。
+
+## Check Your Understanding
+
+1. 观测噪声 $R$ 调大，Kalman gain 和状态估计会怎样变化？
+2. 为什么 KF 只在 LGSSM 下是最优的？
+3. KF 的协方差 $P_t$ 与模块 12 的"不确定性"是什么关系？
+
+<details>
+<summary>显示答案</summary>
+
+1. $K_t$ 变小：滤波器更不信任观测，估计更依赖模型预测，曲线更平滑但对真实突变的响应变慢。
+2. 因为只有线性变换与高斯噪声的组合能保持 belief 始终是高斯；非线性地一步就会把高斯压成非高斯，均值与协方差不再足以刻画 belief，EKF/UKF 都只是近似。
+3. $P_t$ 就是 belief 不确定性的显式表达，且它是**校准的**（在高斯假设下真实误差确实服从该分布）。学习模型的不确定性量化（模块 12）就是要找回 KF 免费提供的这个性质。
+</details>
+
+## Takeaway
+
+- 状态空间模型 = 转移方程 + 观测方程，是所有世界模型的经典原型。
+- Kalman filter 是 belief 递归更新在 LGSSM 下的闭式最优解，核心是 Kalman gain 的自适应权衡。
+- 把已知矩阵换成神经网络，就从本模块走向了整个 Track A。
+
+## Next Module
+
+[模块 04：Representation Learning](./04-representation-learning.mdx)——在换神经网络之前，先问：什么是"好"的表示？

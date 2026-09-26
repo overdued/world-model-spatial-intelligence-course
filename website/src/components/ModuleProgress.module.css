@@ -1,0 +1,68 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  margin: 1rem 0;
+  padding: 0.7rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  background: var(--ifm-background-surface-color);
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.wrapper:hover {
+  border-color: var(--ifm-color-primary);
+}
+
+.done {
+  border-color: var(--ifm-color-success, #2e8555);
+  background: color-mix(in srgb, var(--ifm-color-success, #2e8555) 8%, transparent);
+}
+
+.box {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 2px solid var(--ifm-color-emphasis-400);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.done .box {
+  background: var(--ifm-color-success, #2e8555);
+  border-color: var(--ifm-color-success, #2e8555);
+  color: #fff;
+}
+
+.check {
+  width: 12px;
+  height: 10px;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.action {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.done .action {
+  color: var(--ifm-color-success, #2e8555);
+}
+
+.label {
+  font-size: 0.8rem;
+  color: var(--ifm-color-emphasis-600);
+}

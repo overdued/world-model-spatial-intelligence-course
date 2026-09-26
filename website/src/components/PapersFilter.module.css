@@ -1,0 +1,133 @@
+.filters {
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filterRow {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.filterLabel {
+  min-width: 64px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.chip {
+  padding: 0.25rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  background: transparent;
+  color: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.chip:hover {
+  border-color: var(--ifm-color-primary);
+}
+
+.chipActive {
+  background: var(--ifm-color-primary);
+  border-color: var(--ifm-color-primary);
+  color: #fff;
+}
+
+.count {
+  font-size: 0.8rem;
+  color: var(--ifm-color-emphasis-500);
+  margin: 0.5rem 0;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+.item:hover {
+  background: var(--ifm-background-surface-color);
+  border-color: var(--ifm-color-emphasis-300);
+}
+
+.itemMain {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.title {
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.authors {
+  font-size: 0.78rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.tags {
+  display: flex;
+  gap: 0.35rem;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.tag {
+  padding: 0.12rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: var(--ifm-color-emphasis-100);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  white-space: nowrap;
+}
+
+.level_Foundation {
+  border-color: var(--ifm-color-info, #3b82f6);
+  color: var(--ifm-color-info, #3b82f6);
+  background: transparent;
+}
+
+.level_MustRead {
+  border-color: var(--ifm-color-success, #2e8555);
+  color: var(--ifm-color-success, #2e8555);
+  background: transparent;
+}
+
+.level_Advanced {
+  border-color: var(--ifm-color-warning, #e6a700);
+  color: var(--ifm-color-warning, #e6a700);
+  background: transparent;
+}
+
+@media (max-width: 640px) {
+  .item {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .tags {
+    justify-content: flex-start;
+  }
+}

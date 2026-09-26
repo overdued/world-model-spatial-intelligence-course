@@ -1,0 +1,40 @@
+---
+title: PyTorch
+sidebar_label: PyTorch
+description: 全部 Lab 的实现工具：工程够用即可，按需回查。
+---
+
+# PyTorch
+
+> 本页是**回查手册**。所有 Lab（Lab 0 除外）都用 PyTorch。目标不是精通框架，而是不被工程细节卡住。
+
+## 最小知识集
+
+- **Tensor 与自动微分**：`tensor.requires_grad`、`loss.backward()`、`optimizer.step()` 的标准循环；理解计算图何时构建、何时释放。
+- **`nn.Module`**：encoder/decoder/dynamics 的模块化写法；`forward` 与参数注册。
+- **DataLoader**：`Dataset`/`DataLoader`、shuffle 与 batch；Lab 2 的 rollout 数据就靠它喂。
+- **显存常识**：batch size、混合精度（`torch.autocast`）、`checkpoint` 重计算；Colab 免费 T4 只有 15GB。
+- **Device 管理**：`.to(device)` 的一致性——90% 的 Lab 报错来自 CPU/GPU 张量混用。
+
+## 何时回查
+
+| 场景 | 查什么 |
+|---|---|
+| Lab 2 训练 encoder | `nn.Module`、VAE 的 reparameterization 写法 |
+| Lab 2/3 滚动预测 | 序列数据的 batch 维度管理、`pack_padded_sequence`（可选） |
+| 任何 Lab 报 OOM | 混合精度、梯度 checkpointing、减小 batch |
+| 想在 Colab 跑通 | 运行时选择 GPU、`torch.cuda.is_available()` 自检 |
+
+## 最佳外部资源
+
+- **PyTorch 官方 60 分钟教程**（[pytorch.org/tutorials](https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html)）：一遍过完即可动手。
+- **PyTorch 官方 Docs**：`torch.distributions` 一节必读——RSSM 的 prior/posterior 直接用它写。
+- **Karpathy《Zero to Hero》**（YouTube 系列）：从零手写反向传播与 GPT，工程与原理双修。
+
+## 自查
+
+能不看教程写出"定义模型 → 前向 → 算 loss → 反传 → 更新"的完整循环，能把一个训练脚本从 CPU 改到 GPU 且不显存爆炸，即达标。
+
+## Next
+
+回到主线：[Track A 模块 05](../scientist/05-latent-dynamics.mdx) 或开始 [Lab 0](../start-here/index.mdx)

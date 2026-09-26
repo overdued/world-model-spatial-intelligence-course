@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" font-family="Inter, -apple-system, 'Segoe UI', sans-serif">
+  <defs>
+    <marker id="ai" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4F46E5"/></marker>
+    <marker id="as" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#64748B"/></marker>
+  </defs>
+  <rect width="1280" height="720" fill="#FFFFFF"/>
+  <text x="60" y="52" font-size="30" font-weight="700" fill="#334155">NeRF — Neural Radiance Fields</text>
+  <text x="60" y="82" font-size="17" fill="#64748B">An MLP learns a continuous 5D scene function; images are synthesized by volume rendering along camera rays</text>
+
+  <!-- camera -->
+  <rect x="60" y="300" width="110" height="80" rx="12" fill="#FAFAFC" stroke="#334155" stroke-width="2"/>
+  <circle cx="140" cy="340" r="24" fill="#FFFFFF" stroke="#334155" stroke-width="2"/>
+  <circle cx="140" cy="340" r="10" fill="#334155"/>
+  <text x="115" y="408" font-size="14" fill="#64748B" text-anchor="middle">camera pose</text>
+
+  <!-- ray -->
+  <path d="M164,340 L560,340" stroke="#4F46E5" stroke-width="2" marker-end="url(#ai)"/>
+  <text x="360" y="322" font-size="15" font-weight="600" fill="#4F46E5" text-anchor="middle">camera ray r(t) = o + t·d</text>
+
+  <!-- sample points on ray -->
+  <g fill="#4F46E5">
+    <circle cx="240" cy="340" r="6"/><circle cx="320" cy="340" r="6"/>
+    <circle cx="400" cy="340" r="6"/><circle cx="480" cy="340" r="6"/>
+  </g>
+  <text x="360" y="368" font-size="13" fill="#64748B" text-anchor="middle">sampled points: (x, y, z) position + viewing direction (θ, φ)</text>
+
+  <!-- scene hint -->
+  <circle cx="330" cy="250" r="34" fill="#10B981" opacity="0.25"/>
+  <circle cx="440" cy="430" r="26" fill="#F59E0B" opacity="0.3"/>
+  <text x="330" y="210" font-size="13" fill="#64748B" text-anchor="middle">scene (implicit)</text>
+
+  <!-- MLP -->
+  <rect x="580" y="270" width="180" height="140" rx="12" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2"/>
+  <g stroke="#4F46E5" stroke-width="1.2" opacity="0.6">
+    <line x1="610" y1="290" x2="610" y2="390"/><line x1="640" y1="290" x2="640" y2="390"/>
+    <line x1="670" y1="290" x2="670" y2="390"/><line x1="700" y1="290" x2="700" y2="390"/><line x1="730" y1="290" x2="730" y2="390"/>
+  </g>
+  <text x="670" y="346" font-size="20" font-weight="700" fill="#4F46E5" text-anchor="middle">MLP</text>
+  <text x="670" y="440" font-size="14" fill="#64748B" text-anchor="middle">F(x, d) → (σ, c)</text>
+
+  <!-- outputs -->
+  <path d="M760,300 L840,250" stroke="#64748B" stroke-width="2" marker-end="url(#as)"/>
+  <rect x="846" y="210" width="170" height="70" rx="12" fill="#FAFAFC" stroke="#64748B" stroke-width="1.5"/>
+  <text x="931" y="240" font-size="16" font-weight="700" fill="#334155" text-anchor="middle">density σ</text>
+  <text x="931" y="264" font-size="13" fill="#64748B" text-anchor="middle">how much matter is here</text>
+  <path d="M760,380 L840,430" stroke="#64748B" stroke-width="2" marker-end="url(#as)"/>
+  <rect x="846" y="400" width="170" height="70" rx="12" fill="#FAFAFC" stroke="#64748B" stroke-width="1.5"/>
+  <text x="931" y="430" font-size="16" font-weight="700" fill="#334155" text-anchor="middle">color c</text>
+  <text x="931" y="454" font-size="13" fill="#64748B" text-anchor="middle">view-dependent RGB</text>
+
+  <!-- volume rendering -->
+  <path d="M1016,340 L1076,340" stroke="#64748B" stroke-width="2" marker-end="url(#as)"/>
+  <rect x="1080" y="270" width="140" height="140" rx="12" fill="#FFFFFF" stroke="#4F46E5" stroke-width="2"/>
+  <text x="1150" y="320" font-size="16" font-weight="700" fill="#4F46E5" text-anchor="middle">volume</text>
+  <text x="1150" y="344" font-size="16" font-weight="700" fill="#4F46E5" text-anchor="middle">rendering</text>
+  <text x="1150" y="374" font-size="15" fill="#64748B" text-anchor="middle">∫ σ·c dt</text>
+  <circle cx="1150" cy="450" r="16" fill="#4F46E5" opacity="0.7"/>
+  <path d="M1150,410 L1150,432" stroke="#4F46E5" stroke-width="2" marker-end="url(#ai)"/>
+  <text x="1150" y="492" font-size="14" fill="#64748B" text-anchor="middle">pixel color</text>
+
+  <!-- multi-view consistency -->
+  <g>
+    <rect x="80" y="520" width="120" height="90" rx="12" fill="#FAFAFC" stroke="#64748B" stroke-width="1.5"/>
+    <rect x="230" y="520" width="120" height="90" rx="12" fill="#FAFAFC" stroke="#64748B" stroke-width="1.5"/>
+    <rect x="380" y="520" width="120" height="90" rx="12" fill="#FAFAFC" stroke="#64748B" stroke-width="1.5"/>
+    <circle cx="140" cy="565" r="18" fill="#10B981" opacity="0.3"/>
+    <circle cx="290" cy="565" r="18" fill="#10B981" opacity="0.3"/>
+    <circle cx="440" cy="565" r="18" fill="#10B981" opacity="0.3"/>
+    <text x="290" y="640" font-size="14" fill="#64748B" text-anchor="middle">multi-view consistency: one 5D field explains every training photo → novel views render correctly</text>
+  </g>
+</svg>

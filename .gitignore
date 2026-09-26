@@ -23,4 +23,16 @@ logs/
 # 本地打包
 /CIS6280_World_Models_lectures_Fall2026.zip
 
+# Docusaurus 构建产物与依赖
+website/node_modules/
+website/build/
+website/.docusaurus/
+website/.cache/
+
+# Python / Notebook
+.ipynb_checkpoints/
+__pycache__/
+*-venv/
+venv/
+
 .DS_Store

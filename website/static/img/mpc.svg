@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" font-family="Inter, -apple-system, 'Segoe UI', sans-serif">
+  <defs>
+    <marker id="as" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#64748B"/></marker>
+    <marker id="am" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#F59E0B"/></marker>
+    <marker id="ai" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4F46E5"/></marker>
+  </defs>
+  <rect width="1280" height="720" fill="#FFFFFF"/>
+  <text x="60" y="52" font-size="30" font-weight="700" fill="#334155">Model-Predictive Control (MPC)</text>
+  <text x="60" y="82" font-size="17" fill="#64748B">Sample candidate action sequences, simulate them in the world model, execute only the first action — then replan</text>
+
+  <!-- current state -->
+  <circle cx="160" cy="380" r="40" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2.5"/>
+  <text x="160" y="388" font-size="20" font-weight="700" fill="#4F46E5" text-anchor="middle">s<tspan dy="5" font-size="13">t</tspan></text>
+  <text x="160" y="450" font-size="14" fill="#64748B" text-anchor="middle">current state</text>
+
+  <!-- sampled trajectories (dashed fans) -->
+  <g stroke="#64748B" stroke-width="2" stroke-dasharray="6 4" fill="none">
+    <path d="M200,380 C340,300 460,240 620,200 S900,150 1060,160"/>
+    <path d="M200,380 C340,340 480,290 640,270 S920,240 1070,250"/>
+    <path d="M200,380 C360,380 500,400 660,410 S940,430 1080,420"/>
+    <path d="M200,380 C340,430 470,490 630,520 S910,570 1060,560"/>
+    <path d="M200,380 C330,460 450,540 600,580 S880,650 1040,640"/>
+  </g>
+  <!-- optimal trajectory (amber) -->
+  <path d="M200,380 C350,350 500,330 660,325 S940,320 1080,330" stroke="#F59E0B" stroke-width="3.5" fill="none" marker-end="url(#am)"/>
+  <text x="900" y="302" font-size="15" font-weight="700" fill="#F59E0B">best sequence (highest return)</text>
+
+  <!-- horizon -->
+  <line x1="1080" y1="140" x2="1080" y2="660" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <text x="1096" y="160" font-size="15" fill="#64748B">horizon H</text>
+
+  <!-- execute first action -->
+  <rect x="300" y="560" width="220" height="60" rx="12" fill="#FFFBEB" stroke="#F59E0B" stroke-width="2"/>
+  <text x="410" y="586" font-size="16" font-weight="700" fill="#F59E0B" text-anchor="middle">execute a<tspan dy="4" font-size="11">t</tspan><tspan dy="-4">* only</tspan></text>
+  <text x="410" y="608" font-size="13" fill="#64748B" text-anchor="middle">(first action of best plan)</text>
+  <path d="M240,420 C260,480 290,530 330,556" stroke="#F59E0B" stroke-width="2" fill="none" marker-end="url(#am)"/>
+
+  <!-- receding horizon loop -->
+  <path d="M520,590 C700,660 300,700 180,640 C140,620 130,500 142,424" stroke="#4F46E5" stroke-width="2" fill="none" stroke-dasharray="6 4" marker-end="url(#ai)"/>
+  <text x="330" y="690" font-size="15" font-weight="600" fill="#4F46E5">receding horizon: replan at every step from the new state</text>
+
+  <!-- CEM / MPPI tag -->
+  <rect x="60" y="150" width="230" height="60" rx="12" fill="#FAFAFC" stroke="#64748B" stroke-width="1.5"/>
+  <text x="175" y="176" font-size="15" font-weight="700" fill="#334155" text-anchor="middle">sampling optimizers</text>
+  <text x="175" y="198" font-size="15" fill="#64748B" text-anchor="middle">CEM · MPPI</text>
+
+  <!-- cost note -->
+  <text x="700" y="460" font-size="14" fill="#64748B">each dashed curve = one candidate action sequence</text>
+  <text x="700" y="484" font-size="14" fill="#64748B">rolled out inside the learned world model</text>
+</svg>

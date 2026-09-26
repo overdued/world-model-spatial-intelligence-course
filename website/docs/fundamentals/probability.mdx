@@ -1,0 +1,40 @@
+---
+title: Probability
+sidebar_label: Probability
+description: 世界模型的概率语言最小集：不确定性是这个领域的母语，按需回查。
+---
+
+# Probability（概率论）
+
+> 本页是**回查手册**。世界模型的形式化语言是概率：belief state、观测噪声、随机动力学、不确定性量化全部建立在以下最小集上。
+
+## 最小知识集
+
+- **条件分布与贝叶斯**：$p(s \mid o) \propto p(o \mid s)\, p(s)$——观测更新的全部内容。
+- **高斯分布与协方差**：Kalman filter、RSSM 的随机状态、3D Gaussian Splatting 都是高斯；会读均值/协方差的几何含义。
+- **马尔可夫性**：$p(s_{t+1} \mid s_t, s_{t-1}, \dots) = p(s_{t+1} \mid s_t)$——"状态是未来的充分统计量"的数学表述。
+- **隐变量与边际化**：$p(o) = \int p(o \mid z)\, p(z)\, dz$——VAE、belief state、粒子滤波共用这一结构。
+- **期望与蒙特卡洛估计**：CEM/MPPI 规划器、policy gradient 的梯度估计都靠采样逼近期望。
+
+## 何时回查
+
+| 主线模块 | 用到的概率 |
+|---|---|
+| Track A 02 Observation, State and POMDP | 贝叶斯、belief state、边际化 |
+| Track A 05/06 Latent Dynamics / RSSM | 隐变量模型、KL 散度、ELBO |
+| Track A 09 Planning | 采样估计、期望回报 |
+| Track A 12 / Track B 06 | 不确定性（aleatoric vs epistemic）、校准 |
+
+## 最佳外部资源
+
+- **《Probabilistic Machine Learning: Basics》**（Kevin Murphy, [probml.github.io/pml-book](https://probml.github.io/pml-book/)）第 2–4 章：免费 PDF，ML 视角。
+- **Seeing Theory**（[seeing-theory.brown.edu](https://seeing-theory.brown.edu/)）：交互式可视化，重建直觉最快。
+- **CIS6280 L02 History, Foundations, Probabilistic Formulation**（[PDF](https://jiataogu.me/cis6280-world-models/lectures/lecture-02-world-models-history-foundations-probabilistic-formulation.pdf)）：世界模型语境下的概率形式化示范。
+
+## 自查
+
+能从联合分布推出条件分布、能解释协方差矩阵椭圆的方向与长短轴、能说明马尔可夫性与"历史压缩"的关系，即达标。
+
+## Next
+
+回到主线：[Track A 模块 02](../scientist/02-observation-state-pomdp.mdx) 或 [Track B 模块 06](../spatial/06-state-estimation.mdx)

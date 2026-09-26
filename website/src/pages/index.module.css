@@ -1,0 +1,245 @@
+.hero {
+  padding: 5rem 0 4.5rem;
+  text-align: center;
+  background: linear-gradient(
+    160deg,
+    var(--ifm-color-primary-darkest, #12284a) 0%,
+    var(--ifm-color-primary-dark, #1b3a6b) 55%,
+    var(--ifm-color-primary, #2e5fa3) 100%
+  );
+  color: #fff;
+}
+
+.heroTitle {
+  font-size: 2.9rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.75rem;
+  color: #fff;
+}
+
+.heroSubtitle {
+  font-size: 1.15rem;
+  opacity: 0.9;
+  max-width: 640px;
+  margin: 0 auto 2rem;
+}
+
+.heroButtons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.8rem 1.8rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.btnPrimary {
+  background: #fff;
+  color: var(--ifm-color-primary-darkest, #12284a);
+}
+
+.btnPrimary:hover {
+  color: var(--ifm-color-primary-darkest, #12284a);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.btnOutline {
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  color: #fff;
+}
+
+.btnOutline:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.section {
+  padding: 3.5rem 0;
+}
+
+.sectionAlt {
+  background: var(--ifm-background-surface-color);
+}
+
+.sectionTitle {
+  font-size: 1.9rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.sectionLead {
+  text-align: center;
+  color: var(--ifm-color-emphasis-600);
+  max-width: 620px;
+  margin: 0 auto 2rem;
+}
+
+/* ── Choose Your Path ─────────────────────────────── */
+
+.pathGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.pathCard {
+  display: flex;
+  flex-direction: column;
+  padding: 1.6rem;
+  border-radius: 14px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  background: var(--ifm-background-color);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.pathCard:hover {
+  transform: translateY(-4px);
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+}
+
+.pathIcon {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.pathName {
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin: 0.6rem 0 0.35rem;
+}
+
+.pathTagline {
+  font-size: 0.88rem;
+  color: var(--ifm-color-primary);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.pathMeta {
+  margin: 0 0 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-size: 0.83rem;
+}
+
+.pathMeta > div {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.pathMeta dt {
+  flex: 0 0 108px;
+  font-weight: 700;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.pathMeta dd {
+  margin: 0;
+}
+
+.pathNote {
+  font-size: 0.78rem;
+  color: var(--ifm-color-emphasis-500);
+  font-style: italic;
+  margin-top: auto;
+}
+
+.pathBtn {
+  margin-top: 1rem;
+  text-align: center;
+  background: var(--ifm-color-primary);
+  color: #fff;
+}
+
+.pathBtn:hover {
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
+/* ── Labs ─────────────────────────────────────────── */
+
+.labGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.labCard {
+  display: flex;
+  flex-direction: column;
+  padding: 1.4rem;
+  border-radius: 14px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  background: var(--ifm-background-color);
+}
+
+.labName {
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin-bottom: 0.4rem;
+}
+
+.labDesc {
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-700);
+  flex: 1;
+}
+
+.labFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.gpu {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  background: var(--ifm-color-emphasis-100);
+  border: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.allLabs {
+  text-align: center;
+  margin-top: 1.75rem;
+  font-weight: 600;
+}
+
+/* ── Responsive ───────────────────────────────────── */
+
+@media (max-width: 996px) {
+  .hero {
+    padding: 3.5rem 0;
+  }
+  .heroTitle {
+    font-size: 2.1rem;
+  }
+  .pathGrid,
+  .labGrid {
+    grid-template-columns: 1fr;
+  }
+  .pathMeta dt {
+    flex-basis: 96px;
+  }
+}

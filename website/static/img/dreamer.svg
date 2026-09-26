@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" font-family="Inter, -apple-system, 'Segoe UI', sans-serif">
+  <defs>
+    <marker id="ai" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4F46E5"/></marker>
+    <marker id="am" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#F59E0B"/></marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#10B981"/></marker>
+  </defs>
+  <rect width="1280" height="720" fill="#FFFFFF"/>
+  <text x="60" y="52" font-size="30" font-weight="700" fill="#334155">Dreamer: learning control by imagination</text>
+  <text x="60" y="82" font-size="17" fill="#64748B">Three repeating phases — learn the model, practice in imagination, act in reality</text>
+
+  <!-- Box 1: World Model Learning (top) -->
+  <rect x="440" y="130" width="400" height="120" rx="12" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2"/>
+  <text x="640" y="168" font-size="21" font-weight="700" fill="#4F46E5" text-anchor="middle">1 · World Model Learning</text>
+  <text x="640" y="198" font-size="14" fill="#64748B" text-anchor="middle">fit RSSM on replay buffer of real experience</text>
+  <text x="640" y="222" font-size="14" fill="#64748B" text-anchor="middle">(reconstruction + reward + KL regularization)</text>
+
+  <!-- Box 2: Actor-Critic in Imagination (right) -->
+  <rect x="880" y="330" width="340" height="240" rx="12" fill="#FFFFFF" stroke="#4F46E5" stroke-width="2"/>
+  <text x="1050" y="366" font-size="20" font-weight="700" fill="#4F46E5" text-anchor="middle">2 · Actor–Critic</text>
+  <text x="1050" y="392" font-size="15" fill="#64748B" text-anchor="middle">in Imagination</text>
+  <!-- imagination rollout tree -->
+  <circle cx="960" cy="450" r="14" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2"/>
+  <g stroke="#4F46E5" stroke-width="1.8" stroke-dasharray="6 4" fill="none">
+    <path d="M972,442 L1020,420"/><path d="M972,458 L1020,480"/>
+    <path d="M1034,416 L1080,400"/><path d="M1034,428 L1080,440"/>
+    <path d="M1034,474 L1080,460"/><path d="M1034,486 L1080,500"/>
+  </g>
+  <g fill="#FFFFFF" stroke="#4F46E5" stroke-width="1.8">
+    <circle cx="1027" cy="422" r="11"/><circle cx="1027" cy="478" r="11"/>
+    <circle cx="1087" cy="400" r="9"/><circle cx="1087" cy="440" r="9"/>
+    <circle cx="1087" cy="460" r="9"/><circle cx="1087" cy="500" r="9"/>
+  </g>
+  <text x="1050" y="540" font-size="13" fill="#64748B" text-anchor="middle">latent rollouts (dashed) — no real env steps;</text>
+  <text x="1050" y="558" font-size="13" fill="#64748B" text-anchor="middle">actor π and critic V trained on imagined rewards</text>
+
+  <!-- Box 3: Real Environment Interaction (left) -->
+  <rect x="60" y="350" width="340" height="150" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="2"/>
+  <text x="230" y="388" font-size="20" font-weight="700" fill="#10B981" text-anchor="middle">3 · Real Environment</text>
+  <text x="230" y="414" font-size="15" fill="#64748B" text-anchor="middle">execute policy, collect (o, a, r),</text>
+  <text x="230" y="438" font-size="15" fill="#64748B" text-anchor="middle">append to replay buffer</text>
+  <circle cx="150" cy="466" r="10" fill="#10B981" opacity="0.4"/>
+  <circle cx="200" cy="472" r="13" fill="#10B981" opacity="0.55"/>
+  <circle cx="260" cy="464" r="9" fill="#10B981" opacity="0.4"/>
+
+  <!-- cyclic arrows -->
+  <path d="M400,400 C330,330 350,220 434,196" stroke="#10B981" stroke-width="2.5" fill="none" marker-end="url(#ag)"/>
+  <text x="280" y="270" font-size="15" font-weight="600" fill="#10B981">data trains</text>
+  <text x="280" y="292" font-size="15" font-weight="600" fill="#10B981">the model</text>
+
+  <path d="M840,230 C950,260 1000,290 1040,326" stroke="#4F46E5" stroke-width="2.5" fill="none" stroke-dasharray="6 4" marker-end="url(#ai)"/>
+  <text x="1010" y="262" font-size="15" font-weight="600" fill="#4F46E5">imagine with</text>
+  <text x="1010" y="284" font-size="15" font-weight="600" fill="#4F46E5">the model</text>
+
+  <path d="M880,500 C700,560 500,560 402,478" stroke="#F59E0B" stroke-width="2.5" fill="none" marker-end="url(#am)"/>
+  <text x="640" y="588" font-size="15" font-weight="600" fill="#F59E0B">trained policy acts in the real world</text>
+
+  <!-- bottom note -->
+  <rect x="440" y="640" width="400" height="52" rx="12" fill="#FAFAFC" stroke="#E2E8F0" stroke-width="1.5"/>
+  <text x="640" y="672" font-size="15" fill="#334155" text-anchor="middle">Sample-efficient: most learning is free — it happens inside the learned model.</text>
+</svg>

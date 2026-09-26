@@ -1,0 +1,89 @@
+---
+title: Capstone — Build Your Own Spatial World Model
+sidebar_label: 13 · Capstone
+description: Track B 毕业项目——从多视角视频到可查询的持久 3D/4D 场景表示与评估。
+---
+
+<ModuleProgress id="b13" label="Capstone: Build Your Own Spatial World Model" />
+
+## Why this matters
+
+Track B 的每个模块都给了你一块积木（几何、表示、估计、记忆、行动）。Capstone 要求你把它们组装成一个**从原始视频到可查询世界再到行动评估**的完整系统——这才是"空间智能工程师"的定义。
+
+## Visual Intuition
+
+```mermaid
+flowchart LR
+    V["多视角视频 / RGB-D 序列"] --> P["感知管线<br/>位姿 + 深度"]
+    P --> R["持久 3D/4D 表示<br/>点云/高斯/占据"]
+    R --> Q["可查询接口<br/>渲染/碰撞/占据/语义"]
+    Q --> A["下游评估<br/>导航或操作任务"]
+    A --> E["标准化评估报告"]
+```
+
+Capstone 的最小闭环：视频进、表示存、查询出、任务评。四个环节都要有，质量可以取舍。
+
+## Core Idea
+
+Track B Capstone 的默认形态：**从多视角视频构建一个可查询的持久 3D/4D 场景表示，并在导航或操作任务上评估其价值**。与 Track A Capstone 共享同一约束——显式定义 state / transition / action interface / evaluation criteria——但"state"在这里是空间表示（占据栅格、高斯场、scene graph 任选），"transition"是场景随时间/交互的更新规则。
+
+三个建议选题梯度（按工作量递增）：
+
+1. **静态场景 + 导航评估**：手机绕拍场景 → COLMAP 位姿 → 3DGS/占据地图 → 在给定目标点上演示规划查询（渲染检查可视性、占据检查碰撞）。工作量集中在管线整合。
+2. **动态场景 4D 表示**：单目动态视频 → 4D 高斯/形变 NeRF → "任意时刻 + 任意视角"查询接口 → 与静态重建做定量对比（PSNR、跟踪一致性）。
+3. **表示驱动的下游任务**：在仿真导航/操作任务中，对比"用你的表示做规划"与"端到端策略"的成功率——直接回答"显式空间世界模型值不值"这个研究问题。
+
+评估要求与 Track A 相同：报告必须包含标准化评估章节（定位用 ATE/RPE、表示用 PSNR/渲染质量、任务用成功率 + 失效模式分析），不许只有 demo 视频。
+
+## Key Concepts
+
+- **可查询接口**：表示的价值由它支持的查询定义（渲染/碰撞/语义）。
+- **管线整合**：感知 → 表示 → 查询 → 任务的端到端责任。
+- **定量评估文化**：ATE/RPE、PSNR、成功率、失效模式。
+- **四要素声明**：与 Track A Capstone 共享的硬约束。
+- **三档选题**：静态导航 / 动态 4D / 下游任务对比。
+
+## Core Equations
+
+本模块以系统设计为主——你的报告中 state（如占据场 $m: \mathbb{R}^3 \to [0,1]$）与查询接口（如碰撞查询 $\mathbb{1}[m(x) > \tau]$）应写成显式数学形式。
+
+## University Lecture
+
+| 课程 | 参考 | 链接 |
+|---|---|---|
+| UPenn CIS 6280 World Models | Final Project 四里程碑与四要素约束 | [课程主页](https://jiataogu.me/cis6280-world-models/) |
+| MIT 16.485 VNAV | EuRoC 数据集 + evo 的定量评估文化 | [课程主页](https://vnav.mit.edu/) |
+
+## Papers
+
+依选题而定（proposal 中列出 3–5 篇直接相关论文）：
+
+- **方向参考**：3DGS（[arXiv:2308.04079](https://arxiv.org/abs/2308.04079)）之于方向 1；Dynamic 3D Gaussians（[arXiv:2310.08528](https://arxiv.org/abs/2310.08528)）之于方向 2；CMP（[arXiv:1702.03920](https://arxiv.org/abs/1702.03920)）之于方向 3。
+
+## Hands-on
+
+本模块即最终的 Hands-on。前置依赖：完成 Lab 5–8 中至少两个（开发中），以及 Lab 10 的评估方法（开发中）。
+
+## Check Your Understanding
+
+1. 为什么"可查询接口"比"表示本身"更能定义 Capstone 的价值？
+2. 方向 3 的对比实验设计上最大的陷阱是什么？
+3. 失效模式分析为什么和成功率数字同样重要？
+
+<details>
+<summary>显示答案</summary>
+
+1. 一个高斯场如果只是"能渲染视频"，它只是重建结果；定义了查询接口（碰撞、可视性、语义检索）后，它才成为可被规划器与世界模型消费的"世界状态"。接口把表示从产物变成资源——这正是世界模型的定义方式。
+2. 不公平比较：显式表示路线若享受额外信息（真值位姿、更长的规划预算），结论无意义。必须统一观测输入、计算预算与评估协议，且报告置信区间——否则你证明的只是"信息多的方法更好"。
+3. 成功率是均值，失效模式是方差与尾部：真实部署死在长尾（反光表面、动态遮挡、薄结构）。失效模式分析既暴露表示的系统性弱点（指导下一版迭代），也界定系统的安全运行域——这是工程报告与研究论文共通的成熟标志。
+</details>
+
+## Takeaway
+
+- Track B Capstone = 视频进、表示存、查询出、任务评的最小闭环。
+- 显式定义空间 state 与查询接口，价值由可支持的下游任务度量。
+- 定量评估与失效模式分析是交付物的另一半，与系统同等重要。
+
+## Next Module
+
+Track B 已完成。回看全局地图见 [Start Here](../start-here/index.mdx)；想理解空间表示之上的预测与规划理论，推荐补 [Track A 模块 09：Planning with World Models](../scientist/09-planning-with-world-models.mdx)。

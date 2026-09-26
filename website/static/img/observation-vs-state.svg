@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" font-family="Inter, -apple-system, 'Segoe UI', sans-serif">
+  <defs>
+    <marker id="as" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#64748B"/></marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#10B981"/></marker>
+  </defs>
+  <rect width="1280" height="720" fill="#FFFFFF"/>
+  <text x="60" y="52" font-size="30" font-weight="700" fill="#334155">State vs Observation</text>
+  <text x="60" y="82" font-size="17" fill="#64748B">The world has a true state; the agent only sees a partial, noisy projection of it</text>
+
+  <!-- Left: State -->
+  <rect x="70" y="130" width="460" height="340" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="2"/>
+  <text x="300" y="168" font-size="22" font-weight="700" fill="#10B981" text-anchor="middle">State s<tspan dy="4" font-size="14">t</tspan></text>
+  <text x="300" y="196" font-size="15" fill="#64748B" text-anchor="middle">complete, hidden, Markov</text>
+  <!-- sun icon -->
+  <circle cx="300" cy="300" r="42" fill="#10B981" opacity="0.9"/>
+  <g stroke="#10B981" stroke-width="3" stroke-linecap="round">
+    <line x1="300" y1="238" x2="300" y2="220"/>
+    <line x1="300" y1="362" x2="300" y2="380"/>
+    <line x1="238" y1="300" x2="220" y2="300"/>
+    <line x1="362" y1="300" x2="380" y2="300"/>
+    <line x1="256" y1="256" x2="244" y2="244"/>
+    <line x1="344" y1="256" x2="356" y2="244"/>
+    <line x1="256" y1="344" x2="244" y2="356"/>
+    <line x1="344" y1="344" x2="356" y2="356"/>
+  </g>
+  <circle cx="180" cy="410" r="12" fill="#10B981" opacity="0.5"/>
+  <circle cx="420" cy="400" r="10" fill="#10B981" opacity="0.5"/>
+  <circle cx="240" cy="425" r="8" fill="#10B981" opacity="0.4"/>
+  <text x="300" y="450" font-size="14" fill="#64748B" text-anchor="middle">every object, every property, fully specified</text>
+
+  <!-- Middle: POMDP -->
+  <rect x="565" y="250" width="150" height="100" rx="12" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2"/>
+  <text x="640" y="290" font-size="20" font-weight="700" fill="#4F46E5" text-anchor="middle">POMDP</text>
+  <text x="640" y="316" font-size="13" fill="#64748B" text-anchor="middle">o ~ p(o | s)</text>
+  <path d="M530,300 L561,300" stroke="#64748B" stroke-width="2" marker-end="url(#as)"/>
+  <path d="M715,300 L746,300" stroke="#64748B" stroke-width="2" marker-end="url(#as)"/>
+
+  <!-- Right: Observation -->
+  <rect x="750" y="130" width="460" height="340" rx="12" fill="#FFFFFF" stroke="#64748B" stroke-width="2"/>
+  <text x="980" y="168" font-size="22" font-weight="700" fill="#334155" text-anchor="middle">Observation o<tspan dy="4" font-size="14">t</tspan></text>
+  <text x="980" y="196" font-size="15" fill="#64748B" text-anchor="middle">partial, noisy, from a viewpoint</text>
+  <!-- camera view: partial sun -->
+  <rect x="840" y="230" width="280" height="180" rx="12" fill="#FAFAFC" stroke="#64748B" stroke-width="1.5"/>
+  <path d="M840,230 A42,42 0 0 1 900,290 L840,290 Z" fill="#10B981" opacity="0.5"/>
+  <g stroke="#64748B" stroke-width="1.5" fill="none">
+    <path d="M840,300 L1120,300" stroke-dasharray="4 4"/>
+  </g>
+  <!-- noise dots -->
+  <g fill="#94A3B8">
+    <circle cx="950" cy="330" r="3"/><circle cx="1020" cy="360" r="3"/><circle cx="1080" cy="330" r="3"/>
+    <circle cx="900" cy="370" r="3"/><circle cx="1050" cy="250" r="3"/><circle cx="980" cy="260" r="3"/>
+  </g>
+  <text x="980" y="440" font-size="14" fill="#64748B" text-anchor="middle">occlusion · sensor noise · limited field of view</text>
+
+  <!-- Bottom: history -> belief -->
+  <rect x="200" y="530" width="300" height="80" rx="12" fill="#FAFAFC" stroke="#64748B" stroke-width="1.5"/>
+  <text x="350" y="562" font-size="17" font-weight="600" fill="#334155" text-anchor="middle">history h<tspan dy="4" font-size="12">t</tspan><tspan dy="-4"> = (o</tspan><tspan dy="4" font-size="12">1</tspan><tspan dy="-4">, a</tspan><tspan dy="4" font-size="12">1</tspan><tspan dy="-4">, …, o</tspan><tspan dy="4" font-size="12">t</tspan><tspan dy="-4">)</tspan></text>
+  <text x="350" y="590" font-size="14" fill="#64748B" text-anchor="middle">everything the agent has seen and done</text>
+  <path d="M500,570 L560,570" stroke="#64748B" stroke-width="2" marker-end="url(#as)"/>
+  <rect x="570" y="530" width="220" height="80" rx="12" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2"/>
+  <text x="680" y="562" font-size="17" font-weight="600" fill="#4F46E5" text-anchor="middle">belief state b(h<tspan dy="4" font-size="12">t</tspan><tspan dy="-4">)</tspan></text>
+  <text x="680" y="590" font-size="14" fill="#64748B" text-anchor="middle">a sufficient summary for action</text>
+  <path d="M790,570 L850,570" stroke="#10B981" stroke-width="2" marker-end="url(#ag)"/>
+  <rect x="860" y="530" width="220" height="80" rx="12" fill="#FFFBEB" stroke="#F59E0B" stroke-width="2"/>
+  <text x="970" y="562" font-size="17" font-weight="600" fill="#F59E0B" text-anchor="middle">policy π(a|b)</text>
+  <text x="970" y="590" font-size="14" fill="#64748B" text-anchor="middle">act on the belief, not the state</text>
+</svg>

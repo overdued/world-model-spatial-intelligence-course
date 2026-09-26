@@ -1,0 +1,9 @@
+{
+  "label": "Foundations",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "title": "Foundations（地基回查）",
+    "description": "世界模型与空间智能所需的数学与机器学习地基。不是强制起点——学到主线卡壳时按需回查。"
+  }
+}

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" font-family="Inter, -apple-system, 'Segoe UI', sans-serif">
+  <defs>
+    <marker id="ai" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4F46E5"/></marker>
+  </defs>
+  <rect width="1280" height="720" fill="#FFFFFF"/>
+  <text x="60" y="52" font-size="30" font-weight="700" fill="#334155">3D Gaussian Splatting</text>
+  <text x="60" y="82" font-size="17" fill="#64748B">An explicit cloud of anisotropic 3D Gaussians, rendered by projecting and alpha-blending</text>
+
+  <!-- 3D gaussian cloud -->
+  <text x="240" y="160" font-size="18" font-weight="700" fill="#334155" text-anchor="middle">1 · 3D Gaussian cloud</text>
+  <g>
+    <ellipse cx="160" cy="300" rx="60" ry="28" fill="#4F46E5" opacity="0.25" transform="rotate(-20 160 300)"/>
+    <ellipse cx="300" cy="250" rx="44" ry="20" fill="#10B981" opacity="0.3" transform="rotate(30 300 250)"/>
+    <ellipse cx="240" cy="380" rx="70" ry="26" fill="#F59E0B" opacity="0.3" transform="rotate(10 240 380)"/>
+    <ellipse cx="370" cy="340" rx="36" ry="16" fill="#EF4444" opacity="0.25" transform="rotate(-40 370 340)"/>
+    <ellipse cx="180" cy="440" rx="40" ry="18" fill="#4F46E5" opacity="0.2" transform="rotate(50 180 440)"/>
+    <ellipse cx="350" cy="450" rx="50" ry="22" fill="#10B981" opacity="0.2" transform="rotate(-10 350 450)"/>
+  </g>
+  <text x="240" y="520" font-size="14" fill="#64748B" text-anchor="middle">each Gaussian: position μ, covariance Σ, color, opacity α</text>
+  <text x="240" y="544" font-size="14" fill="#64748B" text-anchor="middle">explicit — points you can move, edit, delete</text>
+
+  <!-- arrow -->
+  <path d="M450,340 L540,340" stroke="#4F46E5" stroke-width="2.5" marker-end="url(#ai)"/>
+  <text x="495" y="322" font-size="15" font-weight="600" fill="#4F46E5" text-anchor="middle">project</text>
+  <text x="495" y="366" font-size="13" fill="#64748B" text-anchor="middle">(splat)</text>
+
+  <!-- 2D splats -->
+  <text x="700" y="160" font-size="18" font-weight="700" fill="#334155" text-anchor="middle">2 · 2D projection</text>
+  <rect x="580" y="200" width="240" height="300" rx="12" fill="#FAFAFC" stroke="#E2E8F0" stroke-width="1.5"/>
+  <g>
+    <ellipse cx="650" cy="300" rx="46" ry="24" fill="#4F46E5" opacity="0.3" transform="rotate(-15 650 300)"/>
+    <ellipse cx="730" cy="270" rx="34" ry="18" fill="#10B981" opacity="0.35" transform="rotate(25 730 270)"/>
+    <ellipse cx="700" cy="380" rx="52" ry="24" fill="#F59E0B" opacity="0.3" transform="rotate(8 700 380)"/>
+    <ellipse cx="760" cy="350" rx="28" ry="14" fill="#EF4444" opacity="0.3" transform="rotate(-35 760 350)"/>
+    <ellipse cx="640" cy="430" rx="32" ry="16" fill="#4F46E5" opacity="0.25" transform="rotate(45 640 430)"/>
+  </g>
+  <text x="700" y="540" font-size="14" fill="#64748B" text-anchor="middle">ellipses on the image plane, depth-sorted</text>
+
+  <!-- arrow -->
+  <path d="M840,340 L930,340" stroke="#4F46E5" stroke-width="2.5" marker-end="url(#ai)"/>
+  <text x="885" y="322" font-size="15" font-weight="600" fill="#4F46E5" text-anchor="middle">α-blend</text>
+  <text x="885" y="366" font-size="13" fill="#64748B" text-anchor="middle">front to back</text>
+
+  <!-- rendered image -->
+  <text x="1090" y="160" font-size="18" font-weight="700" fill="#334155" text-anchor="middle">3 · rendered image</text>
+  <rect x="970" y="200" width="240" height="300" rx="12" fill="#FFFFFF" stroke="#334155" stroke-width="2"/>
+  <rect x="990" y="220" width="90" height="70" rx="8" fill="#4F46E5" opacity="0.5"/>
+  <rect x="1100" y="250" width="80" height="60" rx="8" fill="#10B981" opacity="0.5"/>
+  <rect x="1020" y="320" width="120" height="80" rx="8" fill="#F59E0B" opacity="0.45"/>
+  <rect x="1080" y="420" width="100" height="60" rx="8" fill="#4F46E5" opacity="0.35"/>
+  <text x="1090" y="540" font-size="14" fill="#64748B" text-anchor="middle">photorealistic frame</text>
+
+  <!-- bottom labels -->
+  <rect x="300" y="610" width="300" height="60" rx="12" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.5"/>
+  <text x="450" y="636" font-size="16" font-weight="700" fill="#4F46E5" text-anchor="middle">explicit representation</text>
+  <text x="450" y="658" font-size="13" fill="#64748B" text-anchor="middle">vs NeRF's implicit MLP field</text>
+  <rect x="680" y="610" width="300" height="60" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="1.5"/>
+  <text x="830" y="636" font-size="16" font-weight="700" fill="#10B981" text-anchor="middle">fast rendering</text>
+  <text x="830" y="658" font-size="13" fill="#64748B" text-anchor="middle">rasterization, real-time frame rates</text>
+</svg>

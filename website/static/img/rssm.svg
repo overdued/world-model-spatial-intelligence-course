@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" font-family="Inter, -apple-system, 'Segoe UI', sans-serif">
+  <defs>
+    <marker id="ai" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4F46E5"/></marker>
+    <marker id="am" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#F59E0B"/></marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#10B981"/></marker>
+  </defs>
+  <rect width="1280" height="720" fill="#FFFFFF"/>
+  <text x="60" y="52" font-size="30" font-weight="700" fill="#334155">RSSM — Recurrent State-Space Model</text>
+  <text x="60" y="82" font-size="17" fill="#64748B">A deterministic memory (GRU) carries a stochastic belief state through time</text>
+
+  <!-- action input -->
+  <rect x="130" y="150" width="90" height="46" rx="12" fill="#FFFBEB" stroke="#F59E0B" stroke-width="2"/>
+  <text x="175" y="179" font-size="17" font-weight="700" fill="#F59E0B" text-anchor="middle">a<tspan dy="4" font-size="12">1</tspan></text>
+  <rect x="560" y="150" width="90" height="46" rx="12" fill="#FFFBEB" stroke="#F59E0B" stroke-width="2"/>
+  <text x="605" y="179" font-size="17" font-weight="700" fill="#F59E0B" text-anchor="middle">a<tspan dy="4" font-size="12">2</tspan></text>
+
+  <!-- recurrent layer: GRU boxes, thick path -->
+  <rect x="120" y="300" width="150" height="80" rx="12" fill="#4F46E5"/>
+  <text x="195" y="334" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">GRU</text>
+  <text x="195" y="360" font-size="15" fill="#FFFFFF" text-anchor="middle">h<tspan dy="4" font-size="11">1</tspan></text>
+  <rect x="550" y="300" width="150" height="80" rx="12" fill="#4F46E5"/>
+  <text x="625" y="334" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">GRU</text>
+  <text x="625" y="360" font-size="15" fill="#FFFFFF" text-anchor="middle">h<tspan dy="4" font-size="11">2</tspan></text>
+  <rect x="980" y="300" width="150" height="80" rx="12" fill="#4F46E5" opacity="0.55"/>
+  <text x="1055" y="334" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">GRU</text>
+  <text x="1055" y="360" font-size="15" fill="#FFFFFF" text-anchor="middle">h<tspan dy="4" font-size="11">3</tspan></text>
+  <g stroke="#4F46E5" stroke-width="5" fill="none">
+    <path d="M270,340 L546,340" marker-end="url(#ai)"/>
+    <path d="M700,340 L976,340" marker-end="url(#ai)"/>
+  </g>
+  <text x="408" y="322" font-size="14" font-weight="600" fill="#4F46E5" text-anchor="middle">deterministic path (recurrent)</text>
+  <text x="838" y="322" font-size="14" font-weight="600" fill="#4F46E5" text-anchor="middle">deterministic path (recurrent)</text>
+
+  <!-- action into GRU -->
+  <g stroke="#F59E0B" stroke-width="2" fill="none">
+    <path d="M175,196 L175,296" marker-end="url(#am)"/>
+    <path d="M605,196 L605,296" marker-end="url(#am)"/>
+  </g>
+
+  <!-- stochastic states -->
+  <circle cx="195" cy="480" r="42" fill="#FFFFFF" stroke="#4F46E5" stroke-width="2.5" stroke-dasharray="6 4"/>
+  <text x="195" y="488" font-size="20" font-weight="700" fill="#4F46E5" text-anchor="middle">z<tspan dy="5" font-size="13">1</tspan><tspan dy="-5"> ~</tspan></text>
+  <circle cx="625" cy="480" r="42" fill="#FFFFFF" stroke="#4F46E5" stroke-width="2.5" stroke-dasharray="6 4"/>
+  <text x="625" y="488" font-size="20" font-weight="700" fill="#4F46E5" text-anchor="middle">z<tspan dy="5" font-size="13">2</tspan><tspan dy="-5"> ~</tspan></text>
+  <circle cx="1055" cy="480" r="42" fill="#FFFFFF" stroke="#4F46E5" stroke-width="2.5" stroke-dasharray="6 4" opacity="0.7"/>
+  <text x="1055" y="488" font-size="20" font-weight="700" fill="#4F46E5" text-anchor="middle">z<tspan dy="5" font-size="13">3</tspan><tspan dy="-5"> ~</tspan></text>
+  <g stroke="#4F46E5" stroke-width="2" stroke-dasharray="6 4" fill="none">
+    <path d="M195,380 L195,434" marker-end="url(#ai)"/>
+    <path d="M625,380 L625,434" marker-end="url(#ai)"/>
+    <path d="M1055,380 L1055,434" marker-end="url(#ai)"/>
+  </g>
+  <text x="250" y="410" font-size="13" fill="#64748B">sample z ~ q(z|h)</text>
+
+  <!-- z feeds next GRU -->
+  <g stroke="#4F46E5" stroke-width="2" fill="none">
+    <path d="M237,480 C330,480 420,380 546,352" marker-end="url(#ai)"/>
+    <path d="M667,480 C760,480 850,380 976,352" marker-end="url(#ai)"/>
+  </g>
+
+  <!-- decoder heads from (h2,z2) -->
+  <rect x="470" y="580" width="160" height="60" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="2"/>
+  <text x="550" y="606" font-size="15" font-weight="700" fill="#10B981" text-anchor="middle">observation</text>
+  <text x="550" y="628" font-size="15" font-weight="700" fill="#10B981" text-anchor="middle">decoder → x̂<tspan dy="4" font-size="10">t</tspan></text>
+  <rect x="660" y="580" width="160" height="60" rx="12" fill="#FFFBEB" stroke="#F59E0B" stroke-width="2"/>
+  <text x="740" y="606" font-size="15" font-weight="700" fill="#F59E0B" text-anchor="middle">reward</text>
+  <text x="740" y="628" font-size="15" font-weight="700" fill="#F59E0B" text-anchor="middle">decoder → r̂<tspan dy="4" font-size="10">t</tspan></text>
+  <g stroke-width="2" fill="none">
+    <path d="M590,522 L560,576" stroke="#10B981" marker-end="url(#ag)"/>
+    <path d="M660,522 L720,576" stroke="#F59E0B" marker-end="url(#am)"/>
+  </g>
+  <text x="700" y="552" font-size="13" fill="#64748B">heads read (h<tspan dy="3" font-size="9">t</tspan><tspan dy="-3">, z</tspan><tspan dy="3" font-size="9">t</tspan><tspan dy="-3">)</tspan></text>
+
+  <!-- layer labels -->
+  <g font-size="14" font-weight="600" fill="#64748B">
+    <text x="60" y="250">① recurrent: h<tspan dy="4" font-size="10">t</tspan><tspan dy="-4"> = GRU(h</tspan><tspan dy="4" font-size="10">t−1</tspan><tspan dy="-4">, z</tspan><tspan dy="4" font-size="10">t−1</tspan><tspan dy="-4">, a</tspan><tspan dy="4" font-size="10">t</tspan><tspan dy="-4">)</tspan></text>
+    <text x="60" y="690">② deterministic memory h + ③ stochastic state z = full model state s<tspan dy="4" font-size="10">t</tspan><tspan dy="-4"> = (h</tspan><tspan dy="4" font-size="10">t</tspan><tspan dy="-4">, z</tspan><tspan dy="4" font-size="10">t</tspan><tspan dy="-4">)</tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,81 @@
+---
+title: Video World Models
+sidebar_label: 10 · Video World Models
+description: 大规模视频生成模型作为通用世界模拟器——Genie、Sora 与扩散视频。
+---
+
+<ModuleProgress id="a10" label="Video World Models" />
+
+## Why this matters
+
+2024 年后，"世界模型"的叙事中心从 Dreamer 式潜空间转向大规模视频生成：Sora 自称"世界模拟器"，Genie 把视频变成可交互环境。这条路线代表世界模型的规模化前沿，也带来漂移与评估的新难题。
+
+## Visual Intuition
+
+![视频世界模型](/img/video-world-model.svg)
+
+视频世界模型 = 时空生成架构（DiT/时空注意力）+ 条件信号（动作、相机轨迹、文本）。开环时生成未来帧；闭环时把自己生成的帧喂回输入——漂移由此开始。
+
+## Core Idea
+
+把"预测未来"表述为**条件视频生成**：给定过去帧与动作/相机控制信号，用 diffusion 或 flow matching 目标训练时空生成模型（通常是 DiT 类架构，视频被切成时空 patch token）。与 Dreamer 路线相比，它直接在像素空间建模——放弃紧凑潜状态，换取保真度与通用性。
+
+两个标志性系统定义了这条路线。**Sora**（2024）的技术报告 *Video Generation Models as World Simulators* 宣称规模化视频模型涌现出物理直觉（物体恒存、简单交互），引发"视频模型是否理解物理"的大辩论。**Genie**（DeepMind, 2024）更进一步：从无标注游戏视频中学习**潜动作空间**（latent actions），让生成的视频可以被"玩"——生成模型第一次成为可交互环境，GameNGen 在 DOOM 上证明了端到端可玩性。
+
+核心未解问题是 **closed-loop drift**：自回归地把生成帧喂回输入，误差与伪影逐帧累积，几十秒后画面崩坏。长程一致性技术（锚定帧、重同步、历史条件）与漂移的定量评估，直通模块 12。
+
+## Key Concepts
+
+- **DiT / 时空注意力**：视频生成的当代主干架构。
+- **动作条件生成**：以动作为条件预测未来帧——世界模型接口的视频版。
+- **Latent actions（Genie）**：从无标注视频无监督发现动作空间。
+- **Closed-loop drift**：自回归闭环生成的误差累积与画面崩坏。
+- **生成质量 ≠ 决策有用性**：FVD 高分不代表能做规划（模块 12）。
+
+## Core Equations
+
+扩散模型的训练目标（score/denoising 视角）：
+
+$$\mathcal{L} = \mathbb{E}_{x_0, \epsilon, t}\big\| \epsilon - \epsilon_\theta(x_t, t, c) \big\|^2$$
+
+其中 $c$ 为条件（动作/文本/历史帧）。flow matching 则用 $\| v_\theta(x_t, t) - (x_1 - x_0) \|^2$ 直接回归概率路径的速度场。
+
+## University Lecture
+
+| 课程 | Lecture | 链接 |
+|---|---|---|
+| UPenn CIS 6280 World Models | L11 Diffusion & Flow Matching；L12–L13 Video World Models I/II | [课程主页](https://jiataogu.me/cis6280-world-models/)（L11–L13 slides 随学期发布） |
+
+## Papers
+
+- **Must Read**：Bruce et al. (2024), *Genie: Generative Interactive Environments*（[arXiv:2402.15391](https://arxiv.org/abs/2402.15391)）。
+- **Recommended**：Ho et al. (2022), *Video Diffusion Models*（[arXiv:2204.03458](https://arxiv.org/abs/2204.03458)）；Brooks et al. (2024), *Video Generation Models as World Simulators*（Sora 技术报告，[OpenAI 官网](https://openai.com/index/video-generation-models-as-world-simulators/)）。
+- **Optional**：Lipman et al. (2023), *Flow Matching for Generative Modeling*（[arXiv:2210.02747](https://arxiv.org/abs/2210.02747)）；Valevski et al. (2024), *GameNGen*（[arXiv:2408.14837](https://arxiv.org/abs/2408.14837)）。
+
+## Hands-on
+
+Lab 7（开发中）：在移动小球视频上训练小规模动作条件视频模型，可视化 open-loop 长 rollout 的 drift。
+
+## Check Your Understanding
+
+1. 视频世界模型与 Dreamer 式世界模型的建模对象有何不同？
+2. Genie 的 latent action 解决了什么数据来源问题？
+3. 为什么 closed-loop drift 是视频世界模型特有的重症？
+
+<details>
+<summary>显示答案</summary>
+
+1. Dreamer 在压缩后的潜空间建模动力学，状态是向量；视频世界模型直接在像素空间建模帧的联合分布，状态即画面本身。前者紧凑可控适合规划，后者保真通用但难以提取决策所需的紧凑状态。
+2. 海量互联网/游戏视频没有动作标签，无法直接训练动作条件模型。Genie 用一个 latent action 模型从相邻帧无监督推断"发生了什么动作"，把无标注视频变成伪标注的交互数据。
+3. 因为模型消费自己的输出：生成帧的微小伪影成为下一步的输入条件，分布逐步偏离训练分布（自诱导 OOD），伪影被逐帧放大。开环生成没有这个问题，闭环交互才暴露——这正是漂移需要专门评估的原因。
+</details>
+
+## Takeaway
+
+- 视频世界模型 = 像素空间的条件生成，以保真度和通用性换紧凑性。
+- Genie 证明了生成模型可以成为可交互环境；Sora 引发了"生成即理解"的辩论。
+- Closed-loop drift 是这条路线的阿喀琉斯之踵，模块 12 专门处理。
+
+## Next Module
+
+[模块 11：World Model + Policy](./11-world-model-policy.mdx)——把世界模型与策略接成完整 MBRL 闭环。

@@ -1,3 +1,9 @@
+<!-- AUTO-GENERATED — DO NOT EDIT
+     generated_at: 2026-09-26 17:38 +0800
+     data_source: metadata/courses.json ← courses/*/metadata.json
+     regenerate:  python3 scripts/extract_course_metadata.py && python3 scripts/update_index.py
+-->
+
 # 课程索引：World Models & Spatial Intelligence
 
 共收录 11 门课程。本文件由 `scripts/update_index.py` 根据 `metadata/courses.json` 自动生成，请勿手工编辑。

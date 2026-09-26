@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" font-family="Inter, -apple-system, 'Segoe UI', sans-serif">
+  <defs>
+    <marker id="ai" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4F46E5"/></marker>
+    <marker id="am" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#F59E0B"/></marker>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#EF4444"/></marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#10B981"/></marker>
+  </defs>
+  <rect width="1280" height="720" fill="#FFFFFF"/>
+  <text x="60" y="52" font-size="30" font-weight="700" fill="#334155">Latent Dynamics: learn in a compressed space</text>
+  <text x="60" y="82" font-size="17" fill="#64748B">Encode pixels → predict in latent space → decode and compare with reality</text>
+
+  <!-- input image -->
+  <rect x="60" y="270" width="140" height="140" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="2"/>
+  <g stroke="#10B981" stroke-width="1" opacity="0.5">
+    <line x1="95" y1="270" x2="95" y2="410"/><line x1="130" y1="270" x2="130" y2="410"/><line x1="165" y1="270" x2="165" y2="410"/>
+    <line x1="60" y1="305" x2="200" y2="305"/><line x1="60" y1="340" x2="200" y2="340"/><line x1="60" y1="375" x2="200" y2="375"/>
+  </g>
+  <text x="130" y="440" font-size="15" font-weight="600" fill="#334155" text-anchor="middle">image x<tspan dy="4" font-size="11">t</tspan></text>
+
+  <!-- encoder -->
+  <path d="M200,340 L266,340" stroke="#4F46E5" stroke-width="2.5" marker-end="url(#ai)"/>
+  <path d="M266,290 L386,320 L386,360 L266,390 Z" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2"/>
+  <text x="326" y="346" font-size="17" font-weight="700" fill="#4F46E5" text-anchor="middle">Encoder</text>
+  <text x="326" y="420" font-size="13" fill="#64748B" text-anchor="middle">compress</text>
+
+  <!-- z_t -->
+  <path d="M386,340 L452,340" stroke="#4F46E5" stroke-width="2.5" marker-end="url(#ai)"/>
+  <circle cx="500" cy="340" r="46" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2.5"/>
+  <text x="500" y="348" font-size="22" font-weight="700" fill="#4F46E5" text-anchor="middle">z<tspan dy="5" font-size="14">t</tspan></text>
+  <text x="500" y="420" font-size="13" fill="#64748B" text-anchor="middle">compact state</text>
+
+  <!-- dynamics -->
+  <path d="M546,340 L612,340" stroke="#4F46E5" stroke-width="2.5" marker-end="url(#ai)"/>
+  <rect x="612" y="292" width="190" height="96" rx="12" fill="#FFFFFF" stroke="#4F46E5" stroke-width="2"/>
+  <text x="707" y="330" font-size="18" font-weight="700" fill="#4F46E5" text-anchor="middle">Dynamics</text>
+  <text x="707" y="356" font-size="14" fill="#64748B" text-anchor="middle">ẑ<tspan dy="4" font-size="10">t+1</tspan><tspan dy="-4"> ~ p(·|z</tspan><tspan dy="4" font-size="10">t</tspan><tspan dy="-4">, a</tspan><tspan dy="4" font-size="10">t</tspan><tspan dy="-4">)</tspan></text>
+  <!-- action input -->
+  <rect x="662" y="180" width="90" height="46" rx="12" fill="#FFFBEB" stroke="#F59E0B" stroke-width="2"/>
+  <text x="707" y="209" font-size="17" font-weight="700" fill="#F59E0B" text-anchor="middle">a<tspan dy="4" font-size="12">t</tspan></text>
+  <path d="M707,226 L707,288" stroke="#F59E0B" stroke-width="2" marker-end="url(#am)"/>
+
+  <!-- z_hat -->
+  <path d="M802,340 L868,340" stroke="#4F46E5" stroke-width="2.5" stroke-dasharray="6 4" marker-end="url(#ai)"/>
+  <circle cx="916" cy="340" r="46" fill="#FFFFFF" stroke="#4F46E5" stroke-width="2.5" stroke-dasharray="6 4"/>
+  <text x="916" y="348" font-size="22" font-weight="700" fill="#4F46E5" text-anchor="middle">ẑ<tspan dy="5" font-size="14">t+1</tspan></text>
+  <text x="916" y="420" font-size="13" fill="#64748B" text-anchor="middle">predicted latent</text>
+
+  <!-- decoder -->
+  <path d="M962,340 L1028,340" stroke="#4F46E5" stroke-width="2.5" stroke-dasharray="6 4" marker-end="url(#ai)"/>
+  <path d="M1028,320 L1148,290 L1148,390 L1028,360 Z" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2"/>
+  <text x="1088" y="346" font-size="17" font-weight="700" fill="#4F46E5" text-anchor="middle">Decoder</text>
+
+  <!-- predicted image -->
+  <path d="M1088,390 L1088,470" stroke="#4F46E5" stroke-width="2.5" stroke-dasharray="6 4" marker-end="url(#ai)"/>
+  <rect x="1018" y="474" width="140" height="140" rx="12" fill="#FFFFFF" stroke="#4F46E5" stroke-width="2" stroke-dasharray="6 4"/>
+  <g stroke="#4F46E5" stroke-width="1" opacity="0.35">
+    <line x1="1053" y1="474" x2="1053" y2="614"/><line x1="1088" y1="474" x2="1088" y2="614"/><line x1="1123" y1="474" x2="1123" y2="614"/>
+    <line x1="1018" y1="509" x2="1158" y2="509"/><line x1="1018" y1="544" x2="1158" y2="544"/><line x1="1018" y1="579" x2="1158" y2="579"/>
+  </g>
+  <text x="1088" y="644" font-size="15" font-weight="600" fill="#4F46E5" text-anchor="middle">predicted x̂<tspan dy="4" font-size="11">t+1</tspan></text>
+
+  <!-- real next image -->
+  <rect x="60" y="474" width="140" height="140" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="2"/>
+  <g stroke="#10B981" stroke-width="1" opacity="0.5">
+    <line x1="95" y1="474" x2="95" y2="614"/><line x1="130" y1="474" x2="130" y2="614"/><line x1="165" y1="474" x2="165" y2="614"/>
+    <line x1="60" y1="509" x2="200" y2="509"/><line x1="60" y1="544" x2="200" y2="544"/><line x1="60" y1="579" x2="200" y2="579"/>
+  </g>
+  <text x="130" y="644" font-size="15" font-weight="600" fill="#10B981" text-anchor="middle">real x<tspan dy="4" font-size="11">t+1</tspan></text>
+
+  <!-- error arrow -->
+  <path d="M1018,544 L204,544" stroke="#EF4444" stroke-width="2.5" marker-end="url(#ar)"/>
+  <text x="610" y="530" font-size="16" font-weight="700" fill="#EF4444" text-anchor="middle">reconstruction / prediction error → training signal</text>
+
+  <text x="640" y="696" font-size="14" fill="#64748B" text-anchor="middle">All learning happens in latent space: the encoder, dynamics, and decoder are trained jointly to minimize prediction error.</text>
+</svg>

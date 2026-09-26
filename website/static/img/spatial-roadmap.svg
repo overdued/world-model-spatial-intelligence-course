@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" font-family="Inter, -apple-system, 'Segoe UI', sans-serif">
+  <defs>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#10B981"/></marker>
+  </defs>
+  <rect width="1280" height="720" fill="#FFFFFF"/>
+  <text x="60" y="52" font-size="30" font-weight="700" fill="#334155">Track B — Spatial Intelligence Roadmap</text>
+  <text x="60" y="82" font-size="17" fill="#64748B">From pixels and geometry to robots that act in 3D worlds, in 13 steps</text>
+
+  <!-- Row 1: stations 1-7 -->
+  <g font-size="15" font-weight="600" fill="#334155" text-anchor="middle">
+    <rect x="40" y="230" width="150" height="72" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="1.5"/>
+    <text x="115" y="260">1 · What is</text><text x="115" y="282">Spatial Intel.</text>
+    <rect x="220" y="230" width="150" height="72" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="1.5"/>
+    <text x="295" y="260">2 · Camera</text><text x="295" y="282">&amp; Geometry</text>
+    <rect x="400" y="230" width="150" height="72" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="1.5"/>
+    <text x="475" y="260">3 · Depth /</text><text x="475" y="282">Point Cloud</text>
+    <rect x="580" y="230" width="150" height="72" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="1.5"/>
+    <text x="655" y="260">4 · NeRF /</text><text x="655" y="282">3DGS</text>
+    <rect x="760" y="230" width="150" height="72" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="1.5"/>
+    <text x="835" y="260">5 · 4D Worlds</text><text x="835" y="282" font-weight="400" font-size="13" fill="#64748B">space + time</text>
+    <rect x="940" y="230" width="150" height="72" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="1.5"/>
+    <text x="1015" y="260">6 · State</text><text x="1015" y="282">Estimation</text>
+    <rect x="1120" y="230" width="150" height="72" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="1.5"/>
+    <text x="1195" y="260">7 · SLAM /</text><text x="1195" y="282">VIO</text>
+  </g>
+  <g stroke="#10B981" stroke-width="2" fill="none">
+    <path d="M190,266 L216,266" marker-end="url(#ag)"/>
+    <path d="M370,266 L396,266" marker-end="url(#ag)"/>
+    <path d="M550,266 L576,266" marker-end="url(#ag)"/>
+    <path d="M730,266 L756,266" marker-end="url(#ag)"/>
+    <path d="M910,266 L936,266" marker-end="url(#ag)"/>
+    <path d="M1090,266 L1116,266" marker-end="url(#ag)"/>
+    <path d="M1195,302 L1195,340" marker-end="url(#ag)"/>
+  </g>
+
+  <!-- Row 2: stations 8-13 (snake, right to left) -->
+  <g font-size="15" font-weight="600" fill="#334155" text-anchor="middle">
+    <rect x="1120" y="344" width="150" height="72" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="1.5"/>
+    <text x="1195" y="374">8 · Spatial</text><text x="1195" y="396">Memory</text>
+    <rect x="940" y="344" width="150" height="72" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="1.5"/>
+    <text x="1015" y="374">9 · Affordance</text><text x="1015" y="396" font-weight="400" font-size="13" fill="#64748B">what can I do</text>
+    <rect x="760" y="344" width="150" height="72" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="1.5"/>
+    <text x="835" y="374">10 · Navigation</text><text x="835" y="396" font-weight="400" font-size="13" fill="#64748B">path planning</text>
+    <rect x="580" y="344" width="150" height="72" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="1.5"/>
+    <text x="655" y="374">11 · Robot</text><text x="655" y="396">World Models</text>
+    <rect x="400" y="344" width="150" height="72" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="1.5"/>
+    <text x="475" y="374">12 · VLA</text><text x="475" y="396" font-weight="400" font-size="13" fill="#64748B">vision-lang-action</text>
+    <rect x="220" y="344" width="150" height="72" rx="12" fill="#FFFBEB" stroke="#F59E0B" stroke-width="2"/>
+    <text x="295" y="374" fill="#F59E0B">13 · Capstone</text><text x="295" y="396" font-weight="400" font-size="13" fill="#64748B">spatial agent</text>
+  </g>
+  <g stroke="#10B981" stroke-width="2" fill="none">
+    <path d="M1120,380 L1094,380" marker-end="url(#ag)"/>
+    <path d="M940,380 L914,380" marker-end="url(#ag)"/>
+    <path d="M760,380 L734,380" marker-end="url(#ag)"/>
+    <path d="M580,380 L554,380" marker-end="url(#ag)"/>
+    <path d="M400,380 L374,380" marker-end="url(#ag)"/>
+  </g>
+
+  <!-- phase labels -->
+  <text x="60" y="520" font-size="16" font-weight="700" fill="#10B981">Perception</text>
+  <text x="60" y="544" font-size="14" fill="#64748B">steps 1–5: from images to geometry, depth, and neural 3D/4D representations</text>
+  <text x="60" y="586" font-size="16" font-weight="700" fill="#10B981">State &amp; memory</text>
+  <text x="60" y="610" font-size="14" fill="#64748B">steps 6–9: estimating motion, mapping the world, remembering places, understanding affordances</text>
+  <text x="60" y="652" font-size="16" font-weight="700" fill="#F59E0B">Action</text>
+  <text x="60" y="676" font-size="14" fill="#64748B">steps 10–13: navigation, robot world models, vision-language-action models, capstone</text>
+</svg>

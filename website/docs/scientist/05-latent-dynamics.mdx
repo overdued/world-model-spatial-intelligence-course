@@ -1,0 +1,82 @@
+---
+title: Latent Dynamics
+sidebar_label: 05 · Latent Dynamics
+description: 在学到的潜空间中建模动力学——观测→潜状态→预测的最小闭环。
+---
+
+<ModuleProgress id="a05" label="Latent Dynamics" />
+
+## Why this matters
+
+像素空间的动力学既高维又充满无关细节。Latent dynamics 把世界模型拆成"学表示 + 在表示里学动力学"两步，是 PlaNet/Dreamer 到现代视频模型的共同骨架，也是你第一个亲手训练的世界模型。
+
+## Visual Intuition
+
+![潜空间动力学](/img/latent-dynamics.svg)
+
+encoder 把观测 $o_t$ 压成潜状态 $z_t$；动力学模型在潜空间中预测 $z_{t+1}$；decoder 负责把潜状态翻译回观测以便监督。预测完全发生在低维潜空间——这是计算效率与可预测性的关键。
+
+## Core Idea
+
+Latent dynamics 模型由三个可学习组件构成：**encoder** $q(z_t \mid o_t)$（推断当前潜状态）、**转移模型** $p(z_{t+1} \mid z_t, a_t)$（在潜空间预测）、**decoder** $p(o_t \mid z_t)$（提供训练信号）。整个系统用 VAE/ELBO 框架联合训练：重建项保证表示忠实，KL 项让后验与先验（即转移模型的预测）对齐。
+
+这个结构回答了模块 02 的历史压缩问题：$z_t$ 就是学出来的 belief state——它压缩观测历史（经 RNN 或滤过序列），保留预测所需信息，维度远低于像素。
+
+训练目标的选择决定了模型性格：**one-step** 目标（只预测下一帧）简单稳定但 rollout 时误差复合；**multi-step** 目标（训练时就开环滚动多步）直接优化部署场景但训练更难。这条 one-step vs rollout 的裂缝会在模块 12 全面爆发。
+
+## Key Concepts
+
+- **Encoder / Decoder**：观测与潜状态之间的双向翻译器。
+- **潜状态设计准则**：可推断、可预测、信息充分——三者互相拉扯。
+- **ELBO**：重建项与 KL 正则项的变分目标。
+- **One-step vs rollout 目标**：训练目标与部署场景的失配。
+- **误差累积**：每步微小误差在递归 rollout 中复合放大。
+
+## Core Equations
+
+潜动力学的 ELBO：
+
+$$\log p(o_{1:T} \mid a_{1:T}) \geq \sum_{t=1}^{T} \mathbb{E}_{q(z_t \mid \cdot)}\big[\log p(o_t \mid z_t)\big] - D_{KL}\big(q(z_t \mid \cdot) \,\|\, p(z_t \mid z_{t-1}, a_{t-1})\big)$$
+
+## University Lecture
+
+| 课程 | Lecture | 链接 |
+|---|---|---|
+| UPenn CIS 6280 World Models | L07 Latent-Variable and Adversarial Models（VAE/ELBO） | [slides](https://jiataogu.me/cis6280-world-models/lectures/lecture-07-generative-models-i.pdf) |
+| UPenn CIS 6280 World Models | L08 Latent World Models | [slides](https://jiataogu.me/cis6280-world-models/lectures/lecture-08-latent-world-models.pdf) |
+
+## Papers
+
+- **Must Read**：Hafner et al. (2019), *Learning Latent Dynamics for Planning from Pixels*（PlaNet，[arXiv:1811.04551](https://arxiv.org/abs/1811.04551)）——latent dynamics 范式的确立之作。
+- **Recommended**：Kingma & Welling (2014), *Auto-Encoding Variational Bayes*（[arXiv:1312.6114](https://arxiv.org/abs/1312.6114)）——ELBO 推导的原始出处。
+- **Optional**：Deisenroth & Rasmussen (2011), *PILCO*（ICML，搜索论文名）——非图像域潜动力学 + 不确定性传播的先驱。
+
+## Hands-on
+
+<ColabBadge lab="lab02_latent_dynamics" />
+
+Lab 2 是本模块的完整实践：在 Lab 0 环境采集的图像 rollout 上训练 encoder + MLP/GRU 动力学，画出 one-step 与 10-step open-loop 预测误差曲线——你会亲眼看到误差累积。
+
+## Check Your Understanding
+
+1. 为什么不在像素空间直接学 $p(o_{t+1} \mid o_t, a_t)$？
+2. ELBO 的 KL 项在潜动力学里起什么作用？
+3. one-step 误差很小，为什么 10-step rollout 仍可能完全发散？
+
+<details>
+<summary>显示答案</summary>
+
+1. 像素空间高维且充满预测无关的随机细节（纹理、噪声），直接建模既浪费容量又让动力学学习面对无关的随机性；潜空间先压缩出"可预测的核心"，动力学在低位空间更容易学。
+2. KL 项把后验 $q(z_t \mid o_t)$ 拉向先验 $p(z_t \mid z_{t-1}, a_{t-1})$，即强迫"能推断出来的状态"与"能被动力学预测的状态"一致——没有它，encoder 可以编码无法预测的信息，rollout 立刻失效。
+3. rollout 是闭环的：模型第 $t$ 步的预测误差成为第 $t+1$ 步的输入，误差被动力学复合放大；且 rollout 中的输入分布逐渐偏离训练分布（OOD），one-step 精度无法保证多步稳定。
+</details>
+
+## Takeaway
+
+- Latent dynamics = encoder + 潜空间转移 + decoder，$z_t$ 即学出来的 belief state。
+- ELBO 的 KL 项对齐"可推断"与"可预测"，是潜动力学的隐形支柱。
+- One-step 准确不等于 rollout 可用——误差累积是贯穿全课程的主题。
+
+## Next Module
+
+[模块 06：RSSM](./06-rssm.mdx)——给潜动力学加上"确定性记忆 + 随机性"的混合结构。

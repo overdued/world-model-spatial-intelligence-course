@@ -1,0 +1,86 @@
+---
+title: Observation, State and POMDP
+sidebar_label: 02 · Observation, State and POMDP
+description: 世界模型的第一性问题——观测与状态的区分、belief state 与 POMDP 七元组。
+---
+
+<ModuleProgress id="a02" label="Observation, State and POMDP" />
+
+## Why this matters
+
+你建模的到底是"看到的"还是"真实的"？混淆观测与状态是初学世界模型最常见的错误，也是部分可观测环境（机器人、第一人称视频）中一切困难的根源。
+
+## Visual Intuition
+
+![观测与状态](/img/observation-vs-state.svg)
+
+真实状态 $s_t$ 隐藏在幕后（小球的真实速度与位置），观测 $o_t$ 只是它的带噪投影（一帧像素）。智能体只能从观测历史推断状态——这个推断结果就是 belief state $b_t$。
+
+## Core Idea
+
+**状态（state）** 是关于世界此刻的完整描述：知道 $s_t$ 与动作 $a_t$，未来的分布就唯一确定（马尔可夫性）。**观测（observation）** 是状态经过观测模型 $p(o_t \mid s_t)$ 后的有损样本——相机看不到遮挡物，雷达测不到颜色。
+
+在**完全可观测**（MDP）情形下 $o_t = s_t$，决策只需看当前帧；在**部分可观测**（POMDP）情形下，单帧观测不足以确定状态，智能体必须维护 **belief state**：$b_t = p(s_t \mid o_{1:t}, a_{1:t-1})$，即对状态的、以全部历史为条件的后验分布。
+
+belief state 是"学习型潜状态"的经典原型：它本身就是一个充分统计量，且可以递归更新（bayes filter）。后面所有 latent dynamics 模块（05–08）本质上都是在学一个可微分的、紧凑的 belief state。
+
+## Key Concepts
+
+- **马尔可夫性**：状态是未来的充分统计量，历史可以被丢弃。
+- **观测模型**：$p(o_t \mid s_t)$，连接"真实"与"看到"的桥梁。
+- **belief state $b_t$**：部分可观测下对状态的后验分布，递归更新。
+- **历史压缩**：把 $o_{1:t}, a_{1:t-1}$ 压成固定维度的 $b_t$，是表征学习的动机。
+- **充分统计量**：belief 或潜状态是否保留了预测所需的全部信息。
+
+## Core Equations
+
+POMDP 七元组：
+
+$$(\mathcal{S}, \mathcal{A}, \mathcal{O}, P, \Omega, R, \gamma)$$
+
+其中 $\mathcal{S}$ 状态空间、$\mathcal{A}$ 动作空间、$\mathcal{O}$ 观测空间、$P(s' \mid s,a)$ 转移、$\Omega(o \mid s', a)$ 观测模型、$R$ 奖励、$\gamma$ 折扣。
+
+belief 递归更新（bayes filter）：
+
+$$b_{t+1}(s') \propto \Omega(o_{t+1} \mid s', a_t) \sum_{s} P(s' \mid s, a_t)\, b_t(s)$$
+
+## University Lecture
+
+| 课程 | Lecture | 链接 |
+|---|---|---|
+| UPenn CIS 6280 World Models | L02 History, Foundations, Probabilistic Formulation | [slides](https://jiataogu.me/cis6280-world-models/lectures/lecture-02-world-models-history-foundations-probabilistic-formulation.pdf) |
+
+## Papers
+
+- **Must Read**：Kaelbling, Littman & Cassandra (1998), *Planning and Acting in Partially Observable Stochastic Domains*（经典期刊论文，搜索论文名获取 PDF）——POMDP 的圣经，读 §2 即可。
+- **Recommended**：Ha & Schmidhuber (2018), *World Models*（[arXiv:1803.10122](https://arxiv.org/abs/1803.10122)）§2——看 RNN 如何把历史压缩成隐状态。
+
+## Hands-on
+
+<ColabBadge lab="lab00_tiny_world" />
+
+在 Lab 0 的环境里试一个改动：让 observation 只包含位置、不包含速度——你就亲手制造了一个 POMDP，随机策略的表现会立刻变差。
+
+## Check Your Understanding
+
+1. 一张 Atari 游戏画面是状态还是观测？
+2. belief state 与 RNN 的 hidden state 有什么关系？
+3. 为什么 POMDP 中"记住历史"是必要的？
+
+<details>
+<summary>显示答案</summary>
+
+1. 观测。单帧画面看不到球的速度方向、对手意图等状态成分；这正是 Atari 智能体通常堆叠 4 帧的原因——用短期历史近似充分统计量。
+2. RNN 的 hidden state 是 belief state 的可学习、确定性近似：同样把历史压缩成固定维向量并递归更新，但丢弃了显式的不确定性表达（RSSM 会把它找回来）。
+3. 因为单帧观测不是充分统计量：两个不同的真实状态可能产生相同观测（感知混叠）。只有历史能消除歧义，例如靠前后帧估计速度。
+</details>
+
+## Takeaway
+
+- 观测 ≠ 状态：观测是状态的带噪有损投影，混淆二者是常见错误。
+- belief state $b_t$ 是部分可观测下的正确"内部状态"，可递归更新。
+- 学习型潜状态是 belief state 的可微分近似——这是模块 05–08 的伏笔。
+
+## Next Module
+
+[模块 03：State Space Models](./03-state-space-models.mdx)——belief 递归更新在高斯情形下的闭式解。

@@ -1,0 +1,52 @@
+.scroll {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  background: var(--ifm-background-surface-color);
+}
+
+.table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.table th,
+.table td {
+  padding: 0.7rem 0.9rem;
+  text-align: left;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+  vertical-align: top;
+}
+
+.table thead th {
+  background: var(--ifm-color-emphasis-100);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background: var(--ifm-color-emphasis-100);
+}
+
+.module {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.build {
+  white-space: nowrap;
+}
+
+.labName {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
