@@ -13,7 +13,10 @@
       "gpu_required": false,
       "colab": "lab00_tiny_world/notebook.ipynb",
       "notebook": "labs/lab00_tiny_world/notebook.ipynb",
-      "prerequisites": ["Python", "NumPy"],
+      "prerequisites": [
+        "Python",
+        "NumPy"
+      ],
       "depends_on": [],
       "module": "scientist/01-what-is-a-world-model",
       "description": "从零实现 Moving-Ball World：state/observation/action/transition/reward 与 rollout 动画"
@@ -28,8 +31,12 @@
       "gpu_required": false,
       "colab": "lab01_kalman_filter/notebook.ipynb",
       "notebook": "labs/lab01_kalman_filter/notebook.ipynb",
-      "prerequisites": ["概率论基础"],
-      "depends_on": ["lab00_tiny_world"],
+      "prerequisites": [
+        "概率论基础"
+      ],
+      "depends_on": [
+        "lab00_tiny_world"
+      ],
       "module": "scientist/03-state-space-models",
       "description": "从零实现 KF predict/update，真值/观测/滤波/不确定带可视化与噪声失配实验"
     },
@@ -43,130 +50,193 @@
       "gpu_required": false,
       "colab": "lab02_latent_dynamics/notebook.ipynb",
       "notebook": "labs/lab02_latent_dynamics/notebook.ipynb",
-      "prerequisites": ["PyTorch 基础"],
-      "depends_on": ["lab00_tiny_world"],
+      "prerequisites": [
+        "PyTorch 基础"
+      ],
+      "depends_on": [
+        "lab00_tiny_world"
+      ],
       "module": "scientist/05-latent-dynamics",
       "description": "PyTorch 微型 latent dynamics：image→encoder→z→dynamics→decoder，one-step 与 open-loop rollout"
     },
     {
       "id": "lab03_tiny_rssm",
       "title": "Lab 3 · Tiny RSSM",
-      "status": "development",
+      "status": "ready",
       "track": "scientist",
-      "runtime_cpu": "",
-      "runtime_t4": "",
+      "runtime_cpu": "~3 min（实测 183s，机器空载）；多任务竞争时最长实测 404s，均 <10 min",
+      "runtime_t4": "~1–2 min（估计，CPU-bound 小模型，GPU 加速有限）",
       "gpu_required": false,
       "colab": "lab03_tiny_rssm/notebook.ipynb",
       "notebook": "labs/lab03_tiny_rssm/notebook.ipynb",
-      "prerequisites": ["lab02_latent_dynamics"],
-      "depends_on": ["lab02_latent_dynamics"],
+      "prerequisites": [
+        "lab02_latent_dynamics"
+      ],
+      "depends_on": [
+        "lab02_latent_dynamics"
+      ],
       "module": "scientist/06-rssm",
-      "description": "最小 RSSM：deterministic h_t + stochastic z_t，prior/posterior、KL、imagination rollout"
+      "description": "最小 RSSM：deterministic h_t + stochastic z_t，prior/posterior、KL、imagination rollout",
+      "peak_memory": "~820 MB（/usr/bin/time -l maximum resident set size 实测 858,865,664 B）",
+      "tested": "2026-09-27 jupyter nbconvert --execute --to notebook --inplace 全部 34 cells 通过，0 errors，11 张图正常渲染",
+      "notes": "自生成随机 Moving-Ball 数据（NOISE_STD=0.1，无需下载）；TinyRSSM 1.2M 参数（GRUCell h=64 + 高斯 z=16，reparameterization 与闭式 KL 全部手写可见）。训练 500 steps：recon(sum-BCE) 1000→88，KL→~18 nats 无 posterior collapse。关键实现决策：BCE 必须对像素求和（reduction='sum'）才是正确 ELBO 量纲——对像素取 mean 会让 KL 数值碾压重建项导致 collapse（实测确认，已在 notebook Section 5 和 README Common Problems 中作为教学点说明）。Deterministic-only baseline（同结构 stochastic=False）对比：diversity 0 vs RSSM>0，step-15 位置误差 det 30.9px / RSSM 单次 35.4px / RSSM best-of-8 21.9px；8-dream 像素平均可视化为模糊条件均值。产物 assets/{imagination_grid.png, imagination_rollout.gif, multi_dreams.png, rssm_vs_deterministic.png}。manifest.json 未改动（由父代理合并）。"
     },
     {
       "id": "lab04_mpc_cem_planning",
       "title": "Lab 4 · MPC / CEM Planning",
-      "status": "development",
+      "status": "ready",
       "track": "scientist",
-      "runtime_cpu": "",
-      "runtime_t4": "",
+      "runtime_cpu": "~15s end-to-end (nbconvert wall clock, notebook-internal timer 9.6s; Apple Silicon, python 3.9, torch 2.8 CPU)",
+      "runtime_t4": "~15-30s (估计; 纯 CPU 小模型负载, GPU 无加速收益)",
       "gpu_required": false,
       "colab": "lab04_mpc_cem_planning/notebook.ipynb",
       "notebook": "labs/lab04_mpc_cem_planning/notebook.ipynb",
-      "prerequisites": ["lab03_tiny_rssm"],
-      "depends_on": ["lab03_tiny_rssm"],
+      "prerequisites": [
+        "lab03_tiny_rssm"
+      ],
+      "depends_on": [
+        "lab03_tiny_rssm"
+      ],
       "module": "scientist/09-planning-with-world-models",
-      "description": "用学到的世界模型做 MPC/CEM 规划：候选轨迹采样、排序、receding horizon"
+      "description": "用学到的世界模型做 MPC/CEM 规划：候选轨迹采样、排序、receding horizon",
+      "peak_memory": "355 MB (kernel ru_maxrss)",
+      "tested": "jupyter nbconvert --execute --to notebook --inplace --ExecutePreprocessor.timeout=900, 2026-09-26, /tmp/wmsi-labs-venv (py3.9.6, torch 2.8.0, numpy 2.0.2, matplotlib 3.9.4)",
+      "notes": "自包含: 环境复刻 Lab 0 并自带解析一致性自查; learned dynamics 为 1475 transitions 上训练的 residual MLP (~1.5s)。核心结果: Random -29.05 / MPC(perfect) -5.67 / MPC(learned) -5.87 / CEM(learned) -5.40 (8 episodes, 60 steps); open-loop vs closed-loop 实验证明 receding-horizon 可校正 systematic model bias (corrupted friction: open 0.310 vs promised 0.154, closed 0.010)。图存于 assets/ (fan / predicted-vs-actual / reward curves / trajectory comparison / open-vs-closed / horizon sweep)。"
     },
     {
       "id": "lab05_nerf_gaussian_splatting",
       "title": "Lab 5 · NeRF / Gaussian Splatting",
-      "status": "development",
+      "status": "ready",
       "track": "spatial",
-      "runtime_cpu": "",
-      "runtime_t4": "",
+      "runtime_cpu": "~3-5 min end-to-end (nbconvert wall clock 3m19s-5m25s; notebook-internal timer 190.6s; Apple Silicon, python 3.9, torch 2.8 CPU)",
+      "runtime_t4": "~5-8 min (估计; 小 MLP + 小 batch, GPU 无加速收益, Colab CPU 与本地相当)",
       "gpu_required": false,
       "colab": "lab05_nerf_gaussian_splatting/notebook.ipynb",
       "notebook": "labs/lab05_nerf_gaussian_splatting/notebook.ipynb",
-      "prerequisites": ["lab00_tiny_world"],
-      "depends_on": ["lab00_tiny_world"],
+      "prerequisites": [
+        "lab00_tiny_world"
+      ],
+      "depends_on": [
+        "lab00_tiny_world"
+      ],
       "module": "spatial/04-nerf-gaussian-splatting",
-      "description": "tiny NeRF：camera rays → sampling → volume rendering → novel view synthesis（3DGS 为 Advanced Extension）"
+      "description": "tiny NeRF：camera rays → sampling → volume rendering → novel view synthesis（3DGS 为 Advanced Extension）",
+      "peak_memory": "513 MB (kernel ru_maxrss)",
+      "tested": "jupyter nbconvert --execute --to notebook --inplace --ExecutePreprocessor.timeout=1200, 2026-09-27, /tmp/wmsi-labs-venv (py3.9.6, torch 2.8.0, numpy 2.0.2, matplotlib 3.9.4, imageio)",
+      "notes": "自包含: 5 球 toy scene 解析渲染 30 train + 6 held-out novel views (48x48, 已知位姿, 零下载); 手写 tiny NeRF (19,348 参数, posenc L_pos=6/L_dir=4, sigma 只看位置/color 看方向, 32 点 ray sampling + volume rendering), 3000 iters 训练 ~2-3 min. 核心结果: train PSNR 32.4±0.9 dB, novel view PSNR 27.4±0.4 dB (gap 5.0 dB), novel view 五球位置/颜色/遮挡/高光全部正确; 深度图无监督涌现且前后关系正确; 60 帧 360° orbit GIF 平滑无漂浮伪影; Section 8 少视角实验: 8 views 时 train 37.9 / novel 24.1 dB (gap 13.8 dB), 直观展示 floater 过拟合. Advanced Extension 含 2D Gaussian splatting α-blending 演示与 3DGS 代码库指引. 图/GIF 存于 assets/ (training_views / posenc_basis / loss_psnr / novel_views / depth_maps / orbit.gif / psnr_hist / few_views / splatting_2d)."
     },
     {
       "id": "lab06_dynamic_4d_worlds",
       "title": "Lab 6 · Dynamic 3D / 4D Worlds",
-      "status": "development",
+      "status": "ready",
       "track": "spatial",
-      "runtime_cpu": "",
-      "runtime_t4": "",
+      "runtime_cpu": "~8 s（jupyter nbconvert 完整执行 7.6–9.0 s，notebook 内部计时 4.4–5.1 s，Apple Silicon CPU）",
+      "runtime_t4": "~10–15 s（负载为小 MLP 训练 + matplotlib 3D 逐帧渲染，GPU 无实质加速，Colab CPU 即可）",
       "gpu_required": false,
       "colab": "lab06_dynamic_4d_worlds/notebook.ipynb",
       "notebook": "labs/lab06_dynamic_4d_worlds/notebook.ipynb",
-      "prerequisites": ["lab05_nerf_gaussian_splatting"],
-      "depends_on": ["lab05_nerf_gaussian_splatting"],
+      "prerequisites": [
+        "lab05_nerf_gaussian_splatting"
+      ],
+      "depends_on": [
+        "lab05_nerf_gaussian_splatting"
+      ],
       "module": "spatial/05-dynamic-4d-worlds",
-      "description": "动态点云 (x,y,z,t)：运动估计、时间插值、未来位置预测、4D 动画"
+      "description": "动态点云 (x,y,z,t)：运动估计、时间插值、未来位置预测、4D 动画",
+      "peak_memory": "~543 MB（nbconvert 进程 maximum resident set size 569,802,752 B）",
+      "tested": "2026-09-27，/tmp/wmsi-labs-venv（python 3.9, torch 2.8.0 CPU, numpy 2.0.2, matplotlib 3.9.4, imageio 2.37.2）：jupyter nbconvert --execute --to notebook --inplace --ExecutePreprocessor.timeout=1200 notebook.ipynb，29 cells 全部执行无错误，8 个 assets（3 GIF + 5 PNG）全部生成",
+      "notes": "核心数字（seed 固定，可复现）：ICP 配准 cube 旋转误差 1.33° / 平移误差 0.018；未来 10 帧预测 FDE——sphere（圆周）MLP 0.163 vs CV 0.894（learned dynamics 学到向心加速度，误差降至 1/5），cube（恒速直线）CV 0.014 vs MLP 0.224（MLP 外推出训练分布的软肋，作为教学点保留），blob（正弦浮动）MLP 0.120 vs CV 0.155。temporal interpolation α=1 时点级误差 0.03–0.10，受 NN 匹配在 sphere 上帧间位移>点间距限制。运行时远低于 10 分钟预算。"
     },
     {
       "id": "lab07_video_world_model",
       "title": "Lab 7 · Video World Model",
-      "status": "development",
+      "status": "ready",
       "track": "scientist",
-      "runtime_cpu": "",
-      "runtime_t4": "",
+      "runtime_cpu": "~2 min (实测 112 s，含 kernel 启动；其中训练 105 s)",
+      "runtime_t4": "~1 min (估计)",
       "gpu_required": false,
       "colab": "lab07_video_world_model/notebook.ipynb",
       "notebook": "labs/lab07_video_world_model/notebook.ipynb",
-      "prerequisites": ["lab02_latent_dynamics"],
-      "depends_on": ["lab02_latent_dynamics"],
+      "prerequisites": [
+        "lab02_latent_dynamics"
+      ],
+      "depends_on": [
+        "lab02_latent_dynamics"
+      ],
       "module": "scientist/10-video-world-models",
-      "description": "Moving Shapes 视频预测：CNN encoder + temporal dynamics + decoder，1/5/10 步退化展示"
+      "description": "Moving Shapes 视频预测：CNN encoder + temporal dynamics + decoder，1/5/10 步退化展示",
+      "peak_memory": "~0.6 GB (实测 maximum resident set size 587 MB)",
+      "tested": "2026-09-27, venv /tmp/wmsi-labs-venv (python 3.9, torch 2.8.0 CPU), jupyter nbconvert --execute --to notebook --inplace --ExecutePreprocessor.timeout=1200，0 errors",
+      "notes": "20 cells (12 md + 8 code)。Moving Shapes 数据（3 形状 × 16 帧 × 48×48，代码内生成，~1s）；模型 = CNN Encoder + 手写 ConvGRU(4 行核心) + CNN Decoder，68,657 参数；训练 600 steps batch 16 autoregressive rollout BCE（pos_weight=5）。Rollout degradation：per-step pixel MSE 0.0278 → 0.1534 单调增长，1-step 0.0278 / 5-step 0.1007 (3.6×) / 10-step 0.1534 (5.5×)；fast-motion stress（speed ×2.5, mild OOD）：0.0369 → 0.1772，整条曲线上移（Lab 10 预告）。产物：assets/gt_vs_pred.png、prediction_rollout.gif、rollout_degradation.png、speed_stress.png。教学要点：预测帧 1-3 步位置正确、5 步起模糊、10 步多形状糊成一团 —— 确定性像素预测 + 多模态未来的必然模糊，与 compounding drift 叠加。注意 CPU 上 conv backward 线程归约非确定性，逐位复现数字会有小幅波动。"
     },
     {
       "id": "lab08_navigation_world_model",
       "title": "Lab 8 · Navigation World Model",
-      "status": "development",
+      "status": "ready",
       "track": "spatial",
-      "runtime_cpu": "",
-      "runtime_t4": "",
+      "runtime_cpu": "~30s end-to-end (nbconvert wall clock, notebook-internal timer 23.5s; Apple Silicon, python 3.9, torch 2.8 CPU)",
+      "runtime_t4": "~30-60s (估计; 纯 CPU 小模型负载, GPU 无加速收益)",
       "gpu_required": false,
       "colab": "lab08_navigation_world_model/notebook.ipynb",
       "notebook": "labs/lab08_navigation_world_model/notebook.ipynb",
-      "prerequisites": ["lab00_tiny_world"],
-      "depends_on": ["lab00_tiny_world"],
+      "prerequisites": [
+        "lab00_tiny_world"
+      ],
+      "depends_on": [
+        "lab00_tiny_world"
+      ],
       "module": "spatial/10-navigation",
-      "description": "部分可观测导航：Reactive vs Memory vs World-Model Agent 对比"
+      "description": "部分可观测导航：Reactive vs Memory vs World-Model Agent 对比",
+      "peak_memory": "595 MB (kernel ru_maxrss)",
+      "tested": "jupyter nbconvert --execute --to notebook --inplace --ExecutePreprocessor.timeout=1200, 2026-09-27, /tmp/wmsi-labs-venv (py3.9.6, torch 2.8.0, numpy 2.0.2, matplotlib 3.9.4, imageio)",
+      "notes": "自实现 25x25 grid world(14 矩形障碍, 5x5 局部视野, odometry+moved 反馈, 无 gym 依赖)。三 agent paired 对比(12 测试地图, 300 步上限): Reactive 0.58 succ/211.5 步, Memory(BFS) 1.00/105.2, World Model 1.00/88.0。forward model = 33k 参数 MLP ((window,action)->next window, 含 STAY 查询动作做 map completion), held-out 不可见 cell 补全准确率 0.893; OOD(salt-and-pepper 障碍)下掉到 0.731, 但 closed-loop replanning 下任务指标保持(WM 1.00/95.5 步 vs Memory 1.00/118.5 步)。产物: assets/ 7 个文件(含地图填充 GIF、三 agent 轨迹对比、predicted-vs-actual、OOD 对比、metrics、loss 曲线)。注意: 因视野半径>=1, agent 相邻 cell 恒可见, 不存在撞墙信号, OOD 教学落在模型精度定量下滑 + closed-loop 吸收上。"
     },
     {
       "id": "lab09_world_model_policy",
       "title": "Lab 9 · World Model + Policy",
-      "status": "development",
+      "status": "ready",
       "track": "scientist",
-      "runtime_cpu": "",
-      "runtime_t4": "",
+      "runtime_cpu": "~45s（jupyter nbconvert 完整执行，notebook 内部计时 39.8s，Apple Silicon CPU）",
+      "runtime_t4": "~1-2 min（纯小 MLP + Python 循环负载，GPU 无实质加速，Colab CPU 即可）",
       "gpu_required": false,
       "colab": "lab09_world_model_policy/notebook.ipynb",
       "notebook": "labs/lab09_world_model_policy/notebook.ipynb",
-      "prerequisites": ["lab03_tiny_rssm", "lab04_mpc_cem_planning"],
-      "depends_on": ["lab03_tiny_rssm", "lab04_mpc_cem_planning"],
+      "prerequisites": [
+        "lab03_tiny_rssm",
+        "lab04_mpc_cem_planning"
+      ],
+      "depends_on": [
+        "lab03_tiny_rssm",
+        "lab04_mpc_cem_planning"
+      ],
       "module": "scientist/11-world-model-policy",
-      "description": "Tiny Dreamer：imagination 中训练 actor-critic，对比真实环境直接训练，样本效率曲线"
+      "description": "Tiny Dreamer：imagination 中训练 actor-critic，对比真实环境直接训练，样本效率曲线",
+      "peak_memory": "~360 MB（nbconvert 进程 maximum resident set size）",
+      "tested": "2026-09-26，/tmp/wmsi-labs-venv（python 3.9, torch 2.8.0 CPU）：jupyter nbconvert --execute --to notebook --inplace --ExecutePreprocessor.timeout=900 notebook.ipynb，35 cells 全部执行无错误",
+      "notes": "核心对比：Dreamer-style 用 5,000 真实步达 return -1.4 / success 1.0（success>=0.9 于 2,800 步）；同结构 model-free 在 5,000 步时仅 -21/0.3，给足 10x 预算（50k 步）也只到 -10.4/0.8。model bias 复现成功：sparse-reward 设置下 imagined return ~43 vs real return ~1。跨 3 个种子验证主实验稳定（success>=0.9 均于 ~2,700-2,800 步）。运行时远低于 10 分钟预算，如需更接近 3-6 分钟目标可加大 MF_BUDGET 或 imagination 更新数。"
     },
     {
       "id": "lab10_ood_drift_evaluation",
       "title": "Lab 10 · OOD / Drift Evaluation",
-      "status": "development",
+      "status": "ready",
       "track": "shared",
-      "runtime_cpu": "",
-      "runtime_t4": "",
+      "runtime_cpu": "~2.5 min (实测 139 s，含 kernel 启动；其中训练 108 s)",
+      "runtime_t4": "~1 min (估计)",
       "gpu_required": false,
       "colab": "lab10_ood_drift_evaluation/notebook.ipynb",
       "notebook": "labs/lab10_ood_drift_evaluation/notebook.ipynb",
-      "prerequisites": ["lab03_tiny_rssm"],
-      "depends_on": ["lab03_tiny_rssm", "lab09_world_model_policy"],
+      "prerequisites": [
+        "lab03_tiny_rssm"
+      ],
+      "depends_on": [
+        "lab03_tiny_rssm",
+        "lab09_world_model_policy"
+      ],
       "module": "scientist/12-ood-drift-evaluation",
-      "description": "ID / Mild OOD / Strong OOD 下评估 prediction error、rollout drift、policy failure，Failure Gallery"
+      "description": "ID / Mild OOD / Strong OOD 下评估 prediction error、rollout drift、policy failure，Failure Gallery",
+      "peak_memory": "~0.9 GB (实测 maximum resident set size 923 MB)",
+      "tested": "2026-09-26, venv /tmp/wmsi-labs-venv (python 3.9, torch 2.8.0 CPU), jupyter nbconvert --execute --to notebook --inplace --ExecutePreprocessor.timeout=900，0 errors / 0 warnings",
+      "notes": "26 cells (15 md + 11 code)。ID/Mild/Strong one-step pixel MSE 0.0087/0.0272/0.1921；12-step position error ID ×7.1 增长（0.059→0.415），Mild/Strong 从 step-1 即高位并饱和到 chance level；ensemble(K=5) disagreement 与真实误差 Pearson r=0.686 且随 shift 单调上升；random-shooting MPC 终末目标距离 ID 0.173 vs Strong OOD 0.729（imagined 0.438）。failure_gallery 自动生成 4 PNG + captions.txt。教学要点：one-step 在 ×3 speed 仍只有 0.126，而 8-step rollout 在 ID 已接近 chance —— one-step 好看不等于可部署。评估指标用 soft-argmax 位置误差（pixel MSE 会饱和，作为对照同时展示）。"
     }
   ]
 }

@@ -1,0 +1,10 @@
+{
+  "id": "lab07_video_world_model",
+  "status": "ready",
+  "runtime_cpu": "~2 min (实测 112 s，含 kernel 启动；其中训练 105 s)",
+  "runtime_t4": "~1 min (估计)",
+  "gpu_required": false,
+  "peak_memory": "~0.6 GB (实测 maximum resident set size 587 MB)",
+  "tested": "2026-09-27, venv /tmp/wmsi-labs-venv (python 3.9, torch 2.8.0 CPU), jupyter nbconvert --execute --to notebook --inplace --ExecutePreprocessor.timeout=1200，0 errors",
+  "notes": "20 cells (12 md + 8 code)。Moving Shapes 数据（3 形状 × 16 帧 × 48×48，代码内生成，~1s）；模型 = CNN Encoder + 手写 ConvGRU(4 行核心) + CNN Decoder，68,657 参数；训练 600 steps batch 16 autoregressive rollout BCE（pos_weight=5）。Rollout degradation：per-step pixel MSE 0.0278 → 0.1534 单调增长，1-step 0.0278 / 5-step 0.1007 (3.6×) / 10-step 0.1534 (5.5×)；fast-motion stress（speed ×2.5, mild OOD）：0.0369 → 0.1772，整条曲线上移（Lab 10 预告）。产物：assets/gt_vs_pred.png、prediction_rollout.gif、rollout_degradation.png、speed_stress.png。教学要点：预测帧 1-3 步位置正确、5 步起模糊、10 步多形状糊成一团 —— 确定性像素预测 + 多模态未来的必然模糊，与 compounding drift 叠加。注意 CPU 上 conv backward 线程归约非确定性，逐位复现数字会有小幅波动。"
+}

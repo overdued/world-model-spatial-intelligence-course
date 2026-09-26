@@ -1,0 +1,10 @@
+{
+  "id": "lab08_navigation_world_model",
+  "status": "ready",
+  "runtime_cpu": "~30s end-to-end (nbconvert wall clock, notebook-internal timer 23.5s; Apple Silicon, python 3.9, torch 2.8 CPU)",
+  "runtime_t4": "~30-60s (估计; 纯 CPU 小模型负载, GPU 无加速收益)",
+  "gpu_required": false,
+  "peak_memory": "595 MB (kernel ru_maxrss)",
+  "tested": "jupyter nbconvert --execute --to notebook --inplace --ExecutePreprocessor.timeout=1200, 2026-09-27, /tmp/wmsi-labs-venv (py3.9.6, torch 2.8.0, numpy 2.0.2, matplotlib 3.9.4, imageio)",
+  "notes": "自实现 25x25 grid world(14 矩形障碍, 5x5 局部视野, odometry+moved 反馈, 无 gym 依赖)。三 agent paired 对比(12 测试地图, 300 步上限): Reactive 0.58 succ/211.5 步, Memory(BFS) 1.00/105.2, World Model 1.00/88.0。forward model = 33k 参数 MLP ((window,action)->next window, 含 STAY 查询动作做 map completion), held-out 不可见 cell 补全准确率 0.893; OOD(salt-and-pepper 障碍)下掉到 0.731, 但 closed-loop replanning 下任务指标保持(WM 1.00/95.5 步 vs Memory 1.00/118.5 步)。产物: assets/ 7 个文件(含地图填充 GIF、三 agent 轨迹对比、predicted-vs-actual、OOD 对比、metrics、loss 曲线)。注意: 因视野半径>=1, agent 相邻 cell 恒可见, 不存在撞墙信号, OOD 教学落在模型精度定量下滑 + closed-loop 吸收上。"
+}

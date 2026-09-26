@@ -12,6 +12,14 @@ export const READY_LABS = [
   'lab00_tiny_world',
   'lab01_kalman_filter',
   'lab02_latent_dynamics',
+  'lab03_tiny_rssm',
+  'lab04_mpc_cem_planning',
+  'lab05_nerf_gaussian_splatting',
+  'lab06_dynamic_4d_worlds',
+  'lab07_video_world_model',
+  'lab08_navigation_world_model',
+  'lab09_world_model_policy',
+  'lab10_ood_drift_evaluation',
 ];
 
 /**

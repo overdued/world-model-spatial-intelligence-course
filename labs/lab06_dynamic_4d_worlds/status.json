@@ -1,0 +1,10 @@
+{
+  "id": "lab06_dynamic_4d_worlds",
+  "status": "ready",
+  "runtime_cpu": "~8 s（jupyter nbconvert 完整执行 7.6–9.0 s，notebook 内部计时 4.4–5.1 s，Apple Silicon CPU）",
+  "runtime_t4": "~10–15 s（负载为小 MLP 训练 + matplotlib 3D 逐帧渲染，GPU 无实质加速，Colab CPU 即可）",
+  "gpu_required": false,
+  "peak_memory": "~543 MB（nbconvert 进程 maximum resident set size 569,802,752 B）",
+  "tested": "2026-09-27，/tmp/wmsi-labs-venv（python 3.9, torch 2.8.0 CPU, numpy 2.0.2, matplotlib 3.9.4, imageio 2.37.2）：jupyter nbconvert --execute --to notebook --inplace --ExecutePreprocessor.timeout=1200 notebook.ipynb，29 cells 全部执行无错误，8 个 assets（3 GIF + 5 PNG）全部生成",
+  "notes": "核心数字（seed 固定，可复现）：ICP 配准 cube 旋转误差 1.33° / 平移误差 0.018；未来 10 帧预测 FDE——sphere（圆周）MLP 0.163 vs CV 0.894（learned dynamics 学到向心加速度，误差降至 1/5），cube（恒速直线）CV 0.014 vs MLP 0.224（MLP 外推出训练分布的软肋，作为教学点保留），blob（正弦浮动）MLP 0.120 vs CV 0.155。temporal interpolation α=1 时点级误差 0.03–0.10，受 NN 匹配在 sphere 上帧间位移>点间距限制。运行时远低于 10 分钟预算。"
+}

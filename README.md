@@ -34,13 +34,23 @@ Observation → World State → Representation → Dynamics → Prediction → P
 
 ## Labs
 
-| Lab | 内容 | Colab |
-|---|---|---|
-| Lab 0 | Build a Tiny World（state/observation/action/transition/reward + rollout 动画） | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab00_tiny_world/notebook.ipynb) |
-| Lab 1 | Kalman Filter（从零实现 predict/update + 不确定性可视化 + 噪声实验） | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab01_kalman_filter/notebook.ipynb) |
-| Lab 2 | Latent Dynamics（PyTorch：image→encoder→dynamics→decoder，rollout 与误差累积） | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab02_latent_dynamics/notebook.ipynb) |
+11 个全部可运行（CPU 即可，Colab 免费层一键执行）：
 
-Lab 3–10（RSSM / MPC / NeRF·3DGS / 4D / Video WM / Robot Navigation / WM+Policy / OOD 评估）开发中，设计见 [`synthesis/proposed_course_v0_1.md`](synthesis/proposed_course_v0_1.md)。
+| Lab | 内容 | Runtime |
+|---|---|---|
+| [Lab 0 · Tiny World](labs/lab00_tiny_world/) | 从零构建环境：state/obs/action/transition/reward | CPU ~5s |
+| [Lab 1 · Kalman Filter](labs/lab01_kalman_filter/) | 手写 KF predict/update + 不确定性可视化 | CPU ~3s |
+| [Lab 2 · Latent Dynamics](labs/lab02_latent_dynamics/) | image→encoder→dynamics→decoder，rollout 与误差累积 | CPU ~1min |
+| [Lab 3 · Tiny RSSM](labs/lab03_tiny_rssm/) | deterministic h + stochastic z，prior/posterior/KL，imagination rollout | CPU ~3min |
+| [Lab 4 · MPC / CEM Planning](labs/lab04_mpc_cem_planning/) | 用学到的模型做规划：候选轨迹、receding horizon | CPU ~15s |
+| [Lab 5 · NeRF / 3DGS](labs/lab05_nerf_gaussian_splatting/) | 手写 tiny NeRF：rays→sampling→volume rendering→novel view | CPU ~3.5min |
+| [Lab 6 · Dynamic 4D Worlds](labs/lab06_dynamic_4d_worlds/) | (x,y,z,t)：ICP 运动估计、时间插值、未来预测 | CPU ~10s |
+| [Lab 7 · Video World Model](labs/lab07_video_world_model/) | ConvGRU 视频预测，1/5/10 步退化 | CPU ~2min |
+| [Lab 8 · Navigation World Model](labs/lab08_navigation_world_model/) | 部分可观测导航：Reactive vs Memory vs World-Model | CPU ~30s |
+| [Lab 9 · World Model + Policy](labs/lab09_world_model_policy/) | Tiny Dreamer：imagination 中训练 actor-critic | CPU ~45s |
+| [Lab 10 · OOD / Drift Evaluation](labs/lab10_ood_drift_evaluation/) | ID/Mild/Strong OOD + Failure Gallery | CPU ~2.5min |
+
+每个 Lab 的 README 都有 **Open in Colab** 徽章。状态统一由 [`labs/manifest.json`](labs/manifest.json) 维护。最终项目见 [capstone/](capstone/)（Build Your Own World Model）。
 
 ## University Sources
 

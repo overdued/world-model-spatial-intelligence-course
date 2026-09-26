@@ -1,0 +1,10 @@
+{
+  "id": "lab03_tiny_rssm",
+  "status": "ready",
+  "runtime_cpu": "~3 min（实测 183s，机器空载）；多任务竞争时最长实测 404s，均 <10 min",
+  "runtime_t4": "~1–2 min（估计，CPU-bound 小模型，GPU 加速有限）",
+  "gpu_required": false,
+  "peak_memory": "~820 MB（/usr/bin/time -l maximum resident set size 实测 858,865,664 B）",
+  "tested": "2026-09-27 jupyter nbconvert --execute --to notebook --inplace 全部 34 cells 通过，0 errors，11 张图正常渲染",
+  "notes": "自生成随机 Moving-Ball 数据（NOISE_STD=0.1，无需下载）；TinyRSSM 1.2M 参数（GRUCell h=64 + 高斯 z=16，reparameterization 与闭式 KL 全部手写可见）。训练 500 steps：recon(sum-BCE) 1000→88，KL→~18 nats 无 posterior collapse。关键实现决策：BCE 必须对像素求和（reduction='sum'）才是正确 ELBO 量纲——对像素取 mean 会让 KL 数值碾压重建项导致 collapse（实测确认，已在 notebook Section 5 和 README Common Problems 中作为教学点说明）。Deterministic-only baseline（同结构 stochastic=False）对比：diversity 0 vs RSSM>0，step-15 位置误差 det 30.9px / RSSM 单次 35.4px / RSSM best-of-8 21.9px；8-dream 像素平均可视化为模糊条件均值。产物 assets/{imagination_grid.png, imagination_rollout.gif, multi_dreams.png, rssm_vs_deterministic.png}。manifest.json 未改动（由父代理合并）。"
+}

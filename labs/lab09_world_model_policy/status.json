@@ -1,0 +1,10 @@
+{
+  "id": "lab09_world_model_policy",
+  "status": "ready",
+  "runtime_cpu": "~45s（jupyter nbconvert 完整执行，notebook 内部计时 39.8s，Apple Silicon CPU）",
+  "runtime_t4": "~1-2 min（纯小 MLP + Python 循环负载，GPU 无实质加速，Colab CPU 即可）",
+  "gpu_required": false,
+  "peak_memory": "~360 MB（nbconvert 进程 maximum resident set size）",
+  "tested": "2026-09-26，/tmp/wmsi-labs-venv（python 3.9, torch 2.8.0 CPU）：jupyter nbconvert --execute --to notebook --inplace --ExecutePreprocessor.timeout=900 notebook.ipynb，35 cells 全部执行无错误",
+  "notes": "核心对比：Dreamer-style 用 5,000 真实步达 return -1.4 / success 1.0（success>=0.9 于 2,800 步）；同结构 model-free 在 5,000 步时仅 -21/0.3，给足 10x 预算（50k 步）也只到 -10.4/0.8。model bias 复现成功：sparse-reward 设置下 imagined return ~43 vs real return ~1。跨 3 个种子验证主实验稳定（success>=0.9 均于 ~2,700-2,800 步）。运行时远低于 10 分钟预算，如需更接近 3-6 分钟目标可加大 MF_BUDGET 或 imagination 更新数。"
+}

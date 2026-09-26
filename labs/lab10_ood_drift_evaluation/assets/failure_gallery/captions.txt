@@ -1,0 +1,6 @@
+Lab 10 Failure Gallery — 自动生成
+============================================================
+rollout_id.png         — ID 条件最终步位置误差最大的 open-loop rollout（上排真实帧，下排模型 dream，final position error 0.791）
+rollout_mild.png       — Mild 条件最终步位置误差最大的 open-loop rollout（上排真实帧，下排模型 dream，final position error 1.063）
+rollout_strong.png     — Strong 条件最终步位置误差最大的 open-loop rollout（上排真实帧，下排模型 dream，final position error 0.664）
+planning_failure.png   — 同一 ID 模型 + random shooting 的计划轨迹（想象）vs 在 ID / Strong OOD 真实执行的轨迹：OOD 下 policy failure

@@ -1,0 +1,10 @@
+{
+  "id": "lab10_ood_drift_evaluation",
+  "status": "ready",
+  "runtime_cpu": "~2.5 min (实测 139 s，含 kernel 启动；其中训练 108 s)",
+  "runtime_t4": "~1 min (估计)",
+  "gpu_required": false,
+  "peak_memory": "~0.9 GB (实测 maximum resident set size 923 MB)",
+  "tested": "2026-09-26, venv /tmp/wmsi-labs-venv (python 3.9, torch 2.8.0 CPU), jupyter nbconvert --execute --to notebook --inplace --ExecutePreprocessor.timeout=900，0 errors / 0 warnings",
+  "notes": "26 cells (15 md + 11 code)。ID/Mild/Strong one-step pixel MSE 0.0087/0.0272/0.1921；12-step position error ID ×7.1 增长（0.059→0.415），Mild/Strong 从 step-1 即高位并饱和到 chance level；ensemble(K=5) disagreement 与真实误差 Pearson r=0.686 且随 shift 单调上升；random-shooting MPC 终末目标距离 ID 0.173 vs Strong OOD 0.729（imagined 0.438）。failure_gallery 自动生成 4 PNG + captions.txt。教学要点：one-step 在 ×3 speed 仍只有 0.126，而 8-step rollout 在 ID 已接近 chance —— one-step 好看不等于可部署。评估指标用 soft-argmax 位置误差（pixel MSE 会饱和，作为对照同时展示）。"
+}
