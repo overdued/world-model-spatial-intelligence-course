@@ -78,9 +78,17 @@ class _NoRedirect(urllib.request.HTTPRedirectHandler):
 _opener = urllib.request.build_opener(_NoRedirect)
 
 
+def _sanitize_url(url: str) -> str:
+    """将含非 ASCII 字符（如中文）的 URL 转为合法的百分号编码形式。"""
+    parts = urllib.parse.urlsplit(url)
+    path = urllib.parse.quote(parts.path, safe="/%")
+    query = urllib.parse.quote(parts.query, safe="=&%?/")
+    return urllib.parse.urlunsplit((parts.scheme, parts.netloc, path, query, parts.fragment))
+
+
 def _request(url: str, method: str):
     """发一次请求，返回 (状态码, 最终 Location 或 None)。"""
-    req = urllib.request.Request(url, method=method, headers={"User-Agent": USER_AGENT})
+    req = urllib.request.Request(_sanitize_url(url), method=method, headers={"User-Agent": USER_AGENT})
     with _opener.open(req, timeout=TIMEOUT) as resp:
         return resp.status, resp.headers.get("Location")
 
@@ -117,6 +125,8 @@ def check_url(url: str) -> str:
             return f"error({reason})"
         except OSError as e:
             return f"error({e})"
+        except Exception as e:  # 单个 URL 的任何异常都不终止整体检查
+            return f"error({type(e).__name__}: {e})"
     return "error(未知)"
 
 

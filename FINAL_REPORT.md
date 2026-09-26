@@ -56,7 +56,9 @@
 - **UCSD ML Meets Geometry**：作业在 Piazza；本次采集网络受限仅记录链接。
 - **Berkeley CS294-173**：学生研讨 slides 多数失效（410 Gone），录像仅限注册学生。
 
-## 9. 失效 URL（约 19 条，典型）
+## 9. 失效 URL
+
+在线复查（`scripts/check_links.py`，728 条 URL）：**25 条 404 + 8 条 410** 确认失效，另有 63 条 error/timeout 主要是本机网络拦截（Dropbox 等，浏览器大概率可达）。典型失效链接：
 
 - UPenn：`lectures/lecture-08|09|10/` 交互 deck 页 404（PDF 正常，L10 后材料尚未发布）
 - Stanford：`ps2_template_2025.zip`、`section7.pdf`、`section8.pdf` 404
@@ -68,7 +70,7 @@
 
 完整清单见各课程 `links.md` 与 `logs/link_check.md`。
 
-## 10. 需登录的资源（约 16 项）
+## 10. 需登录的资源（在线复查确认 24 项）
 
 Canvas（UPenn、Harvard、CMU）、Piazza（CMU、UCSD、Berkeley）、UZH OLAT（VAMR 录像）、bCourses（Berkeley）、Ed Discussions（Cornell）、CourseWorks（Columbia）、github.mit.edu（VNAV starter code）、TUM Wiki/Matrix、my.harvard 课表等。全部只记录链接，未做任何绕过。
 

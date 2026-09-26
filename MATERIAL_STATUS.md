@@ -13,9 +13,11 @@
 | Labs（MIT VNAV 讲义） | 11 |
 | Notebooks（本地化） | 0（各课程 notebook 均为外链/Colab，未镜像） |
 | 代码仓库（clone） | 7（CMU A0–A5 共 6 + llm-course 参考 1） |
-| 记录 dead links | 约 19 |
-| 需登录资源 | 约 16 项（Canvas/Piazza/OLAT/bCourses/Ed/CourseWorks 等） |
-| Pending verification | UCSD slides；CMU/Columbia Dropbox 链接（本机网络不可达） |
+| 记录 dead links | 在线复查：728 条 URL 中 25 条 404 + 8 条 410（详见 logs/link_check.md） |
+| 需登录资源 | 在线复查确认 24 项（Canvas/Piazza/OLAT/bCourses/Ed/CourseWorks 等） |
+| Pending verification | UCSD slides；CMU/Columbia Dropbox 链接；54 条 error + 9 条 timeout 多为本机网络拦截（Dropbox 等），浏览器大概率可达 |
+
+> **链接复查（2026-09-26，scripts/check_links.py）**：728 条 URL → 559 正常（200/202）、25 条 404、8 条 410（Berkeley 学生 slides）、38 条 redirect（多为正常跳转）、24 条 login-required、10 条 403、63 条 error/timeout（以本机网络拦截为主，非链接失效）。逐条结果：logs/link_check.md（本地，不上传）。
 
 ## 磁盘占用（本地，含 gitignore 排除项）
 
