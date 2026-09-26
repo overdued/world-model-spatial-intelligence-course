@@ -1,0 +1,105 @@
+
+Spatial AI
+Current Semester: Arch A6956-1 2026 Spring
+Professor: William Martin ( william.martin@columbia.edu )
+Location + Time
+Columbia GSAPP
+Fayerweather 209
+W 11AM → 1PM
+Session + Points
+Full Semester
+3 Points
+Links
+Course Materials 
+Courseworks 
+GSAPP course page 
+Discord invite link 
+In 2022, OpenAI’s ChatGPT and DALL-E popularized the latest milestones in techniques called “generative artificial intelligence,” which have since captivated the world with remarkable creative abilities. Simple text prompts can now appear to initiate the writing of essays, perform deep research, reason deductively, generate striking imagery and video, even author and debug code.
+At the same time, AI pervades the built environment. Government agencies track and identify cars on public roadways; autonomous vehicles and dog-like robots can continuously map environments in real time; environmental sensors record changes in air quality and climate; tech companies listen to and monitor our homes; and satellite data feed increasingly sophisticated predictive models of urban growth and destruction.
+Spatial designers (architects, urban planners, etc.) face particularly complex problems when proposing changes to the built environment, a task which at best requires anticipating the consequences of such decisions. But current software tools don’t intrinsically carry the semantics of “space;” while useful, they rather focus on manipulating 3D geometries or forms of physical data.
+Beyond the 3D and physical, “spatial AI” refers to artificial intelligence as applied to spatial reasoning employed in the design, operation, and occupation of space. Such a medium could enable designers to focus on the semantics of their spatial design propositions rather than being distracted by those of algorithms or commercial software.
+This research seminar will explore the potential of 3D and physical AI to facilitate insights, decisions, and predictions for problems involving higher-level spatial reasoning.
+In this course, students will:
+explore the definitions, affordances, and inner workings of generative and discriminative AI,
+scrutinize canonical writings from relevant technological, architectural, and computational theories regarding notions of “space,”
+experiment with the rapidly evolving landscape of AI methods, including spatial / vision language models, computer vision algorithms, AI agents, robotics simulations, and more,
+develop a critical and technical understanding of the technologies, and
+speculate on new spatial AI methods at human, architectural, and urban scales.
+AI methods are introduced weekly using modern platforms, services, and languages (Python, HuggingFace, OpenAI, Google AI Studio).
+Class sessions each involve a short lecture, an intensive technical workshop, and student presentations, with readings and technical prep work in-between sessions. The course culminates in a final project that combines the methods introduced throughout the course.
+Recommendations
+Experience with Python or another programming language is preferred.
+Students should plan to bring their own laptops to class.
+Objectives
+This course supports an environment to experiment, invent, and develop a series of ideas together. It’s not about becoming an “expert” in a fixed set of skills.
+Expect more questions than answers.   The course uses several frameworks to structure our experiments. We will ground them with a conceptual and technical understanding of today’s AI technologies alongside various notions of “space,” using them as creative inspiration. We will learn by doing.
+Expect that AI will be inconsistent and nondeterministic.   If your projects aren’t producing consistent results, this is expected. We are researching and inventing, meaning we’re investing our time and effort, but we don’t quite know what might result.
+Yes, this course is quite technical , so keep in mind that you’ll need to invest the proper effort to keep up. We do have generative coding tools at our disposal that will help.
+The hope for the course is that you will understand how AI really works and what it   really   is , and that you will gain a fundamental perspective on spatial design relevant to architecture and urbanism, one that presents an alternative to the tool-based approaches that are perhaps more akin to data journalism or data science.
+By the end of the course, you will:
+be familiar with concepts of space,
+know how to engage modern AI platforms (more than just chatbot products),
+know how to construct basic computational models that represent spatial reasoning, and
+have a project that shows your journey and skills.
+Sessions
+Session 
+Date 
+Topics 
+_01 
+2026 Jan 21 
+What is space?
+Teachable Machine 
+_02 
+2026 Jan 28 
+What is AI? 
+_03 
+2026 Feb 04 
+Intro to Python 
+_04 
+2026 Feb 11 
+Semantics and Language Models 
+_05 
+2026 Feb 18 
+Function calling with LLMs 
+_06 
+2026 Feb 25 
+Image Segmentation 
+_07 
+2026 Mar 04 
+Depth Estimation 
+2026 Mar 11 
+Kinne Week 
+2026 Mar 18 
+Spring Break 
+_08 
+2026 Mar 25 
+Vision Language Models 
+_09 
+2026 Apr 01 
+Scene Reconstruction 
+_10 
+2026 Apr 08 
+AI Agents 1 
+_11 
+2026 Apr 15 
+AI Agents 2 
+_12 
+2026 Apr 22 
+Final Review 
+Course Policies
+Sessions
+Every session involves a short lecture, but most of the sessions will be workshops. Students should come prepared with a laptop and all “Tech Prep” work completed   before   class.
+For these workshops, please do the following:
+Do your best to remove distractions. Close email and messaging clients (except the course’s Discord server).
+Work on Spatial AI and not other courses. Why would you just displace the time spent? Why not learn Spatial AI during Spatial AI? 🤯
+Do your best to keep up. Workshops will move quickly, and it’s quite important to participate and become familiar with these tools.
+If I perceive that you are not participating in course sessions due to distraction or working on other courses, I will ask you to leave the session and you will be counted absent.
+Waitlist
+I use the automated system to manage the waitlist.
+Auditing
+I allow auditing as long as auditing students do not interfere with the learning of enrolled students. This means in any group projects, you should not fill a critical role if you are not willing to put in the effort.
+(In my experience, auditing students rarely actually audit past week three of any course, so do think seriously about it. In universities, time is still money.)
+Grading
+A note on the difference between a P and HP grade in my courses:
+If you complete all the assignments as written, the submissions make sense, and the submissions represent genuine original thoughtful work (e.g. no unexplained ChatGPT screenshots), that’s a P.
+If the quality of your work demonstrates exceptional mastery, novel discoveries, or contributions that exceed expectations, that’s a candidate for an HP grade.

@@ -1,0 +1,48 @@
+{
+  "course_id": "harvard_spatial_intelligence",
+  "university": "Harvard University, Graduate School of Design (GSD)",
+  "course_number": "SCI-6512",
+  "course_name": "Spatial Intelligence: Designing the Future of Work",
+  "instructor": "Charu Srivastava",
+  "year": "2026",
+  "semester": "Spring",
+  "official_url": "https://www.gsd.harvard.edu/course/spatial-intelligence-designing-the-future-of-work-spring-2026/",
+  "topics": [
+    "Spatial Intelligence (definition, human-centered)",
+    "Sensors and environmental data collection",
+    "Intelligent Environments (ethics, social and technical implications)",
+    "Multimodal Data (collection, analysis, visualization)",
+    "Machine Learning for spatial factors and work outcomes",
+    "Human-Space Interaction / human-building interaction",
+    "Spatial conditions: light, sound, temperature, biophilia, layout",
+    "Micro-interventions and evidence-based design",
+    "Future of work, AI trends, hybrid work patterns",
+    "Surveys and computational tools for design research"
+  ],
+  "materials": {
+    "slides": false,
+    "notes": false,
+    "assignments": false,
+    "labs": false,
+    "code": false,
+    "videos": false,
+    "reading_list": false
+  },
+  "public_level": "Very Low",
+  "license": "No license declared; Harvard/GSD website copyright (c) President and Fellows of Harvard College",
+  "license_status": "unknown",
+  "world_model_relevance": "low-medium: 不涉及生成式世界模型，但用传感器多模态数据+ML构建空间条件到人类结果的预测模型，是 human-centered 的弱世界模型视角",
+  "spatial_intelligence_relevance": "high: 课程核心即 human-centered Spatial Intelligence，覆盖 sensors、multimodal data、intelligent environments、human-space interaction",
+  "embodied_ai_relevance": "low-medium: 无机器人/3D重建实验，但人-空间交互与环境行为数据与 Embodied AI 的环境理解间接相关",
+  "stats": {
+    "pdfs_downloaded": 0,
+    "notes_downloaded": 0,
+    "assignments_downloaded": 0,
+    "notebooks_downloaded": 0,
+    "code_repos": 0,
+    "dead_links": 0,
+    "login_required": 1
+  },
+  "primary_domain": "Architecture / Smart Environments / Human-centered Spatial Intelligence",
+  "notes": "仅课程描述页公开；作业与材料在 Canvas (course id 168480) 需 HarvardKey 登录。本地 syllabus/ 下保存官方描述快照 (txt, sha256: 040d3e4bf52f3463f4a414b179db358ba806b17912b69065add7f4ead49326b1)，仅用于研究，不重新分发。"
+}

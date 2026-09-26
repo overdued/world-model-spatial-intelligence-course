@@ -1,0 +1,51 @@
+{
+  "course_id": "ucsd_ml_meets_geometry",
+  "university": "University of California, San Diego",
+  "course_number": "",
+  "course_name": "Machine Learning Meets Geometry",
+  "instructor": "Hao Su",
+  "year": "2022",
+  "semester": "Winter",
+  "official_url": "https://haosulab.github.io/ml-meets-geometry-WI22/",
+  "topics": [
+    "Geometry Basics",
+    "3D Reconstruction",
+    "Single-image to 3D",
+    "Multiview 3D",
+    "3D Recognition",
+    "Detection",
+    "Segmentation",
+    "6D Pose Estimation",
+    "Point Cloud Processing",
+    "Learning-based Mesh Processing",
+    "Part-based Generative Model",
+    "Zero-shot 3D Understanding",
+    "Human and Hand Pose",
+    "Shape Correspondence"
+  ],
+  "materials": {
+    "slides": false,
+    "notes": false,
+    "assignments": false,
+    "labs": false,
+    "code": false,
+    "videos": false,
+    "reading_list": false
+  },
+  "public_level": "Low",
+  "license": "",
+  "license_status": "unknown",
+  "world_model_relevance": "medium — 3D 重建/生成式 3D 是空间世界模型的表示基础，无动力学内容",
+  "spatial_intelligence_relevance": "high — 几何+学习的 3D 理解全链条",
+  "embodied_ai_relevance": "medium — 6D 位姿/人体手姿态/mobility 与操作相关",
+  "stats": {
+    "pdfs_downloaded": 0,
+    "notes_downloaded": 0,
+    "assignments_downloaded": 0,
+    "notebooks_downloaded": 0,
+    "code_repos": 0,
+    "dead_links": 0,
+    "login_required": 1
+  },
+  "notes": "采集时本机网络未能完成下载，按项目原则仅记录链接与状态；HW 发布于 Piazza（需登录）。"
+}

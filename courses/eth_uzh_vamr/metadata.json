@@ -1,0 +1,51 @@
+{
+  "course_id": "eth_uzh_vamr",
+  "university": "ETH Zurich / University of Zurich",
+  "course_number": "151-0632-00L (ETH) / 03SMDINF2039 (UZH)",
+  "course_name": "Vision Algorithms for Mobile Robotics",
+  "instructor": "Davide Scaramuzza (Robotics and Perception Group, UZH)",
+  "year": "2026",
+  "semester": "Fall",
+  "official_url": "https://rpg.ifi.uzh.ch/teaching.html",
+  "topics": [
+    "Introduction to Computer Vision and Visual Odometry",
+    "Image Formation: Perspective Projection and Camera Models",
+    "Camera Calibration (DLT, PnP/P3P)",
+    "Filtering and Edge Detection",
+    "Point Feature Detectors (Harris, SIFT)",
+    "Multiple-view Geometry (Stereo, Rectification, Triangulation)",
+    "Eight-Point Algorithm",
+    "P3P and RANSAC",
+    "Bundle Adjustment",
+    "Optical Flow and KLT Tracking",
+    "Place Recognition (Bag of Words)",
+    "Deep Learning Basics for Vision",
+    "Visual-Inertial Odometry / Sensor Fusion",
+    "Event-based Vision (Contrast Maximization)",
+    "SLAM"
+  ],
+  "materials": {
+    "slides": true,
+    "notes": true,
+    "assignments": true,
+    "labs": false,
+    "code": true,
+    "videos": false,
+    "reading_list": true
+  },
+  "public_level": "Very High",
+  "license": "No explicit license on course page; materials publicly hosted by the instructor's lab. Local research copies only, do not redistribute. Ch4_AMRobots.pdf is a copyrighted MIT Press book chapter.",
+  "license_status": "unknown",
+  "world_model_relevance": "medium-high — 不直接讲 world model，但 VO/VIO/SLAM 构成智能体环境状态估计的经典几何基线，L12b 引入学习式方法作为对照",
+  "spatial_intelligence_relevance": "high — 透视投影、多视图几何、三角化、bundle adjustment、稠密重建、位置识别，覆盖 2D→3D 空间结构恢复的全部经典理论并配手写实现",
+  "embodied_ai_relevance": "high — VIO/SLAM/event camera 是移动机器人与无人机实时感知定位的核心，mini-project 在 KITTI/Malaga 真实数据上构建完整 VO 系统",
+  "stats": {
+    "pdfs_downloaded": 25,
+    "notes_downloaded": 4,
+    "assignments_downloaded": 5,
+    "notebooks_downloaded": 0,
+    "code_repos": 1,
+    "dead_links": 2,
+    "login_required": 1
+  }
+}

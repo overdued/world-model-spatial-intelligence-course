@@ -1,0 +1,167 @@
+Spatial AI Course Materials [2026 Spring]
+
+ Spatial AI Course (/spatial-ai/course/) → Syllabus (/spatial-ai/course/syllabus2026sp/) / Materials
+
+ Session _01 → 2026 Jan 21
+
+ What is Spatial AI? 
+
+ Lecture → Introduction to the Course
+
+ Workshop → Urban Observation with Teachable Machine
+
+ Intro Survey (https://forms.gle/yGHBo3BxsTFnvcBD7)
+
+ Session _02 → 2026 Jan 28
+
+ What is space? 
+
+ Discussion → Readings
+
+ Lecture → What Is Space?
+
+ Lecture → How Machine Learning Works
+
+ Workshop → Neural Network Playground (https://docs.google.com/presentation/d/1Vh-ARZckf5xauH5bN9RcMY7hC1pTfUcy2IiEsvQsqVo/edit?slide=id.g2b0577a5474_2_7#slide=id.g2b0577a5474_2_7)
+
+ Readings Due 
+
+ Space: A History. Ancient Greek notions of space. (PDF (https://drive.google.com/file/d/1eK3jNrQrDJYa0QqeXmNSJDYlZ29rVv2r/view?usp=drive_link), pgs 11-36)
+
+ “The Japanese words for “space” could change your view of the world.” Quartz Magazine, Jerrold McGrath, 2018 January 18. (PDF (https://drive.google.com/file/d/1picOg0YXpQTB9arNHPHP0STpd7pJ9mr9/view?usp=drive_link), Link (https://qz.com/1181019/the-japanese-words-for-space-could-change-your-view-of-the-world))
+
+ Thrift, Nigel. (2003). 5 Space: The Fundamental Stuff of Human Geography. Key Concepts in Geography. 2. (PDF (https://drive.google.com/file/d/13LIfvHJdqhlx20tkOyGvELqv-LVqidZg/view?usp=drive_link), pgs 96-105)
+
+ Session _03 → 2026 Feb 04
+
+ What is artificial intelligence? 
+
+ Lecture → What is AI?
+
+ Readings Due 
+
+ Russell, Stuart J., and Peter Norvig. (2022). Artificial Intelligence: A Modern Approach. Chapter 01, Introduction. (PDF (https://www.dropbox.com/scl/fi/08dmwz16x1jxv6l758p3w/AI-A-Modern-Approach-4th-Edition-Chapter-01.pdf?rlkey=57cuqptwgjjl6nekkvzu4ypms&dl=0), pgs 19-53).
+
+ Shaun Carter and Michael Nielson. (2017). “Using Artificial Intelligence to Augment Human Intelligence.” Distill. (Link (https://distill.pub/2017/aia/))
+
+ Turing, Alan M. (1950). “Computing machinery and intelligence.” Mind, 59, 433-460. (PDF 1 original scan (https://www.dropbox.com/scl/fi/2hqmjazni0axuzlx4exkq/Computing-Machinery-and-Intelligence-Alan-Turing-SCAN.pdf?rlkey=xl38t9c5cra8jktqx1t30jcgu&dl=0), PDF 2 w/ minor OCR errors (https://www.dropbox.com/scl/fi/kivpl5gvueuty6lkwom8z/Turing-Computing-Machinery-and-Intelligence-1950-OCR-CLEAN.pdf?rlkey=p815ok7r5rhfviv9bcnbn9hre&dl=0)).
+ Note about this reading: This was written in 1950 and has verbiage that today is considered controversial and biased; treat this more as an historical artifact rather than a modern-day text. It’s important to understand the origin of the “Imitation Game” (aka “The Turing Test”) with respect to the current thought around AI, particularly the prominent chatbot user experience. 
+
+ Tech Prep Due 
+
+ Sign up for a Hugging Face account at https://huggingface.co/ (https://huggingface.co/) – I recommend temporarily signing up for a Pro account at $9/mo for the remainder of the semester.
+
+ Sign up for a Google Colab (https://colab.google) account.
+
+ See the interface here: https://colab.research.google.com (https://colab.research.google.com)
+
+ You can sign up for a free “Colab Pro” account using your student Columbia login and a document showing your status: https://colab.research.google.com/signup (https://colab.research.google.com/signup). Look for the button “No cost for students and educators.”
+
+ Assignment Due 
+
+ Teachable Machine Images (https://www.dropbox.com/scl/fi/r166xpodpbpxgy9y2mros/SpAI-Assignment-Teachable-Machine-Images.pdf?rlkey=y7hn6u4a8bcjvcbbtd43xlhs3&dl=0)
+
+ Submission Form (day of class)
+
+ Session _04 → 2026 Feb 11
+
+ Generative AI + Python 
+
+ Lecture → What is AI?
+
+ Lecture → What is Generative AI?
+
+ Workshop → Python in Google Colab
+
+ Readings Due 
+
+ “Generative AI exists because of the transformer (https://ig.ft.com/generative-ai/).” Financial Times, 2023 Sept 12. By Visual Storytelling Team and Madhumita Murgia.
+
+ An Introduction to Machine Learning (https://www.digitalocean.com/community/tutorials/an-introduction-to-machine-learning) by Lisa Tagliaferri at Digital Ocean. (Link (https://www.digitalocean.com/community/tutorials/an-introduction-to-machine-learning))
+
+ But what is a neural network? | Chapter 1, Deep learning (https://youtu.be/aircAruvnKk?si=pDxyV6PQ36hF9DY_) 18m39s.
+
+ Session _05 → 2026 Feb 18
+
+ Workshop → Google Colab + Hugging Face (Depth Estimation)
+
+ Readings Due 
+
+ Algorithms for Decision Making (Ch 1) (https://www.dropbox.com/scl/fi/pjcravhoue61c0k217wf8/Algorithms-for-Decision-Making-Chapter-01.pdf?rlkey=n65gc0rjw2q1w5v5eurvj853l&dl=0)
+
+ AI is a lot of work (https://www.theverge.com/features/23764584/ai-artificial-intelligence-data-notation-labor-scale-surge-remotasks-openai-chatbots)
+
+ How AI reduces the world to stereotypes (https://restofworld.org/2023/ai-image-stereotypes/)
+
+ Session _06 → 2026 Feb 25
+
+ Workshop → Image Segmentation + Object Detection
+
+ Assignment Due (delayed to Mar 2) 
+
+ Depth Estimation + Colab Practice (PDF (https://www.dropbox.com/scl/fi/frnp564zwo2m1vhz32b5z/SpAI-2026Sp-Depth-Estimation-Assignment.pdf?rlkey=4frf6704hy4my88e71fdeyku4&dl=0), Notebook (https://www.dropbox.com/scl/fi/216m7k8yi10bigjssbpuw/SpAI_2026Sp_depth_estimation.ipynb?rlkey=50mbczwhyubq66w7stuzw9y9n&dl=0))
+
+ Session _07 → 2026 Mar 04
+
+ Spatial Reasoning + LLM Capabilities Beyond Text Completion 
+
+ Lecture → Static Spatial Reasoning
+
+ Workshop → Spatial + Vision Language Models
+
+ (Break)
+
+ Session _08 → 2026 Mar 25
+
+ Workshop → LLM Function Calling
+
+ Readings Due 
+
+ Taxonomy of Computable Space for Spatial AI (https://awmartin.xyz/computable-space/) by William Martin.
+
+ Prepositions of Place and Movement (https://ndla.no/r/engelsk-1/prepositions-of-place-and-movement/9cd50c38e7)
+
+ Newton from Archetype AI (https://www.linkedin.com/posts/archetype-ai_ai-in-the-physical-world-activity-7409308799418929152-wUML)
+
+ Watchings Due 
+
+ Automata: The Extraordinary “Robots” Designed Hundreds Of Years Ago | Mechanical Marvels | Timeline (https://youtu.be/6Nt7xLAfEPs) 1hr
+
+ AlphaGo - The Movie | Full award-winning documentary (https://youtu.be/WXuK6gekU1Y) 1h30min
+
+ The Fastest Maze-Solving Competition On Earth (https://youtu.be/ZMQbHMgK2rw)
+
+ Session _09 → 2026 Apr 01
+
+ Workshop → Intro to Scene Reconstruction 
+
+ Assignment Due 
+
+ Metric Spaces with SVLMs (PDF (https://www.dropbox.com/scl/fi/kl1twfz2tcl5su575jylo/SpAI-2026Sp-Assignment-SVLM.pdf?rlkey=5rtre908vdg3lectum4v21ea0&dl=0), Colab Notebook (https://www.dropbox.com/scl/fi/3ryxxg9ludkg07iubime9/SpAI_2026Sp_Spatial_VLM_Assignment.ipynb?rlkey=ba5szfget6ivbo46opfmc32fu&dl=0))
+
+ Session _10 → 2026 Apr 08
+
+ Workshop → AI Agents and Function-Calling
+
+ Session _11 → 2026 Apr 15
+
+ Workshop → Semantic Models
+
+ Assignment Due
+
+ Function-Calling and AI Agents (PDF (https://www.dropbox.com/scl/fi/80perb0qien5w50wm7up5/SpAI-2026Sp-Assignment-Function-Calling.pdf?rlkey=3ub2x77j3fkdxwwii471lfp5a&dl=0), Submission Form (https://forms.gle/ya3nxTqVivuZ9LPZ7))
+
+ Session _12 → 2026 Apr 22
+
+ Last In-Person Session
+
+ Workshop → Physical AI
+
+ Assignment Due
+
+ Multi-Modal AI Agent Scaffold (PDF (%5Bhttps://www.dropbox.com/scl/fi/rri2qsc9qwlkfdz02jy4n/SpAI-2026Sp-Assignment-Multi-Modal-Agent-Scaffold.pdf?rlkey=n6fn3cvuwxhuit51gf472ijks&dl=0%5D(https://www.dropbox.com/scl/fi/rri2qsc9qwlkfdz02jy4n/SpAI-2026Sp-Assignment-Multi-Modal-Agent-Scaffold.pdf?rlkey=n6fn3cvuwxhuit51gf472ijks&dl=0)), Function Definitions (%5Bhttps://www.dropbox.com/scl/fi/hkw70ie1qf2nzvxyb8b5x/function_definitions.txt?rlkey=q4f71iiow14liaixe5garlu4m&dl=0%5D(https://www.dropbox.com/scl/fi/hkw70ie1qf2nzvxyb8b5x/function_definitions.txt?rlkey=q4f71iiow14liaixe5garlu4m&dl=0)), Submission Form (%5Bhttps://forms.gle/ioP1uqvVoWgKzLhXA%5D(https://forms.gle/ioP1uqvVoWgKzLhXA)))
+
+ by A.W. Martin
+ · Tagged with spatial-ai + course
+
+ · Posted on 2026-01-20

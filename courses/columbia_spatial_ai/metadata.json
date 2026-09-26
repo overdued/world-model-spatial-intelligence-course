@@ -1,0 +1,49 @@
+{
+  "course_id": "columbia_spatial_ai",
+  "university": "Columbia University (GSAPP)",
+  "course_number": "ARCH A6956-1",
+  "course_name": "Spatial AI",
+  "instructor": "William Martin",
+  "year": "2026",
+  "semester": "Spring / Fall (also offered Spring 2024, Spring 2025)",
+  "official_url": "https://www.arch.columbia.edu/courses/12445-5933",
+  "topics": [
+    "Spatial Reasoning",
+    "Spatial Ontology / Semantic Models / Computable Space",
+    "Generative AI / Large Language Models",
+    "LLM Function Calling / AI Agents",
+    "Computer Vision (Image Segmentation, Object Detection, Depth Estimation)",
+    "Spatial / Vision Language Models",
+    "3D / Scene Reconstruction (mentioned, struck from 2026Sp)",
+    "Robotics Simulation / Physical AI (mentioned, one workshop)",
+    "Metric Spaces, Distance + Proximity, Position + Positioning",
+    "Connectivity, Way-finding and Way-signalling",
+    "Architecture / Computational Design (course orientation)"
+  ],
+  "materials": {
+    "slides": true,
+    "notes": false,
+    "assignments": false,
+    "labs": false,
+    "code": false,
+    "videos": false,
+    "reading_list": true
+  },
+  "public_level": "Medium",
+  "license": "none stated",
+  "license_status": "unknown",
+  "license_note": "教师站与 GSAPP 页面均无许可证声明；仅保留本地研究副本，不重新分发。",
+  "world_model_relevance": "medium-low — 用 LLM agent 构建空间模拟，但无 world models 文献与模型训练内容",
+  "spatial_intelligence_relevance": "high — 整课围绕 spatial reasoning / spatial ontology 组织，但为建筑与计算设计视角，非机器人视角",
+  "embodied_ai_relevance": "low-medium — robotics simulation / Physical AI 仅在描述与单次 workshop 出现，无实体机器人实验",
+  "stats": {
+    "pdfs_downloaded": 4,
+    "notes_downloaded": 0,
+    "assignments_downloaded": 0,
+    "notebooks_downloaded": 0,
+    "code_repos": 0,
+    "dead_links": 0,
+    "login_required": 1,
+    "network_blocked_dropbox_files": 12
+  }
+}

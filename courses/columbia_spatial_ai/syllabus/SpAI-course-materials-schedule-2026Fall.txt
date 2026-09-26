@@ -1,0 +1,186 @@
+Spatial AI Course Materials
+
+ Spatial AI Course (/spatial-ai/course/) → Syllabus (/spatial-ai/course/syllabus/) / Materials
+
+ Session 01 → 2026 Sep 10
+
+ What is Spatial AI? 
+
+ Lecture → Introduction to the Course
+
+ Intro Survey (https://forms.gle/iueVY8b9yrHQGQxW8)
+
+ Workshop → Urban Observation with Teachable Machine (https://teachablemachine.withgoogle.com/)
+
+ Session 02 → 2026 Sep 17
+
+ What is space? 
+
+ Discussion + Slides → What is space?
+
+ Demo → Claude Code + Netlify/GitHub
+
+ Readings Due 
+
+ Space: A History. Ancient Greek notions of space. (PDF (https://drive.google.com/file/d/1eK3jNrQrDJYa0QqeXmNSJDYlZ29rVv2r/view?usp=drive_link), pgs 11-36)
+
+ “The Japanese words for “space” could change your view of the world.” Quartz Magazine, Jerrold McGrath, 2018 January 18. (PDF (https://drive.google.com/file/d/1picOg0YXpQTB9arNHPHP0STpd7pJ9mr9/view?usp=drive_link), Link (https://qz.com/1181019/the-japanese-words-for-space-could-change-your-view-of-the-world))
+
+ Thrift, Nigel. (2003). 5 Space: The Fundamental Stuff of Human Geography. Key Concepts in Geography. 2. (PDF (https://drive.google.com/file/d/13LIfvHJdqhlx20tkOyGvELqv-LVqidZg/view?usp=drive_link), pgs 96-105)
+
+ Assignment Due 
+
+ Teachable Machine Images (https://www.dropbox.com/scl/fi/r166xpodpbpxgy9y2mros/SpAI-Assignment-Teachable-Machine-Images.pdf?rlkey=y7hn6u4a8bcjvcbbtd43xlhs3&dl=0)
+
+ Submission Form (day of class)
+
+ Session 03 → 2026 Sep 24
+
+ What is artificial intelligence? 
+
+ Lecture → What is AI? (Part 1)
+
+ Workshop → Neural Network Playground (https://docs.google.com/presentation/d/1Vh-ARZckf5xauH5bN9RcMY7hC1pTfUcy2IiEsvQsqVo/edit?slide=id.g2b0577a5474_2_7#slide=id.g2b0577a5474_2_7)
+
+ Workshop → Semantic Models (aka How to think like a computational designer.)
+
+ Workshop → All the World’s a Game
+
+ Readings Due 
+
+ https://academy.claude.com/courses/claude-code-101 (https://academy.claude.com/courses/claude-code-101)
+
+ Russell, Stuart J., and Peter Norvig. (2022). Artificial Intelligence: A Modern Approach. Chapter 01, Introduction. (PDF (https://www.dropbox.com/scl/fi/08dmwz16x1jxv6l758p3w/AI-A-Modern-Approach-4th-Edition-Chapter-01.pdf?rlkey=57cuqptwgjjl6nekkvzu4ypms&dl=0), pgs 19-53).
+
+ Tech Prep Due 
+
+ Sign up for a Claude Pro account (https://claude.com/pricing). This will be $20/month for just the semester If you time it right, you can pay for just 3 months. If you’re working in a pair, you’ll only need one account.
+
+ Sign up for a Netlify (https://netlify.com/) account (recommended) OR a GitHub (https://github.com/) account (if you don’t already have one). These are both free and will allow us to deploy simple websites.
+
+ Assignment Due 
+
+ https://academy.claude.com/courses/claude-code-101 (https://academy.claude.com/courses/claude-code-101)
+
+ Session 04 → 2026 Oct 01
+
+ Location + Occupancy 
+
+ Lecture → Location + Occupancy
+
+ Lecture → What is Generative AI? LLMs
+
+ Workshop → Location + Occupancy
+
+ Readings Due 
+
+ “Generative AI exists because of the transformer (https://ig.ft.com/generative-ai/).” Financial Times, 2023 Sept 12. By Visual Storytelling Team and Madhumita Murgia.
+
+ AI is a lot of work (https://www.theverge.com/features/23764584/ai-artificial-intelligence-data-notation-labor-scale-surge-remotasks-openai-chatbots) (TheVerge)
+
+ How AI reduces the world to stereotypes (https://restofworld.org/2023/ai-image-stereotypes/) (restofworld.org (http://restofworld.org))
+
+ An Introduction to Machine Learning (https://www.digitalocean.com/community/tutorials/an-introduction-to-machine-learning) by Lisa Tagliaferri at Digital Ocean. (Link (https://www.digitalocean.com/community/tutorials/an-introduction-to-machine-learning))
+
+ But what is a neural network? | Chapter 1, Deep learning (https://youtu.be/aircAruvnKk?si=pDxyV6PQ36hF9DY_) 18m39s.
+
+ Session 05 → 2026 Oct 08
+
+ Agents + Traversal 
+
+ Workshop → Agents + Traversal
+
+ Readings Due 
+
+ Algorithms for Decision Making (Ch 1) (https://www.dropbox.com/scl/fi/pjcravhoue61c0k217wf8/Algorithms-for-Decision-Making-Chapter-01.pdf?rlkey=n65gc0rjw2q1w5v5eurvj853l&dl=0)
+
+ Session 06 → 2026 Oct 15
+
+ Distance + Proximity 
+
+ Lecture → Definitions of Distance (Metric Space)
+
+ Workshop → Distance + Proximity
+
+ Session 07 → 2026 Oct 22
+
+ Position + Positioning 
+
+ Lecture → Static Spatial Reasoning
+
+ Workshop → Position + Positioning
+
+ Readings Due 
+
+ Prepositions of Place and Movement (https://ndla.no/r/engelsk-1/prepositions-of-place-and-movement/9cd50c38e7)
+
+ Watchings Due 
+
+ AlphaGo - The Movie | Full award-winning documentary (https://youtu.be/WXuK6gekU1Y) 1h30min
+
+ Session 08 → 2026 Oct 29
+
+ Topographies (Hindrances + Affordances) 
+
+ Workshop → Hindrances + Affordances
+
+ Readings Due 
+
+ Taxonomy of Computable Space for Spatial AI (https://awmartin.xyz/computable-space/) by William Martin.
+
+ Newton from Archetype AI (https://www.linkedin.com/posts/archetype-ai_ai-in-the-physical-world-activity-7409308799418929152-wUML)
+
+ Watchings Due 
+
+ Automata: The Extraordinary “Robots” Designed Hundreds Of Years Ago | Mechanical Marvels | Timeline (https://youtu.be/6Nt7xLAfEPs) 1hr
+
+ Session 09 → 2026 Nov 05
+
+ Spatial Perception 
+
+ Workshop → Computer vision, spatial VLMs
+
+ Assignment Due 
+
+ Session 10 → 2026 Nov 12
+
+ Connectivity 
+
+ Lecture → Spatial connections, conditional connectivity, multi-modal connectivity
+
+ Workshop → Spatial Connections and Connectivity
+
+ Session 11 → 2026 Nov 19
+
+ Way-finding and way-signalling 
+
+ Lecture → way-finding, way-signalling, routing, path-finding
+
+ Workshop → way-finding and way-signalling
+
+ Watchings Due 
+
+ The Fastest Maze-Solving Competition On Earth (https://youtu.be/ZMQbHMgK2rw)
+
+ Thanksgiving! → 2026 Nov 19
+
+ Session 12 → 2026 Dec 03
+
+ Demo day! 
+
+ Last In-Person Session
+
+ Assignment Due 
+
+ Recommended Readings
+
+ Shaun Carter and Michael Nielson. (2017). “Using Artificial Intelligence to Augment Human Intelligence.” Distill. (Link (https://distill.pub/2017/aia/))
+
+ Turing, Alan M. (1950). “Computing machinery and intelligence.” Mind, 59, 433-460. (PDF 1 original scan (https://www.dropbox.com/scl/fi/2hqmjazni0axuzlx4exkq/Computing-Machinery-and-Intelligence-Alan-Turing-SCAN.pdf?rlkey=xl38t9c5cra8jktqx1t30jcgu&dl=0), PDF 2 w/ minor OCR errors (https://www.dropbox.com/scl/fi/kivpl5gvueuty6lkwom8z/Turing-Computing-Machinery-and-Intelligence-1950-OCR-CLEAN.pdf?rlkey=p815ok7r5rhfviv9bcnbn9hre&dl=0)).
+
+ Note about this reading: This was written in 1950 and has verbiage that today is considered controversial and biased; treat this more as an historical artifact rather than a modern-day text. It’s important to understand the origin of the “Imitation Game” (aka “The Turing Test”) with respect to the current thought around AI, particularly the prominent chatbot user experience. 
+
+ by A.W. Martin
+ · Tagged with spatial-ai + course
+
+ · Posted on 2026-01-20

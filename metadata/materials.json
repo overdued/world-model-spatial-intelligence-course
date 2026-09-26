@@ -1,0 +1,14 @@
+[
+  {
+    "course_id": "example_course_a",
+    "url": "https://example.org/course-a/lectures/L01_introduction.pdf",
+    "dest": "courses/example_course_a/lectures/L01_introduction.pdf",
+    "license_status": "unknown"
+  },
+  {
+    "course_id": "example_course_b",
+    "url": "https://example.org/course-b/notes/week01.pdf",
+    "dest": "courses/example_course_b/lectures/week01_notes.pdf",
+    "license_status": "unknown"
+  }
+]

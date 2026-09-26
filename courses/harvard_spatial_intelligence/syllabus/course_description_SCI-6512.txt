@@ -1,0 +1,30 @@
+Spatial Intelligence: Designing the Future of Work
+Harvard Graduate School of Design (GSD)
+Course Number: SCI-6512
+Instructor: Charu Srivastava (Lecturer in Architecture)
+Semester: Spring 2026
+Type: Project-based Seminar, 4 Units
+Department: Architecture
+Official URL: https://www.gsd.harvard.edu/course/spatial-intelligence-designing-the-future-of-work-spring-2026/
+Canvas: https://canvas.harvard.edu/courses/168480 (requires HarvardKey login)
+Snapshot captured: 2026-09-26 (from public GSD course page; UTF-8)
+
+--- Official Course Description (verbatim) ---
+
+The average adult spends one-third of their life working. Can workspaces be designed to reduce stress, strengthen social connection, or improve focus in real time? As organizations adopt sensors, digital platforms, and AI-driven analytics, workplaces are evolving into complex, data-rich environments that continuously capture patterns of behavior. Designers have new tools to understand spaces of work — and to leverage data to reimagine environments that better support human performance and well-being.
+
+This course investigates how spatial conditions — light, sound, temperature, biophilia, and layout — shape cognitive functioning, creativity, comfort, and communication, across a range of work environments (including traditional and home offices, studios, classrooms, and service and healthcare spaces). Students will collect, analyze, and visualize data, using surveys, sensors, and computational tools, including machine learning, to quantify how spatial factors influence work outcomes. The course emphasizes "micro-interventions," where students design and evaluate small-scale changes in real-world environments.
+
+Hands-on work is central: students will complete exercises and mini-projects that progressively build towards a final project. By exploring emerging AI trends and hybrid work patterns, students will develop designs that re-envision the future of work. Throughout the course, students will also critically examine the ethical, social, and technical implications of intelligent environments. Using workplaces as a case study, this course aims to illustrate how design, technology, and human outcomes intersect in practice.
+
+By the end of the semester, students will be equipped to collect and interpret multimodal data, design and evaluate evidence-based interventions, and articulate how AI, sensing, and data analytics can shape the future of work.
+
+The course is intended for students from architecture, urban design, MDes, and MDE programs. Non-GSD students are welcome. Prior programming experience is recommended, but not required.
+
+--- Instructor Bio (from GSD people page, verbatim) ---
+
+Charu Srivastava is a design researcher and engineer working at the intersection of architecture, human-building interaction, and computational modeling. Her research uses AI and machine learning to study human experiences in the built environment and predict how spatial design influences human health, behavior, and well-being.
+
+Charu is a Lecturer in Architecture at the GSD and a researcher at the Livable Spaces Lab in the Building Technology department at MIT. Her research has been published in peer-reviewed journals such as Building and Environment, Journal of Environmental Psychology, and Journal of Building Engineering. Previously, she has worked as an architectural designer at DES and CAW Architects, conducted building research at Google and the U.S. Green Building Council, and held research positions at Stanford's Urban Informatics Lab and Hybrid Physical + Digital Spaces Lab.
+
+Charu holds a Doctor of Design from the GSD, and both an M.S. in Civil and Environmental Engineering and a B.S. in Architectural Design Engineering from Stanford University.

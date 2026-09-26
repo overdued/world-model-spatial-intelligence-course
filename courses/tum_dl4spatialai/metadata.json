@@ -1,0 +1,45 @@
+{
+  "course_id": "tum_dl4spatialai",
+  "university": "Technical University of Munich (TUM), Computer Vision Group (Cremers)",
+  "course_number": "Practical Course, 10 ECTS (module number not listed publicly)",
+  "course_name": "Deep Learning for Spatial AI",
+  "instructor": "Nikita Araslanov, Qing Cheng, Weirong Chen, Linus Härenstam-Nielsen, Shenhan Qian, Ganlin Zhang (TUM CVG, chair: Daniel Cremers)",
+  "year": "2026",
+  "semester": "Summer Semester 2026 (previous edition: SS2025)",
+  "official_url": "https://cvg.vision.cs.tum.edu/teaching/ss2026/dl4sai",
+  "topics": [
+    "3D/4D reconstruction and SLAM (VGGT)",
+    "3D priors with diffusion models (Bolt3D)",
+    "3D tracking (SpatialTracker)",
+    "Self-supervised learning with 3D priors (RayZer)",
+    "Bundle adjustment for dynamic scene reconstruction (Back on Track / BA-Track, ICCV 2025)",
+    "Camera/object pose estimation",
+    "Dynamic object segmentation",
+    "Video/panoptic segmentation",
+    "Research project methodology (midterm/final presentations + written report)"
+  ],
+  "materials": {
+    "slides": true,
+    "notes": false,
+    "assignments": false,
+    "labs": false,
+    "code": false,
+    "videos": true,
+    "reading_list": true
+  },
+  "public_level": "Medium",
+  "license": "Not specified (© TUM CVG); arXiv papers under arXiv license",
+  "license_status": "unknown",
+  "world_model_relevance": "high — generative 3D priors (Bolt3D) and self-supervised 3D-aware models (RayZer) are core building blocks of 3D-aware world models",
+  "spatial_intelligence_relevance": "high — the course IS Spatial AI: 3D/4D reconstruction, SLAM, 3D tracking, pose estimation with SOTA feed-forward 3D models",
+  "embodied_ai_relevance": "medium — perception stack (SLAM, pose, dynamic reconstruction) relevant to embodied agents, but no robotics/planning/control component",
+  "stats": {
+    "pdfs_downloaded": 8,
+    "notes_downloaded": 0,
+    "assignments_downloaded": 0,
+    "notebooks_downloaded": 0,
+    "code_repos": 0,
+    "dead_links": 0,
+    "login_required": 1
+  }
+}

@@ -1,0 +1,26 @@
+# 本地下载的课程材料（PDF/slides/数据等）不上传 GitHub：
+# 多数课程未标注开源许可证，为避免再分发版权问题，仓库只提交
+# README / metadata / links 等索引文件，材料本体仅保留在本地，
+# 对应原始链接见各课程 links.md。
+
+# 下载物
+courses/**/*.pdf
+courses/**/*.zip
+courses/**/*.ics
+courses/**/SHA256SUMS.txt
+courses/**/*.html
+courses/**/interactive/
+courses/cmu_16825_learning_for_3d_vision/assignments/*/
+
+# 参考仓库克隆（Apache-2.0，保留上游 remote，本地参考用）
+references/llm_course_reference/
+references/papers/
+
+# 日志与临时文件
+logs/
+*.log
+
+# 本地打包
+/CIS6280_World_Models_lectures_Fall2026.zip
+
+.DS_Store

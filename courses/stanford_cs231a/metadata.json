@@ -1,0 +1,51 @@
+{
+  "course_id": "stanford_cs231a",
+  "university": "Stanford University",
+  "course_number": "CS231A",
+  "course_name": "Computer Vision: From 3D Perception to 3D Reconstruction and Beyond",
+  "instructor": "Silvio Savarese, Jeannette Bohg (TAs: Aditya Dutt, Ishikaa Lunawat, Adam Sun; Guest: Francis Engelmann)",
+  "year": "2025",
+  "semester": "Spring",
+  "official_url": "https://web.stanford.edu/class/cs231a/",
+  "topics": [
+    "Camera Models",
+    "Camera Calibration",
+    "Single View Metrology",
+    "Epipolar Geometry",
+    "Stereo Systems",
+    "Structure from Motion",
+    "Active Stereo & Volumetric Stereo",
+    "Fitting and Matching",
+    "Representations & Representation Learning",
+    "Monocular Depth Estimation",
+    "Feature Tracking",
+    "Optical Flow & Scene Flow",
+    "Optimal Estimation (Kalman/EKF/UKF)",
+    "Neural Radiance Fields (NeRF)",
+    "Gaussian Splatting"
+  ],
+  "materials": {
+    "slides": true,
+    "notes": true,
+    "assignments": true,
+    "labs": false,
+    "code": true,
+    "videos": false,
+    "reading_list": true
+  },
+  "public_level": "Very High",
+  "license": "未标注（Stanford 课程页面，无明确开源许可证）",
+  "license_status": "unknown",
+  "world_model_relevance": "high — 覆盖多视图几何、状态估计（Kalman 滤波族）、NeRF/3DGS 世界表示，是 world model 的几何与表示基础",
+  "spatial_intelligence_relevance": "high — 课程主线即 2D 图像到 3D 结构感知与重建，是 spatial intelligence 的经典方法论",
+  "embodied_ai_relevance": "medium-high — 主动立体、ego-motion、滤波状态估计是机器人感知栈核心，但无硬件实验",
+  "stats": {
+    "pdfs_downloaded": 32,
+    "notes_downloaded": 10,
+    "assignments_downloaded": 5,
+    "notebooks_downloaded": 0,
+    "code_repos": 0,
+    "dead_links": 3,
+    "login_required": 1
+  }
+}
