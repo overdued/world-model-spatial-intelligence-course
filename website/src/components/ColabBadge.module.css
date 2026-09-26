@@ -16,3 +16,17 @@
   clip: rect(0 0 0 0);
   white-space: nowrap;
 }
+
+.comingSoon {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 10px;
+  border-radius: 10px;
+  font-size: 0.78rem;
+  line-height: 18px;
+  color: var(--ifm-color-secondary-darkest);
+  background: var(--ifm-color-emphasis-200);
+  border: 1px dashed var(--ifm-color-emphasis-400);
+  cursor: default;
+  white-space: nowrap;
+}

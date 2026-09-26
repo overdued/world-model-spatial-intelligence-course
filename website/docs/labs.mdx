@@ -10,21 +10,48 @@ import ColabBadge from '@site/src/components/ColabBadge';
 
 Every lab is a Colab notebook designed to run end-to-end on the **free tier (T4 GPU, 12h session)** — small models, small datasets, precomputed assets where needed. Nothing to install locally.
 
+:::tip 当前可用
+**Lab 0–2 已上线**（CPU 即可运行）。Lab 3–10 正在开发中，标记为 🚧 的条目暂无 notebook。
+:::
+
 Lab order is a suggestion, not a requirement: the Scientist track leans on Labs 1–4, 7, 9, 10; the Engineer track on Labs 1, 5, 6, 8, 9, 10. The capstone is shared.
 
-| Lab | What you build | GPU budget | Open |
+Lab 状态统一由 [`labs/manifest.json`](https://github.com/overdued/world-model-spatial-intelligence-course/blob/main/labs/manifest.json) 维护：✅ Ready（可一键运行）/ 🚧 In Development / 📋 Planned。只有 ✅ 的 Lab 才会显示 Colab 徽章。
+
+## Lab Dependency Graph
+
+```mermaid
+graph TD
+    L0["Lab 0 · Tiny World ✅"] --> L1["Lab 1 · Kalman Filter ✅"]
+    L0 --> L2["Lab 2 · Latent Dynamics ✅"]
+    L2 --> L3["Lab 3 · Tiny RSSM 🚧"]
+    L3 --> L4["Lab 4 · MPC / CEM Planning 🚧"]
+    L4 --> L9["Lab 9 · World Model + Policy 🚧"]
+    L3 --> L9
+    L3 --> L10["Lab 10 · OOD / Drift Evaluation 🚧"]
+    L9 --> L10
+    L0 --> L5["Lab 5 · NeRF / 3DGS 🚧"]
+    L5 --> L6["Lab 6 · Dynamic 4D Worlds 🚧"]
+    L6 --> L8["Lab 8 · Navigation World Model 🚧"]
+    L8 --> L10
+    L2 --> L7["Lab 7 · Video World Model 🚧"]
+```
+
+Scientist 主线：`Lab 0 → 1 → 2 → 3 → 4 → 9 → 10`（Observation → State → Representation → Dynamics → Imagination → Planning → Policy → Evaluation）。Spatial 主线：`Lab 0 → 5 → 6 → 8 → 10`。Video 支线：`Lab 2 → 7`。
+
+| Lab | What you build | Status | Open |
 | --- | --- | --- | --- |
-| **Lab 0 · Tiny World** | A Gymnasium-compatible environment from scratch — the testbed for everything after | CPU only | <ColabBadge lab="lab00_tiny_world" /> |
-| **Lab 1 · Kalman Filter** | Hand-written KF predict–update loop tracking a noisy 2D target, compared against dynamax | CPU only | <ColabBadge lab="lab01_kalman_filter" /> |
-| **Lab 2 · Latent Dynamics** | VAE encoder + latent transition model: the minimal observation → latent → prediction loop | ~1–2 h T4 | <ColabBadge lab="lab02_latent_dynamics" /> |
-| **Lab 3 · Tiny RSSM** | A simplified RSSM (deterministic GRU + stochastic latent, KL training) on image observations | ~4–8 h T4 | <ColabBadge lab="lab03_tiny_rssm" /> |
-| **Lab 4 · MPC / CEM Planning** | CEM and MPPI planners on your learned latent dynamics — model + planner = controller | ~1–2 h T4 | <ColabBadge lab="lab04_mpc_cem_planning" /> |
-| **Lab 5 · NeRF / Gaussian Splatting** | Reconstruct a static scene two ways: a tiny NeRF and 3DGS, with speed–quality comparison | ~2–3 h T4 | <ColabBadge lab="lab05_nerf_gaussian_splatting" /> |
-| **Lab 6 · Dynamic 4D Worlds** | Extend Lab 5 along the time axis: 4D Gaussians or deformation-field NeRF | ~2–4 h T4 | <ColabBadge lab="lab06_dynamic_4d_worlds" /> |
-| **Lab 7 · Video World Model** | A small action-conditioned video predictor (diffusion/flow matching) — watch drift happen | ~4–6 h T4 | <ColabBadge lab="lab07_video_world_model" /> |
-| **Lab 8 · Navigation World Model** | A navigation world-model pipeline with EuRoC-based state-estimation evaluation | ~3–5 h T4 | <ColabBadge lab="lab08_navigation_world_model" /> |
-| **Lab 9 · World Model + Policy** | Full MBRL closed loop: actor-critic in imagination (Dreamer-style) or TD-MPC-style planning | ~6–10 h T4 | <ColabBadge lab="lab09_world_model_policy" /> |
-| **Lab 10 · OOD / Drift Evaluation** | A standardized "health check" for your trained world model: calibration, rollout error, drift | ~1–3 h T4 | <ColabBadge lab="lab10_ood_drift_evaluation" /> |
+| **Lab 0 · Tiny World** | A Gymnasium-compatible environment from scratch — the testbed for everything after | ✅ Ready (CPU ~5s) | <ColabBadge lab="lab00_tiny_world" /> |
+| **Lab 1 · Kalman Filter** | Hand-written KF predict–update loop tracking a noisy 2D target, compared against dynamax | ✅ Ready (CPU ~3s) | <ColabBadge lab="lab01_kalman_filter" /> |
+| **Lab 2 · Latent Dynamics** | VAE encoder + latent transition model: the minimal observation → latent → prediction loop | ✅ Ready (CPU ~1min) | <ColabBadge lab="lab02_latent_dynamics" /> |
+| **Lab 3 · Tiny RSSM** | A simplified RSSM (deterministic GRU + stochastic latent, KL training) on image observations | 🚧 In Development | <ColabBadge lab="lab03_tiny_rssm" /> |
+| **Lab 4 · MPC / CEM Planning** | CEM and MPPI planners on your learned latent dynamics — model + planner = controller | 🚧 In Development | <ColabBadge lab="lab04_mpc_cem_planning" /> |
+| **Lab 5 · NeRF / Gaussian Splatting** | Reconstruct a static scene two ways: a tiny NeRF and 3DGS, with speed–quality comparison | 🚧 In Development | <ColabBadge lab="lab05_nerf_gaussian_splatting" /> |
+| **Lab 6 · Dynamic 4D Worlds** | Extend Lab 5 along the time axis: 4D Gaussians or deformation-field NeRF | 🚧 In Development | <ColabBadge lab="lab06_dynamic_4d_worlds" /> |
+| **Lab 7 · Video World Model** | A small action-conditioned video predictor (diffusion/flow matching) — watch drift happen | 🚧 In Development | <ColabBadge lab="lab07_video_world_model" /> |
+| **Lab 8 · Navigation World Model** | A navigation world-model pipeline with EuRoC-based state-estimation evaluation | 🚧 In Development | <ColabBadge lab="lab08_navigation_world_model" /> |
+| **Lab 9 · World Model + Policy** | Full MBRL closed loop: actor-critic in imagination (Dreamer-style) or TD-MPC-style planning | 🚧 In Development | <ColabBadge lab="lab09_world_model_policy" /> |
+| **Lab 10 · OOD / Drift Evaluation** | A standardized "health check" for your trained world model: calibration, rollout error, drift | 🚧 In Development | <ColabBadge lab="lab10_ood_drift_evaluation" /> |
 
 ## Capstone
 
