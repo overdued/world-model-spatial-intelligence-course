@@ -1,0 +1,65 @@
+name: Lab notebooks
+
+# Execute every lab notebook top to bottom on CPU, one job per lab.
+# The weekly run catches breakage from new releases of the unpinned dependencies.
+on:
+  pull_request:
+    paths:
+      - 'labs/**'
+      - '.github/workflows/lab-notebooks.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'labs/**'
+  schedule:
+    - cron: '0 3 * * 1'   # Mondays 03:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  list:
+    runs-on: ubuntu-latest
+    outputs:
+      labs: ${{ steps.find.outputs.labs }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: find
+        run: echo "labs=$(ls -d labs/lab*/ | xargs -n1 basename | jq -R . | jq -sc .)" >> "$GITHUB_OUTPUT"
+
+  run:
+    needs: list
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        lab: ${{ fromJson(needs.list.outputs.labs) }}
+    defaults:
+      run:
+        working-directory: labs/${{ matrix.lab }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: labs/*/requirements.txt
+
+      - name: Install dependencies
+        run: |
+          # CPU-only torch wheel avoids downloading ~2 GB of CUDA libraries.
+          if grep -q '^torch' requirements.txt; then
+            pip install torch --index-url https://download.pytorch.org/whl/cpu
+          fi
+          pip install -r requirements.txt nbconvert ipykernel
+
+      - name: Execute notebook
+        env:
+          MPLBACKEND: Agg
+        run: >
+          jupyter nbconvert --to notebook --execute notebook.ipynb
+          --ExecutePreprocessor.timeout=900
+          --output-dir "$RUNNER_TEMP/out"

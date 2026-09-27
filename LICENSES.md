@@ -4,8 +4,8 @@
 
 ## 本仓库原创内容
 
-- 文档（README、synthesis/、各课程 README/metadata/links）：建议 **CC BY 4.0**。
-- 脚本（scripts/）：建议 **MIT**。
+- 文档（README、website/docs、synthesis/、各课程 README/metadata/links）：**CC BY 4.0**，全文见 [`LICENSE-CONTENT`](LICENSE-CONTENT)。
+- 代码（labs/、scripts/、website/src）：**MIT**，全文见 [`LICENSE`](LICENSE)。
 
 ## 第三方课程材料
 
