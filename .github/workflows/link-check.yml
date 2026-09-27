@@ -1,0 +1,41 @@
+name: Weekly link check
+
+on:
+  schedule:
+    - cron: '0 2 * * 1'   # Mondays 02:00 UTC (10:00 Beijing)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Check links
+        run: python scripts/check_links.py
+
+      # The report is informational: many course pages block bots or need a
+      # login, so the job does not fail on dead links. Read the summary instead.
+      - name: Write summary
+        if: always()
+        run: |
+          {
+            echo "## Link check"
+            sed -n '/^## 统计/,$p' logs/link_check.md
+            echo
+            echo "### 404 / 410"
+            grep -E '\| (404|410)' logs/link_check.md || echo "None"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: link-check-report
+          path: logs/link_check.md
