@@ -1,0 +1,43 @@
+---
+sidebar_position: 5
+title: Transformers and Attention
+sidebar_label: Transformers
+description: The backbone of modern world models — attention, positional encoding, autoregressive and masked modeling; consult on demand.
+---
+
+# Transformers
+
+> This page is a **reference manual**. From IRIS and Genie to V-JEPA and VLAs, the backbone of almost every modern world model is a Transformer. You don't need to be able to train a large model from scratch, only to read these models' architecture diagrams and loss functions.
+
+## Minimal knowledge set
+
+- **Attention**: $\mathrm{Attention}(Q,K,V) = \mathrm{softmax}\!\left(QK^\top / \sqrt{d}\right)V$. Each token gathers information from the others, weighted by similarity. The $\sqrt{d}$ keeps the softmax from saturating.
+- **Multi-head attention and residual blocks**: several heads look at different relations in parallel. "Attention + MLP + residual + LayerNorm" is the unit that gets stacked over and over.
+- **Positional encoding**: attention itself has no notion of order, so position (time step, image-patch coordinates) is encoded into the tokens. NeRF's positional encoding (Track B Module 04) is the same idea.
+- **Causal masking and autoregression**: look only at the past and predict the next token. Video world models generate the future frame by frame or token by token in exactly this way.
+- **Masked modeling**: hide part of the input and predict it. MAE predicts in pixel space, JEPA predicts in representation space (Track A Module 04).
+- **ViT and tokenization**: cut an image into 16×16 patches and treat them as tokens. Add a time axis for video and you get spatiotemporal tokens.
+
+## When to consult
+
+| Main-track module | Transformers used |
+|---|---|
+| Track A 04 Representation Learning | ViT, masked modeling, the JEPA predictor |
+| Track A 10 Video World Models | Spatiotemporal tokens, autoregressive generation, action conditioning |
+| Track B 12 VLA and World-Action Models | Multimodal tokens, action tokenization |
+
+## Best external resources
+
+- **3Blue1Brown: Attention in transformers, step-by-step** ([3blue1brown.com/lessons/attention](https://www.3blue1brown.com/lessons/attention)): build the geometric intuition first.
+- **Andrej Karpathy: Let's build GPT from scratch** ([YouTube](https://www.youtube.com/watch?v=kCc8FmEb1nY)): write a GPT from zero in two hours. The best hands-on introduction.
+- **The Annotated Transformer** ([nlp.seas.harvard.edu](https://nlp.seas.harvard.edu/annotated-transformer/)): the original paper, line by line, with PyTorch code.
+- ***Dive into Deep Learning*, Chapter 11** ([d2l.ai](https://d2l.ai/chapter_attention-mechanisms-and-transformers/index.html)): a textbook treatment of attention and Transformers.
+- **Original papers**: [Attention Is All You Need](https://arxiv.org/abs/1706.03762) (Vaswani et al., 2017) and [ViT](https://arxiv.org/abs/2010.11929) (Dosovitskiy et al., 2021).
+
+## Self-check
+
+You are ready when you can write out the forward pass of single-head attention and state every tensor's shape, explain why a causal mask lets a model generate autoregressively, and say how the prediction targets of MAE and JEPA differ.
+
+## Next
+
+Back to the main tracks: [Track A Module 04](../scientist/04-representation-learning.mdx) or [Track A Module 10](../scientist/10-video-world-models.mdx)

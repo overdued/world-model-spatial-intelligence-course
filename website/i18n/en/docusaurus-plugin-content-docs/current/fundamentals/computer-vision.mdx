@@ -1,0 +1,42 @@
+---
+sidebar_position: 6
+title: Computer Vision
+sidebar_label: Computer Vision
+description: The minimal path from pixels to geometry — image formation, camera models, feature matching, and visual encoders; consult on demand.
+---
+
+# Computer Vision
+
+> This page is a **reference manual**. Most world models take images and video as input, and spatial intelligence is built on recovering geometry from pixels. This page covers only what the main tracks actually use.
+
+## Minimal knowledge set
+
+- **Image formation and the pinhole camera**: a 3D point is moved into the camera frame by the extrinsics $[R \mid t]$, then projected to pixels by the intrinsics $K$: $\lambda\, \tilde{x} = K [R \mid t]\, \tilde{X}$. Depth is lost in the projection, which is the root of every difficulty in monocular vision.
+- **Multi-view geometry**: corresponding points in two views satisfy the epipolar constraint, and with two known camera poses you can triangulate a 3D point. SLAM, SfM, and NeRF training data all rely on this.
+- **Features and matching**: corners, SIFT / ORB descriptors, and RANSAC to reject outliers. This is exactly the front end of ORB-SLAM.
+- **Convolutional features and visual encoders**: translation equivariance and hierarchical features in CNNs. Pretrained encoders (ResNet, DINO, ViT) compress an image into a vector you can predict on.
+- **Dense prediction**: depth estimation, optical flow, and segmentation produce one output per pixel. They are common intermediate representations for 4D scenes and navigation.
+
+## When to consult
+
+| Main-track module | Computer vision used |
+|---|---|
+| Track B 02 Camera and Geometry | Pinhole model, intrinsics and extrinsics, epipolar geometry |
+| Track B 03 Depth and Point Clouds | Triangulation, depth estimation, back-projection to point clouds |
+| Track B 07 SLAM and VIO | Feature matching, RANSAC, bundle adjustment |
+| Track A 04 Representation Learning | Visual encoders, pretrained features |
+
+## Best external resources
+
+- **Stanford CS231A** ([course page](https://web.stanford.edu/class/cs231a/) · [course notes](https://web.stanford.edu/class/cs231a/course_notes.html)): camera models, epipolar geometry, and SfM, the closest match to Track B. Start with Lecture 2, [Camera Models](https://web.stanford.edu/class/cs231a/lectures_2025/lecture2_camera_models.pdf).
+- **Stanford CS231n course notes** ([cs231n.github.io](https://cs231n.github.io/)): the classic introduction to convolutional networks and visual representations.
+- **Richard Szeliski, *Computer Vision: Algorithms and Applications*, 2nd ed.** ([szeliski.org/Book](https://szeliski.org/Book/)): free PDF. Chapter 2 (image formation), Chapter 7 (feature detection and matching), and Chapter 11 (SfM and SLAM) are the most relevant.
+- ***Dive into Deep Learning*, Chapter 7** ([d2l.ai](https://d2l.ai/chapter_convolutional-neural-networks/index.html)): convolutional networks, explained with code.
+
+## Self-check
+
+You are ready when you can write the pinhole projection and say what the intrinsics and extrinsics each control, explain why two views can triangulate a point but one cannot, and say what problem RANSAC solves.
+
+## Next
+
+Back to the main tracks: [Track B Module 02](../spatial/02-camera-and-geometry.mdx) or [Track A Module 04](../scientist/04-representation-learning.mdx)
