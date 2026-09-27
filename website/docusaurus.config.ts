@@ -6,7 +6,12 @@ import rehypeKatex from 'rehype-katex';
 
 const config: Config = {
   title: 'World Models & Spatial Intelligence',
-  tagline: '从表征到预测、规划与物理智能',
+  // siteConfig strings are not translatable through i18n/ JSON, so the
+  // tagline (used for the homepage <meta description>) is chosen per locale.
+  tagline:
+    process.env.DOCUSAURUS_CURRENT_LOCALE === 'en'
+      ? 'From Representation to Prediction, Planning and Physical Intelligence'
+      : '从表征到预测、规划与物理智能',
   url: 'https://overdued.github.io',
   baseUrl: '/world-model-spatial-intelligence-course/',
   organizationName: 'overdued',
@@ -115,11 +120,11 @@ const config: Config = {
           position: 'left',
           items: [
             {
-              label: '🧑‍🔬 World Model Scientist',
+              label: '🧑‍🔬 世界模型科学家',
               to: '/docs/scientist/',
             },
             {
-              label: '👷 Spatial & Embodied Engineer',
+              label: '👷 空间与具身工程师',
               to: '/docs/spatial/',
             },
           ],
@@ -171,8 +176,8 @@ const config: Config = {
           title: '学习',
           items: [
             {label: '从这里开始', to: '/docs/start-here/'},
-            {label: 'World Model Scientist', to: '/docs/scientist/'},
-            {label: 'Spatial & Embodied Engineer', to: '/docs/spatial/'},
+            {label: '世界模型科学家', to: '/docs/scientist/'},
+            {label: '空间与具身工程师', to: '/docs/spatial/'},
             {label: '路线图', to: '/roadmap'},
           ],
         },
@@ -193,18 +198,18 @@ const config: Config = {
               href: 'https://github.com/overdued/world-model-spatial-intelligence-course',
             },
             {
-              label: 'Issues',
+              label: '问题反馈',
               href: 'https://github.com/overdued/world-model-spatial-intelligence-course/issues',
             },
             {
-              label: 'CUHK(SZ)',
+              label: '港中大（深圳）',
               href: 'https://www.cuhk.edu.cn/',
             },
           ],
         },
       ],
       copyright:
-        'Copyright © 2026 CUHK(SZ) SAI BL&SP Group. Docs CC BY 4.0 · Code MIT.',
+        'Copyright © 2026 港中大（深圳）人工智能学院 BL&SP 课题组 · 文档 CC BY 4.0 · 代码 MIT',
     },
     prism: {
       theme: prismThemes.github,

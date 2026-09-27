@@ -40,7 +40,7 @@ export default function TrackRoadmap({track}) {
       <div className={styles.header}>
         <span className={styles.icon}>{data.icon}</span>
         <div>
-          <div className={styles.trackTitle}>{data.title}</div>
+          <div className={styles.trackTitle}>{pick(locale, data, 'title')}</div>
           <div className={styles.tagline}>{pick(locale, data, 'tagline')}</div>
         </div>
       </div>
@@ -58,7 +58,7 @@ export default function TrackRoadmap({track}) {
                 className={`${styles.card} ${done ? styles.cardDone : ''}`}>
                 <div className={styles.cardTop}>
                   <span className={styles.moduleId}>{mod.id}</span>
-                  <span className={styles.moduleTitle}>{mod.title}</span>
+                  <span className={styles.moduleTitle}>{pick(locale, mod, 'title')}</span>
                   <span className={styles.estTime}>{pick(locale, mod, 'estTime')}</span>
                 </div>
                 <div className={styles.oneLiner}>{pick(locale, mod, 'oneLiner')}</div>
@@ -91,7 +91,7 @@ export default function TrackRoadmap({track}) {
                 下一个：
               </Translate>{' '}
               <Link to={`${data.basePath}/${stats.next.slug}`}>
-                {stats.next.id} · {stats.next.title}
+                {stats.next.id} · {pick(locale, stats.next, 'title')}
               </Link>
             </>
           ) : (

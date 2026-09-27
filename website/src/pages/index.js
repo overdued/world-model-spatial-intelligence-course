@@ -42,9 +42,10 @@ function Hero() {
 const paths = [
   {
     icon: '🧩',
-    name: 'Foundations',
-    tagline: '补齐短板——线性代数、概率、PyTorch、深度学习、强化学习、计算机视觉。',
-    taglineEn: 'Fill the gaps — linear algebra, probability, PyTorch, DL, RL, CV.',
+    name: '基础',
+    nameEn: 'Foundations',
+    tagline: '补齐短板——线性代数、概率、PyTorch、深度学习、Transformer、计算机视觉、强化学习。',
+    taglineEn: 'Fill the gaps — linear algebra, probability, PyTorch, DL, Transformers, CV, RL.',
     learner: '来自邻近领域的任何人；按需取用。',
     learnerEn: 'Anyone arriving from an adjacent field; dip in as needed.',
     modules: '7 个模块',
@@ -59,7 +60,8 @@ const paths = [
   },
   {
     icon: '🧑‍🔬',
-    name: 'World Model Scientist',
+    name: '世界模型科学家',
+    nameEn: 'World Model Scientist',
     tagline: '表征 → 动力学 → 预测 → 规划 → 评估。',
     taglineEn: 'Representation → Dynamics → Prediction → Planning → Evaluation.',
     learner: '想亲手构建世界模型的研究者与工程师。',
@@ -76,7 +78,8 @@ const paths = [
   },
   {
     icon: '👷',
-    name: 'Spatial & Embodied Engineer',
+    name: '空间与具身工程师',
+    nameEn: 'Spatial & Embodied Engineer',
     tagline: '几何 → 3D → SLAM → 空间记忆 → 导航 → 机器人。',
     taglineEn: 'Geometry → 3D → SLAM → Spatial Memory → Navigation → Robot.',
     learner: '机器人、自动驾驶、AR/VR 与空间计算的构建者。',
@@ -105,7 +108,7 @@ function ChooseYourPath() {
           {paths.map((p) => (
             <div key={p.name} className={styles.pathCard}>
               <div className={styles.pathIcon}>{p.icon}</div>
-              <h3 className={styles.pathName}>{p.name}</h3>
+              <h3 className={styles.pathName}>{pick(locale, p, 'name')}</h3>
               <p className={styles.pathTagline}>{pick(locale, p, 'tagline')}</p>
               <dl className={styles.pathMeta}>
                 <div>

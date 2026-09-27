@@ -2,7 +2,7 @@
  * Track definitions — CONTRACT FILE.
  *
  * Content authors (module MDX writers) rely on this exact shape:
- *   tracks.<track>.modules[] = {id, title, slug, estTime, estTimeEn, oneLiner, oneLinerEn}
+ *   tracks.<track>.modules[] = {id, title, titleEn, slug, estTime, estTimeEn, oneLiner, oneLinerEn}
  * - `id`    is the stable module id used by <ModuleProgress id="a01" />
  *           and localStorage progress (key "wmsi-progress").
  * - `slug`  is the doc route segment under the track base, i.e. the MDX
@@ -10,8 +10,8 @@
  * - Full module URL = `/docs/<track>/<slug>`.
  *
  * i18n convention: default fields are Chinese (defaultLocale zh-Hans);
- * `*En` fields carry the English text. `title` stays in English in both
- * locales because it matches the doc titles / sidebar labels.
+ * `*En` fields carry the English text. `title` / `titleEn` match the doc
+ * titles in docs/ (Chinese) and i18n/en/ (English) respectively.
  * Components select fields with `pick(locale, obj, field)` from
  * src/utils/i18n.js.
  *
@@ -21,7 +21,8 @@
 export const tracks = {
   scientist: {
     key: 'scientist',
-    title: 'World Model Scientist',
+    title: '世界模型科学家',
+    titleEn: 'World Model Scientist',
     shortTitle: 'Scientist',
     icon: '🧑‍🔬',
     basePath: '/docs/scientist',
@@ -30,7 +31,8 @@ export const tracks = {
     modules: [
       {
         id: 'a01',
-        title: 'What is a World Model?',
+        title: '什么是世界模型？',
+        titleEn: 'What is a World Model?',
         slug: '01-what-is-a-world-model',
         estTime: '45 分钟',
         estTimeEn: '45 min',
@@ -39,7 +41,8 @@ export const tracks = {
       },
       {
         id: 'a02',
-        title: 'Observation, State and POMDP',
+        title: '观测、状态与 POMDP',
+        titleEn: 'Observation, State and POMDP',
         slug: '02-observation-state-pomdp',
         estTime: '60 分钟',
         estTimeEn: '60 min',
@@ -48,7 +51,8 @@ export const tracks = {
       },
       {
         id: 'a03',
-        title: 'State Space Models',
+        title: '状态空间模型',
+        titleEn: 'State Space Models',
         slug: '03-state-space-models',
         estTime: '75 分钟',
         estTimeEn: '75 min',
@@ -57,7 +61,8 @@ export const tracks = {
       },
       {
         id: 'a04',
-        title: 'Representation Learning',
+        title: '表征学习',
+        titleEn: 'Representation Learning',
         slug: '04-representation-learning',
         estTime: '60 分钟',
         estTimeEn: '60 min',
@@ -66,7 +71,8 @@ export const tracks = {
       },
       {
         id: 'a05',
-        title: 'Latent Dynamics',
+        title: '潜在动力学',
+        titleEn: 'Latent Dynamics',
         slug: '05-latent-dynamics',
         estTime: '75 分钟',
         estTimeEn: '75 min',
@@ -76,6 +82,7 @@ export const tracks = {
       {
         id: 'a06',
         title: 'RSSM',
+        titleEn: 'RSSM',
         slug: '06-rssm',
         estTime: '90 分钟',
         estTimeEn: '90 min',
@@ -84,7 +91,8 @@ export const tracks = {
       },
       {
         id: 'a07',
-        title: 'World Models 2018',
+        title: 'World Models（2018）',
+        titleEn: 'World Models 2018',
         slug: '07-world-models-2018',
         estTime: '45 分钟',
         estTimeEn: '45 min',
@@ -94,6 +102,7 @@ export const tracks = {
       {
         id: 'a08',
         title: 'Dreamer',
+        titleEn: 'Dreamer',
         slug: '08-dreamer',
         estTime: '90 分钟',
         estTimeEn: '90 min',
@@ -102,7 +111,8 @@ export const tracks = {
       },
       {
         id: 'a09',
-        title: 'Planning with World Models',
+        title: '基于世界模型的规划',
+        titleEn: 'Planning with World Models',
         slug: '09-planning-with-world-models',
         estTime: '75 分钟',
         estTimeEn: '75 min',
@@ -111,7 +121,8 @@ export const tracks = {
       },
       {
         id: 'a10',
-        title: 'Video World Models',
+        title: '视频世界模型',
+        titleEn: 'Video World Models',
         slug: '10-video-world-models',
         estTime: '75 分钟',
         estTimeEn: '75 min',
@@ -120,7 +131,8 @@ export const tracks = {
       },
       {
         id: 'a11',
-        title: 'World Model + Policy',
+        title: '世界模型 + 策略',
+        titleEn: 'World Model + Policy',
         slug: '11-world-model-policy',
         estTime: '75 分钟',
         estTimeEn: '75 min',
@@ -129,7 +141,8 @@ export const tracks = {
       },
       {
         id: 'a12',
-        title: 'OOD, Drift and Evaluation',
+        title: 'OOD、漂移与评估',
+        titleEn: 'OOD, Drift and Evaluation',
         slug: '12-ood-drift-evaluation',
         estTime: '60 分钟',
         estTimeEn: '60 min',
@@ -138,7 +151,8 @@ export const tracks = {
       },
       {
         id: 'a13',
-        title: 'Capstone: Build Your Own World Model',
+        title: '毕业项目：构建你自己的空间世界模型',
+        titleEn: 'Capstone: Build Your Own World Model',
         slug: '13-capstone',
         estTime: '项目制',
         estTimeEn: 'project',
@@ -149,7 +163,8 @@ export const tracks = {
   },
   spatial: {
     key: 'spatial',
-    title: 'Spatial & Embodied Intelligence',
+    title: '空间与具身智能',
+    titleEn: 'Spatial & Embodied Intelligence',
     shortTitle: 'Engineer',
     icon: '👷',
     basePath: '/docs/spatial',
@@ -158,7 +173,8 @@ export const tracks = {
     modules: [
       {
         id: 'b01',
-        title: 'What is Spatial Intelligence?',
+        title: '什么是空间智能？',
+        titleEn: 'What is Spatial Intelligence?',
         slug: '01-what-is-spatial-intelligence',
         estTime: '45 分钟',
         estTimeEn: '45 min',
@@ -167,7 +183,8 @@ export const tracks = {
       },
       {
         id: 'b02',
-        title: 'Camera and Geometry',
+        title: '相机与几何',
+        titleEn: 'Camera and Geometry',
         slug: '02-camera-and-geometry',
         estTime: '60 分钟',
         estTimeEn: '60 min',
@@ -176,7 +193,8 @@ export const tracks = {
       },
       {
         id: 'b03',
-        title: 'Depth and Point Clouds',
+        title: '深度与点云',
+        titleEn: 'Depth and Point Clouds',
         slug: '03-depth-and-point-clouds',
         estTime: '60 分钟',
         estTimeEn: '60 min',
@@ -185,7 +203,8 @@ export const tracks = {
       },
       {
         id: 'b04',
-        title: 'NeRF and Gaussian Splatting',
+        title: 'NeRF 与 Gaussian Splatting',
+        titleEn: 'NeRF and Gaussian Splatting',
         slug: '04-nerf-gaussian-splatting',
         estTime: '90 分钟',
         estTimeEn: '90 min',
@@ -194,7 +213,8 @@ export const tracks = {
       },
       {
         id: 'b05',
-        title: 'Dynamic 3D / 4D Worlds',
+        title: '动态 3D / 4D 世界',
+        titleEn: 'Dynamic 3D / 4D Worlds',
         slug: '05-dynamic-4d-worlds',
         estTime: '75 分钟',
         estTimeEn: '75 min',
@@ -203,7 +223,8 @@ export const tracks = {
       },
       {
         id: 'b06',
-        title: 'State Estimation',
+        title: '状态估计',
+        titleEn: 'State Estimation',
         slug: '06-state-estimation',
         estTime: '75 分钟',
         estTimeEn: '75 min',
@@ -212,7 +233,8 @@ export const tracks = {
       },
       {
         id: 'b07',
-        title: 'SLAM and VIO',
+        title: 'SLAM 与 VIO',
+        titleEn: 'SLAM and VIO',
         slug: '07-slam-vio',
         estTime: '90 分钟',
         estTimeEn: '90 min',
@@ -221,7 +243,8 @@ export const tracks = {
       },
       {
         id: 'b08',
-        title: 'Spatial Memory',
+        title: '空间记忆',
+        titleEn: 'Spatial Memory',
         slug: '08-spatial-memory',
         estTime: '60 分钟',
         estTimeEn: '60 min',
@@ -230,7 +253,8 @@ export const tracks = {
       },
       {
         id: 'b09',
-        title: 'Affordance',
+        title: '可供性（Affordance）',
+        titleEn: 'Affordance',
         slug: '09-affordance',
         estTime: '45 分钟',
         estTimeEn: '45 min',
@@ -239,7 +263,8 @@ export const tracks = {
       },
       {
         id: 'b10',
-        title: 'Navigation',
+        title: '导航',
+        titleEn: 'Navigation',
         slug: '10-navigation',
         estTime: '75 分钟',
         estTimeEn: '75 min',
@@ -248,7 +273,8 @@ export const tracks = {
       },
       {
         id: 'b11',
-        title: 'Robot World Models',
+        title: '机器人世界模型',
+        titleEn: 'Robot World Models',
         slug: '11-robot-world-models',
         estTime: '75 分钟',
         estTimeEn: '75 min',
@@ -257,7 +283,8 @@ export const tracks = {
       },
       {
         id: 'b12',
-        title: 'VLA and World-Action Models',
+        title: 'VLA 与世界-动作模型',
+        titleEn: 'VLA and World-Action Models',
         slug: '12-vla-world-action-models',
         estTime: '75 分钟',
         estTimeEn: '75 min',
@@ -266,7 +293,8 @@ export const tracks = {
       },
       {
         id: 'b13',
-        title: 'Capstone: Build Your Own Spatial World Model',
+        title: '毕业项目：构建你自己的空间世界模型',
+        titleEn: 'Capstone: Build Your Own Spatial World Model',
         slug: '13-capstone',
         estTime: '项目制',
         estTimeEn: 'project',

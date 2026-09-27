@@ -1,22 +1,22 @@
 ---
-title: State Estimation
-sidebar_label: 06 · State Estimation
+title: 状态估计
+sidebar_label: 06 · 状态估计
 description: Kalman/EKF/UKF 与因子图——空间智能的状态推断引擎。
 ---
 
-<ModuleProgress id="b06" label="State Estimation" />
+<ModuleProgress id="b06" label="状态估计" />
 
-## Why this matters
+## 为什么重要
 
-机器人不知道自己在哪，一切 3D 表示都无处安放。状态估计是空间智能的推断引擎：把带噪传感器流变成连续可信的位姿与地图估计。本模块与 Track A 模块 03 互为镜像——那里学理论，这里学系统。
+机器人不知道自己在哪，一切 3D 表示都无处安放。状态估计是空间智能的推断引擎：把带噪传感器流变成连续可信的位姿与地图估计。本模块与 路线 A 模块 03 互为镜像——那里学理论，这里学系统。
 
-## Visual Intuition
+## 直观理解
 
 ![Kalman filter](/img/kalman-filter.svg)
 
 预测-更新循环在机器人语境下的含义：IMU/轮速计把 belief 向前传播（不确定性膨胀），相机/GPS 观测把它拉回（不确定性收缩）。椭圆是协方差——机器人对自身位置"把握有多大"。
 
-## Core Idea
+## 核心思想
 
 空间智能的状态估计面对的现实是**非线性 + 多传感器 + 实时**。非线性来自旋转与透视投影：EKF 在当前估计处做一阶泰勒展开线性化，简单但对大误差发散；UKF 用少量 sigma 点传播分布，无需雅可比且精度到二阶。两者都是"滤波"路线——只维护当前状态的 belief，历史被边际化掉。
 
@@ -24,7 +24,7 @@ description: Kalman/EKF/UKF 与因子图——空间智能的状态推断引擎�
 
 工程要点是**不确定性的正确使用**：协方差不只是输出，它决定传感器融合的权重（噪声大的传感器自动降权）、决定何时信任模型（ Kalman gain 的空间版）、决定下游规划的安全余量。VIO（模块 07）就是本模块理论 + IMU 预积分 + 视觉前端的系统集成。
 
-## Key Concepts
+## 关键概念
 
 - **EKF**：局部线性化的滤波，简单脆弱但无处不在。
 - **UKF**：sigma 点无迹变换，免雅可比、二阶精度。
@@ -32,7 +32,7 @@ description: Kalman/EKF/UKF 与因子图——空间智能的状态推断引擎�
 - **滤波 vs 平滑**：边际化历史 vs 联合优化整段轨迹。
 - **协方差即权重**：不确定性驱动传感器融合与规划安全边际。
 
-## Core Equations
+## 核心公式
 
 EKF 的线性化更新（$F_t, H_t$ 为雅可比）：
 
@@ -42,26 +42,26 @@ $$P_{t|t-1} = F_t P_{t-1|t-1} F_t^\top + Q, \qquad K_t = P_{t|t-1} H_t^\top (H_t
 
 $$X^* = \arg\min_X \sum_i \big\| h_i(X) - z_i \big\|_{\Sigma_i}^2$$
 
-## University Lecture
+## 大学课程
 
 | 课程 | Lecture | 链接 |
 |---|---|---|
 | Stanford CS231A | L14–L15 Optimal Estimation（KF/EKF/UKF，flipped format）+ PS4 | [课程主页](https://web.stanford.edu/class/cs231a/) |
 | MIT 16.485 VNAV | L16–L19 ML/MAP Estimation 与非线性最小二乘 | [课程主页](https://vnav.mit.edu/) |
 
-## Papers
+## 论文
 
 - **Must Read**：Kalman (1960), *A New Approach to Linear Filtering and Prediction Problems*（经典论文，搜索论文名）。
 - **Recommended**：Thrun, Burgard & Fox, *Probabilistic Robotics*（教材，搜索书名）——机器人状态估计的圣经，第 3 章。
 - **Optional**：[dynamax](https://github.com/probml/dynamax)（JAX 生态的 SSM 库）与 [GTSAM](https://gtsam.org/)（因子图优化库）的 tutorial。
 
-## Hands-on
+## 动手实践
 
 <ColabBadge lab="lab01_kalman_filter" />
 
-Lab 1 手写 KF 跟踪 2D 目标并与 dynamax 对比。Track B 学习者额外建议：把观测换成"只在某些时刻可用"（模拟 GPS 丢失），观察协方差的膨胀与收缩。
+Lab 1 手写 KF 跟踪 2D 目标并与 dynamax 对比。路线 B 学习者额外建议：把观测换成"只在某些时刻可用"（模拟 GPS 丢失），观察协方差的膨胀与收缩。
 
-## Check Your Understanding
+## 自测
 
 1. EKF 在什么情况下会发散？
 2. 因子图视角下，EKF 与全平滑 SLAM 的区别是什么？
@@ -75,12 +75,12 @@ Lab 1 手写 KF 跟踪 2D 目标并与 dynamax 对比。Track B 学习者额外�
 3. IMU 高频、短期精确但漂移（积分噪声累积）；视觉低频、无漂移但有尺度歧义与纹理依赖。融合后 IMU 提供帧间高频约束、视觉提供长期锚定并恢复尺度——这正是 VIO 的设计逻辑（模块 07）。
 </details>
 
-## Takeaway
+## 要点回顾
 
 - 状态估计 = 带噪传感器流 → belief 的递归/批量推断，EKF/UKF/因子图是三代工具。
 - 滤波与平滑在因子图语言下统一，滑窗是工程折中。
 - 协方差是融合权重与安全余量的来源——不确定性是系统的燃料而非附属品。
 
-## Next Module
+## 下一模块
 
-[模块 07：SLAM and VIO](./07-slam-vio.mdx)——把状态估计组装成完整的定位建图系统。
+[模块 07：SLAM 与 VIO](./07-slam-vio.mdx)——把状态估计组装成完整的定位建图系统。

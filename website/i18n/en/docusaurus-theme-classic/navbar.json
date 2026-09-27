@@ -27,13 +27,13 @@
     "message": "GitHub",
     "description": "Navbar item with label GitHub"
   },
-  "item.label.🧑‍🔬 World Model Scientist": {
+  "item.label.🧑‍🔬 世界模型科学家": {
     "message": "🧑‍🔬 World Model Scientist",
-    "description": "Navbar item with label 🧑‍🔬 World Model Scientist"
+    "description": "Navbar item with label 🧑‍🔬 世界模型科学家"
   },
-  "item.label.👷 Spatial & Embodied Engineer": {
+  "item.label.👷 空间与具身工程师": {
     "message": "👷 Spatial & Embodied Engineer",
-    "description": "Navbar item with label 👷 Spatial & Embodied Engineer"
+    "description": "Navbar item with label 👷 空间与具身工程师"
   },
   "item.label.大学课程": {
     "message": "University Courses",
