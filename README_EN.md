@@ -90,8 +90,8 @@ Every knowledge point in the course modules is traced back to a university lectu
 
 ## License
 
-- Course content (website/docs, synthesis): **CC BY 4.0**
-- Code (labs, scripts, website/src): **MIT**
+- Course content (website/docs, synthesis): **CC BY 4.0**, see [LICENSE-CONTENT](LICENSE-CONTENT)
+- Code (labs, scripts, website/src): **MIT**, see [LICENSE](LICENSE)
 - Third-party university course materials: copyright belongs to the original authors/universities (see [LICENSES.md](LICENSES.md)); this repository only indexes links and does not redistribute them
 
 ## Acknowledgements

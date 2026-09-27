@@ -90,8 +90,8 @@ Observation → World State → Representation → Dynamics → Prediction → P
 
 ## License
 
-- 课程内容（website/docs、synthesis）：**CC BY 4.0**
-- 代码（labs、scripts、website/src）：**MIT**
+- 课程内容（website/docs、synthesis）：**CC BY 4.0**，见 [LICENSE-CONTENT](LICENSE-CONTENT)
+- 代码（labs、scripts、website/src）：**MIT**，见 [LICENSE](LICENSE)
 - 第三方大学课程材料：版权归原作者/高校所有（见 [LICENSES.md](LICENSES.md)），本仓库仅索引链接、不再分发
 
 ## Acknowledgements
