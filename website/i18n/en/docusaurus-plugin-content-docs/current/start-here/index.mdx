@@ -1,0 +1,62 @@
+---
+title: Start Here
+sidebar_label: Start Here
+description: Portal for the World Models & Spatial Intelligence open course — understand the course in 10 seconds, pick a learning track, learn how modules work, and check your prerequisites.
+---
+
+# World Models & Spatial Intelligence
+
+## The course in 10 seconds
+
+A **world model** is an agent's **predictable representation** of the world: given the current state and an action, it answers "what happens next." **Spatial intelligence** grounds that ability in the 3D/4D physical world: perceiving geometry, estimating one's own state, remembering the environment, and navigating and acting within it. This open course places both in a single framework: **represent the world → predict the world → act in the world**.
+
+![Course overview](/img/world-model-overview.svg)
+
+The figure above is the course's global map: the left half is the "world model" thread (representation, prediction, planning), the right half is the "spatial intelligence" thread (geometry, 3D representations, SLAM, robotics), and the two converge at "action and evaluation."
+
+## Two tracks, how to choose
+
+| | 🧑‍🔬 Track A · World Model Scientist | 🤖 Track B · Spatial & Embodied Intelligence |
+|---|---|---|
+| **Goal** | Build models: learn to construct, train, and evaluate world models | Build systems: assemble spatial-intelligence systems from world models and 3D representations |
+| **Audience** | Learners aiming at world models / generative models / MBRL research | Robotics, autonomous driving, AR/VR, spatial computing |
+| **Core content** | Representation learning → latent dynamics → RSSM/Dreamer → planning → video world models → evaluation | Camera geometry → depth/point clouds → NeRF/3DGS → state estimation/SLAM → navigation/VLA |
+| **Labs** | Labs 0–4, 7, 9, 10 | Labs 0, 1, 5, 6, 8, 9, 10 |
+| **Exit** | Reproduce a Dreamer-class system; complete the Capstone world model | Ship a perception → state-estimation → planning closed loop; complete the spatial Capstone |
+| **Suggested time** | 13 modules, about 8–10 weeks | 13 modules, about 8–10 weeks |
+
+The two tracks are **parallel, not sequential**: building video world models does not require SLAM, and doing SLAM does not require diffusion. If you are unsure, read the first two modules of both tracks before deciding; you can also switch tracks at any time.
+
+## How to use each module
+
+Every module follows the same template. Reading the sections in their fixed order builds stable expectations:
+
+1. **Why this matters**: one paragraph on why the topic is worth learning;
+2. **Visual Intuition**: build intuition from the figures first, then read the text;
+3. **Core Idea / Key Concepts / Core Equations**: the core principles, terminology, and formulas;
+4. **University Lecture**: official links to the corresponding lectures at top universities worldwide, for deeper study;
+5. **Papers**: tiered as Must Read / Recommended / Optional — you do not need to read them all;
+6. **Hands-on**: the corresponding Colab lab — **hands-on work is mandatory, not optional**;
+7. **Check Your Understanding**: self-test questions; if you cannot answer, go back and reread;
+8. **Takeaway / Next Module**: a three-sentence summary plus an explicit next step.
+
+The progress bar at the top of each module (ModuleProgress) tracks your learning progress.
+
+## Prerequisites self-check
+
+This course assumes graduate-level machine-learning background. If you can answer "yes" to every item below, start right away; otherwise, fill gaps on demand from [Foundations](../fundamentals/linear-algebra.mdx) — **Foundations is a reference manual, not a mandatory starting point**:
+
+- [ ] Can do matrix factorization and least squares, and understand the geometric meaning of eigenvalues → [Linear Algebra](../fundamentals/linear-algebra.mdx)
+- [ ] Comfortable with conditional distributions, Bayes' rule, Gaussian distributions, and covariance → [Probability](../fundamentals/probability.mdx)
+- [ ] Can write training loops in PyTorch and manage DataLoaders and GPU memory → [PyTorch](../fundamentals/pytorch.mdx)
+- [ ] Understand backpropagation, VAE/ELBO, and common regularization techniques → [Deep Learning](../fundamentals/deep-learning.mdx)
+- [ ] Know the basic forms of MDPs, the Bellman equation, and policy gradients → [Reinforcement Learning](../fundamentals/reinforcement-learning.mdx)
+
+## Provenance
+
+This course is built on the skeleton of UPenn [CIS 6280: World Models](https://jiataogu.me/cis6280-world-models/) (first offered Fall 2026), and integrates lectures and assignment designs from 11 university courses including Stanford CS231A, CMU 16-825, MIT VNAV, and ETH/UZH VAMR. The University Lecture table in each module is the provenance annotation.
+
+## Next Module
+
+- Track A → [Module 01: What is a World Model?](../scientist/01-what-is-a-world-model.mdx)
+- Track B → [Module 01: What is Spatial Intelligence?](../spatial/01-what-is-spatial-intelligence.mdx)

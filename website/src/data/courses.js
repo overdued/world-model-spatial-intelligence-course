@@ -5,6 +5,10 @@
  *
  * `perspective` marks the two courses that approach "spatial intelligence"
  * from architecture / human-centered design rather than robotics/ML.
+ *
+ * i18n: `note` / `perspectiveLabels` are Chinese (default locale); `noteEn` /
+ * `perspectiveLabelsEn` carry the English text. School names, course names,
+ * instructors and `topics` are proper-noun content and stay in English.
  */
 export const courses = [
   {
@@ -27,7 +31,8 @@ export const courses = [
       'Evaluating world models (OOD, drift, calibration)',
     ],
     materials: {slides: true, notes: true, assignments: false, labs: false, code: false, videos: false},
-    note: 'The backbone of this course — the first graduate course devoted entirely to world models.',
+    note: '本课程的骨干——第一门完全聚焦世界模型的研究生课程。',
+    noteEn: 'The backbone of this course — the first graduate course devoted entirely to world models.',
   },
   {
     id: 'stanford_cs231a',
@@ -104,7 +109,8 @@ export const courses = [
       'Event-based vision & SLAM',
     ],
     materials: {slides: true, notes: true, assignments: true, labs: false, code: true, videos: false},
-    note: 'Mini-project: build a full visual odometry pipeline on KITTI/Malaga real data.',
+    note: '小项目：在 KITTI/Malaga 真实数据上搭建完整的视觉里程计流水线。',
+    noteEn: 'Mini-project: build a full visual odometry pipeline on KITTI/Malaga real data.',
   },
   {
     id: 'ucsd_ml_meets_geometry',
@@ -201,7 +207,8 @@ export const courses = [
       'Computational design orientation',
     ],
     materials: {slides: true, notes: false, assignments: false, labs: false, code: false, videos: false},
-    note: 'Architecture / computational-design perspective on spatial intelligence — a complement, not a robotics course.',
+    note: '从建筑 / 计算设计视角看空间智能——是补充，不是机器人课程。',
+    noteEn: 'Architecture / computational-design perspective on spatial intelligence — a complement, not a robotics course.',
   },
   {
     id: 'harvard_spatial_intelligence',
@@ -222,11 +229,17 @@ export const courses = [
       'Evidence-based design & future of work',
     ],
     materials: {slides: false, notes: false, assignments: false, labs: false, code: false, videos: false},
-    note: 'Human-centered / smart-environments perspective; only the course description page is public.',
+    note: '人本 / 智能环境视角；仅课程介绍页公开。',
+    noteEn: 'Human-centered / smart-environments perspective; only the course description page is public.',
   },
 ];
 
 export const perspectiveLabels = {
+  architecture: '建筑 / 设计视角',
+  'human-centered': '人本视角',
+};
+
+export const perspectiveLabelsEn = {
   architecture: 'Architecture / Design perspective',
   'human-centered': 'Human-centered perspective',
 };

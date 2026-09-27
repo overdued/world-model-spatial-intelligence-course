@@ -1,5 +1,7 @@
 # Lab 5 · NeRF / Gaussian Splatting
 
+**中文** | [English](README_EN.md)
+
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab05_nerf_gaussian_splatting/notebook.ipynb)
 
 ## Goal

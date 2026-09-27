@@ -1,4 +1,5 @@
 import React from 'react';
+import {translate} from '@docusaurus/Translate';
 import styles from './ColabBadge.module.css';
 
 const COLAB_BASE =
@@ -28,12 +29,30 @@ export const READY_LABS = [
  * 已实现的 lab：渲染 "Open in Colab" 徽章，链接到
  * labs/<lab>/notebook.ipynb（main 分支）。
  * 未实现的 lab：渲染不可点击的 "开发中" 占位，避免 404。
+ * 文案按当前 locale 显示中文（默认）或英文。
  */
-export default function ColabBadge({lab, label = 'Open in Colab'}) {
+export default function ColabBadge({lab, label}) {
+  const resolvedLabel =
+    label ??
+    translate({
+      id: 'colabBadge.openInColab',
+      message: '在 Colab 中打开',
+      description: 'Default accessible label of the Colab badge',
+    });
   if (!READY_LABS.includes(lab)) {
     return (
-      <span className={styles.comingSoon} title="Notebook 尚未发布">
-        🚧 开发中 · Coming soon
+      <span
+        className={styles.comingSoon}
+        title={translate({
+          id: 'colabBadge.comingSoon.title',
+          message: 'Notebook 尚未发布',
+          description: 'Tooltip of the coming-soon Colab placeholder',
+        })}>
+        {translate({
+          id: 'colabBadge.comingSoon',
+          message: '🚧 开发中',
+          description: 'Placeholder shown for labs without a published notebook',
+        })}
       </span>
     );
   }
@@ -42,10 +61,10 @@ export default function ColabBadge({lab, label = 'Open in Colab'}) {
     <a href={url} target="_blank" rel="noopener noreferrer" className={styles.badge}>
       <img
         src="https://colab.research.google.com/assets/colab-badge.svg"
-        alt={label}
+        alt={resolvedLabel}
         className={styles.img}
       />
-      <span className={styles.srOnly}>{label}: {lab}</span>
+      <span className={styles.srOnly}>{resolvedLabel}: {lab}</span>
     </a>
   );
 }

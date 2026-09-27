@@ -1,0 +1,82 @@
+---
+title: SLAM and VIO
+sidebar_label: 07 · SLAM and VIO
+description: Simultaneous localization and mapping — ORB-SLAM, Kimera, MSCKF, and the systems engineering of visual-inertial fusion.
+---
+
+<ModuleProgress id="b07" label="SLAM and VIO" />
+
+## Why this matters
+
+SLAM is the most classical "perceive while modeling" system: the robot builds a world model (a map) while localizing itself within it. It is the first complete closed loop of spatial intelligence, and the comprehensive exam for all previous modules (geometry, estimation, representation).
+
+## Visual Intuition
+
+![SLAM system](/img/slam.svg)
+
+The classical division of labor in SLAM: the **front end** does real-time odometry (feature tracking/optical flow → inter-frame motion), the **back end** does globally consistent optimization (factor graphs), and **loop closure** recognizes "I've been here before" to cancel accumulated drift. The three subsystems correspond to the convergence of the previous three modules' knowledge.
+
+## Core Idea
+
+Formalizing the **SLAM problem**: jointly estimate the trajectory $x_{1:t}$ and the map $M$, given observations $z_{1:t}$ and controls $u_{1:t}$. The two technical routes follow Module 06's split: the filtering school (EKF-SLAM, MSCKF — landmarks stuffed into the state vector, history marginalized out) and the optimization school (factor graphs + keyframe bundle adjustment, with iSAM2 solving incrementally). Modern systems (ORB-SLAM3, VINS, Kimera) are all dominated by the optimization school, with filtering ideas retained locally.
+
+**VIO (visual-inertial odometry)** is the high-frequency, low-latency backbone of state estimation: the IMU provides high-frequency inter-frame constraints (preintegration compresses hundreds of IMU readings between two keyframes into a single factor), while vision provides long-term drift-free anchoring and scale. MSCKF (the filtering school's representative) uses multi-state constraints to avoid maintaining a map; VINS-Mono/Kimera-VIO (the optimization school's representatives) jointly optimize pose, velocity, and IMU bias within a sliding window. Observability analysis (when scale and the gravity direction are recoverable) is VIO's distinctive theoretical depth.
+
+**Loop closure** is the ultimate mechanism against drift: odometry error accumulates without bound along the path, and only recognizing "I've been here" can close the loop and cancel the error — place recognition (Module 08) is therefore SLAM's memory subsystem. Evaluation culture matters equally: the EuRoC dataset + the evo toolkit + ATE/RPE metrics are the systematic standard for quantitative comparison.
+
+## Key Concepts
+
+- **Front end / back end**: real-time odometry vs. global optimization.
+- **IMU preintegration**: compressing high-frequency inertial readings into a single factor between keyframes.
+- **Filtering vs. optimization**: the MSCKF vs. sliding-window BA debate.
+- **Loop closure**: the drift-canceling mechanism driven by place recognition.
+- **ATE / RPE**: the evaluation standards for trajectory accuracy and relative-motion error.
+
+## Core Equations
+
+The sliding-window optimization objective of VIO:
+
+$$\min_X \sum_{k} \big\| r_{\mathcal{I}}^{(k)} \big\|_{\Sigma}^2 + \sum_{(i,j)} \big\| r_{\mathcal{V}}^{(i,j)} \big\|_{\Sigma}^2$$
+
+where $r_{\mathcal{I}}$ is the IMU preintegration residual and $r_{\mathcal{V}}$ is the visual reprojection residual.
+
+## University Lecture
+
+| Course | Lecture | Link |
+|---|---|---|
+| MIT 16.485 VNAV | L20 Visual-Inertial Odometry, L23–L24 SLAM (factor graphs, marginalization), Lab 9/9.5 (ORB-SLAM3 vs. Kimera-VIO comparison) | [Course page](https://vnav.mit.edu/) |
+| ETH/UZH VAMR | L13 Visual-Inertial Fusion, L14 SLAM + mini-project (a complete VO) | [Course page](https://rpg.ifi.uzh.ch/teaching.html) |
+
+## Papers
+
+- **Must Read**: Mur-Artal, Montiel & Tardós (2015), *ORB-SLAM: A Versatile and Accurate Monocular SLAM System* ([arXiv:1502.00956](https://arxiv.org/abs/1502.00956)).
+- **Recommended**: Cadena et al. (2016), *Past, Present, and Future of SLAM* ([arXiv:1606.05830](https://arxiv.org/abs/1606.05830)); Qin, Li & Shen (2018), *VINS-Mono* ([arXiv:1708.03852](https://arxiv.org/abs/1708.03852)).
+- **Optional**: Mourikis & Roumeliotis (2007), *MSCKF* (ICRA; search the title); Teed & Deng (2021), *DROID-SLAM* ([arXiv:2108.10869](https://arxiv.org/abs/2108.10869)) — a representative of learning-based SLAM.
+
+## Hands-on
+
+No dedicated lab yet. Suggested path: first finish Lab 1 to build filtering intuition, then — following MIT VNAV Lab 9 — run the open-source releases of ORB-SLAM3 and Kimera-VIO on EuRoC sequences and evaluate them with evo.
+
+## Check Your Understanding
+
+1. Why must SLAM perform loop closure while VIO can go without it?
+2. What computational problem does IMU preintegration solve?
+3. What do ATE and RPE each measure?
+
+<details>
+<summary>Show answer</summary>
+
+1. Odometry-style methods (including VIO) maintain only a local window, so error accumulates without bound along the path; SLAM's goal is a globally consistent map, which requires injecting "the ends meet" information into the optimization via loop-closure constraints, amortizing the accumulated drift in one shot. Pure odometry for short-duration tasks can tolerate having no loop closure.
+2. Between two keyframes (say 100 ms) there are hundreds of IMU samples; building a constraint for each would make optimization infeasible. Preintegration compresses all IMU readings between two keyframes into a single relative-motion constraint (position/velocity/rotation increments + covariance), and can be corrected efficiently when the bias estimate is updated — avoiding re-integration.
+3. ATE (absolute trajectory error) measures the positional deviation of the estimated trajectory after global alignment with ground truth — global consistency; RPE (relative pose error) measures local pose drift within a fixed time window — local accuracy. A system can have poor ATE but good RPE (uncorrected drift without loop closure) or vice versa (loop closures force alignment but the local motion jitters).
+</details>
+
+## Takeaway
+
+- SLAM = front-end odometry + back-end factor graph + loop closure — the system integration of geometry, estimation, and representation.
+- VIO fuses two complementary sensors in a sliding window via IMU preintegration residuals and visual reprojection residuals.
+- Loop closure is the antidote to drift; ATE/RPE + EuRoC is the standard culture of quantitative evaluation.
+
+## Next Module
+
+[Module 08: Spatial Memory](./08-spatial-memory.mdx) — SLAM remembers geometry; an agent also needs to remember "where I have been."

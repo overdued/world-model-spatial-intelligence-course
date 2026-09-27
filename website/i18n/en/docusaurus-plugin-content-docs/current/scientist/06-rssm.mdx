@@ -1,0 +1,82 @@
+---
+title: RSSM
+sidebar_label: 06 · RSSM
+description: The Recurrent State Space Model — the backbone of the Dreamer family, latent dynamics mixing the deterministic and the stochastic.
+---
+
+<ModuleProgress id="a06" label="RSSM" />
+
+## Why this matters
+
+A purely deterministic model (GRU) cannot learn environmental stochasticity; a purely stochastic model (a sequential VAE) cannot remember long-range dependencies. RSSM separates the two and recombines them — the architectural backbone running unchanged from PlaNet to DreamerV3. Understand RSSM and you understand half of the MBRL field.
+
+## Visual Intuition
+
+![RSSM structure](/img/rssm.svg)
+
+RSSM keeps two states per step: a deterministic state $h_t$ (the GRU hidden state, in charge of memory) and a stochastic state $z_t$ (sampled from a Gaussian/categorical distribution, in charge of expressing uncertainty). Observations update both; prediction uses only the prior, inference uses the posterior.
+
+## Core Idea
+
+RSSM (Recurrent State Space Model) decomposes the latent state into $(h_t, z_t)$: the **deterministic path** $h_t = f_\theta(h_{t-1}, z_{t-1}, a_{t-1})$ is carried by a GRU, guaranteeing lossless propagation of long-range memory; the **stochastic path** $z_t \sim p_\theta(z_t \mid h_t)$ carries the environment's inherent randomness and observation ambiguity. The deterministic part keeps rollouts stable; the stochastic part lets the model express "many futures for the same history."
+
+Training still uses the ELBO, but the KL term takes on new meaning: the posterior $q(z_t \mid h_t, o_t)$ has seen the observation; the prior $p(z_t \mid h_t)$ has not — the KL penalizes "information only available after seeing the answer," forcing the prior to predict the posterior as well as possible. At rollout time no observation is available and only the prior is sampled, so the model must learn to "guess blind" about the future.
+
+From DreamerV2 on, $z_t$ was replaced with **discrete categorical distributions** (one categorical per dimension), which empirically is more stable on Atari-class tasks and avoids posterior collapse; DreamerV3 added engineering tricks such as symlog normalization and free bits, making it tuning-free across domains. The evolution of RSSM is an engineering history of "how to make stochastic latent dynamics trainable."
+
+## Key Concepts
+
+- **Deterministic state $h_t$**: GRU memory, the carrier of long-range dependencies.
+- **Stochastic state $z_t$**: expresses multimodal futures and observation ambiguity.
+- **Prior / Posterior**: prediction without the observation vs inference with it, aligned by KL.
+- **Discrete latent variables**: DreamerV2's key change — categorical + straight-through gradients.
+- **Imagination**: rolling out inside the model using only the prior — the protagonist of Module 08.
+
+## Core Equations
+
+The four components of RSSM:
+
+$$h_t = f_\theta(h_{t-1}, z_{t-1}, a_{t-1}), \qquad \text{prior: } p_\theta(z_t \mid h_t)$$
+
+$$\text{posterior: } q_\theta(z_t \mid h_t, o_t), \qquad \text{decoder: } p_\theta(o_t \mid h_t, z_t)$$
+
+## University Lecture
+
+| Course | Lecture | Link |
+|---|---|---|
+| UPenn CIS 6280 World Models | L08 Latent World Models (World Models 2018, autoregressive prediction, action conditioning) | [slides](https://jiataogu.me/cis6280-world-models/lectures/lecture-08-latent-world-models.pdf) |
+
+## Papers
+
+- **Must Read**: Hafner et al. (2019), *Learning Latent Dynamics for Planning from Pixels* (PlaNet, [arXiv:1811.04551](https://arxiv.org/abs/1811.04551)) — the original RSSM paper.
+- **Recommended**: Hafner et al. (2020), *Dream to Control* (DreamerV1, [arXiv:1912.01603](https://arxiv.org/abs/1912.01603)); Hafner et al. (2021), *Mastering Atari with Discrete World Models* (DreamerV2, [arXiv:2010.02193](https://arxiv.org/abs/2010.02193)) — see the motivation for discrete latent variables.
+
+## Hands-on
+
+Lab 3: implement a simplified RSSM (GRU + stochastic latent, prior/posterior with KL training) and visualize imagination rollouts and KL curves. In the meantime, a close read of the RSSM source in [dreamerv3-torch](https://github.com/NM512/dreamerv3-torch) (~200 lines) is recommended.
+
+**Open Lab**: <ColabBadge lab="lab03_tiny_rssm" />
+
+## Check Your Understanding
+
+1. Why not use the GRU's $h_t$ directly as the latent state, instead of additionally sampling a $z_t$?
+2. Why can only the prior be used during rollout (imagination)?
+3. What problem do discrete latent variables solve relative to continuous Gaussians?
+
+<details>
+<summary>Show answer</summary>
+
+1. A deterministic GRU produces a unique next state for each history and cannot express stochastic environments (dice, ambiguity behind occlusion); forcing it to fit stochastic data yields an "averaged future" — blurry frames and distorted dynamics. A stochastic $z_t$ lets the model express multimodal distributions.
+2. In imagination there are no real observations, so the posterior's input $o_t$ does not exist. If training did not enforce prior≈posterior, the model would live in two different latent spaces during imagination versus real interaction, and a policy learned in one would not transfer to the other.
+3. Continuous Gaussians are easily crushed by the KL term into an uninformative fixed distribution (posterior collapse); categorical distributions with straight-through gradients and KL scheduling are empirically more stable, and discrete codes naturally express "discretely different future modes."
+</details>
+
+## Takeaway
+
+- RSSM = deterministic memory (GRU) × stochastic state (sampling); the division of labor resolves the tension between stability and multimodality.
+- The KL term forces the prior to predict the posterior — the precondition for usable imagination.
+- The evolution from continuous to discrete latent variables embodies the engineering storyline of "making stochastic dynamics trainable."
+
+## Next Module
+
+[Module 07: World Models 2018](./07-world-models-2018.mdx) — back to the origin: the simpler founding paper that predates RSSM.

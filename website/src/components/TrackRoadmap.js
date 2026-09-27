@@ -1,6 +1,8 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import Link from '@docusaurus/Link';
+import Translate, {translate} from '@docusaurus/Translate';
 import {getTrack} from '@site/src/data/tracks';
+import {pick, useCurrentLocale} from '@site/src/utils/i18n';
 import {readProgress, subscribeProgress} from '@site/src/utils/progress';
 import styles from './TrackRoadmap.module.css';
 
@@ -10,9 +12,11 @@ import styles from './TrackRoadmap.module.css';
  * Vertical timeline roadmap for a learning track. Reads module metadata
  * from src/data/tracks.js and completion state from localStorage
  * ("wmsi-progress", written by <ModuleProgress />).
+ * Text fields are locale-aware (Chinese default, `*En` overrides).
  */
 export default function TrackRoadmap({track}) {
   const data = getTrack(track);
+  const locale = useCurrentLocale();
   const [progress, setProgress] = useState({});
 
   useEffect(() => {
@@ -37,7 +41,7 @@ export default function TrackRoadmap({track}) {
         <span className={styles.icon}>{data.icon}</span>
         <div>
           <div className={styles.trackTitle}>{data.title}</div>
-          <div className={styles.tagline}>{data.tagline}</div>
+          <div className={styles.tagline}>{pick(locale, data, 'tagline')}</div>
         </div>
       </div>
 
@@ -55,9 +59,9 @@ export default function TrackRoadmap({track}) {
                 <div className={styles.cardTop}>
                   <span className={styles.moduleId}>{mod.id}</span>
                   <span className={styles.moduleTitle}>{mod.title}</span>
-                  <span className={styles.estTime}>{mod.estTime}</span>
+                  <span className={styles.estTime}>{pick(locale, mod, 'estTime')}</span>
                 </div>
-                <div className={styles.oneLiner}>{mod.oneLiner}</div>
+                <div className={styles.oneLiner}>{pick(locale, mod, 'oneLiner')}</div>
               </Link>
             </li>
           );
@@ -70,19 +74,30 @@ export default function TrackRoadmap({track}) {
             {stats.bar}&nbsp;{stats.percent}%
           </code>
           <span className={styles.counts}>
-            {stats.completed}/{stats.total} completed
+            {translate(
+              {
+                id: 'trackRoadmap.progress.counts',
+                message: '{completed}/{total} 已完成',
+                description: 'Completion counts in the track roadmap summary',
+              },
+              {completed: stats.completed, total: stats.total},
+            )}
           </span>
         </div>
         <div className={styles.nextLine}>
           {stats.next ? (
             <>
-              Next up:{' '}
+              <Translate id="trackRoadmap.nextUp" description="Prefix of the next-module line in the track roadmap">
+                下一个：
+              </Translate>{' '}
               <Link to={`${data.basePath}/${stats.next.slug}`}>
                 {stats.next.id} · {stats.next.title}
               </Link>
             </>
           ) : (
-            <>All modules completed — on to the Capstone! 🎓</>
+            <Translate id="trackRoadmap.allDone" description="Shown when every module of the track is completed">
+              全部模块已完成——冲向毕业项目！🎓
+            </Translate>
           )}
         </div>
       </div>

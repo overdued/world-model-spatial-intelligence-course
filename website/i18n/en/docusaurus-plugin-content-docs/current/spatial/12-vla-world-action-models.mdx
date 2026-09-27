@@ -1,0 +1,81 @@
+---
+title: VLA and World-Action Models
+sidebar_label: 12 · VLA and World-Action Models
+description: Vision-Language-Action models and world-action models — the debate between implicit and explicit world models.
+---
+
+<ModuleProgress id="b12" label="VLA and World-Action Models" />
+
+## Why this matters
+
+RT-2, Octo, and π₀ use internet-scale vision-language pretraining to output robot actions directly; V-JEPA 2 uses a video-prediction model for planning. The intersection of VLA and world models is the hottest battlefield in embodied intelligence today — and the front line of the "implicit vs. explicit world model" debate.
+
+## Visual Intuition
+
+![VLA and world-action models](/img/vla-world-action.svg)
+
+Two directions of the same coin: **VLA** starts from world understanding and outputs actions (understanding → action); the **world-action model** starts from actions and predicts how the world evolves (action → consequences). The former is a policy, the latter a world model — a complete embodied agent needs both.
+
+## Core Idea
+
+**VLA (Vision-Language-Action)** formulates robot control as sequence modeling: RT-2 discretizes actions into tokens and generates them autoregressively alongside vision-language tokens in a Transformer, so the semantic knowledge of internet VLM pretraining ("what a soda can is") transfers directly into control. Octo and OpenVLA open-sourced and generalized this route (across multiple robot embodiments); π₀ uses flow matching to output continuous action chunks, balancing precision and frequency.
+
+The **world-action model** goes in the opposite direction: predicting how the world evolves conditioned on actions. The key innovation is the **latent action** — discovering abstractions of "actions" unsupervised from unlabeled video (Genie's legacy), turning massive action-label-free video into learnable interaction data. V-JEPA 2 (Meta, 2025) shows a third path: JEPA-style video-prediction pretraining + fine-tuning on a small amount of robot data, with MPC-style planning in representation space — Track A Module 04's "reconstruction vs. prediction" debate replayed on robots.
+
+The **implicit vs. explicit debate** is the intellectual core of this module: the VLA camp argues that a large enough policy network has implicitly learned the world model it needs ("a model that predicts actions must understand consequences"); the explicit camp (this course's leaning) argues that a queryable model of action consequences brings planning, evaluation, and counterfactual abilities, and that prediction accuracy can be measured independently. As of 2026 the empirical consensus is still forming — which itself makes a good Capstone topic.
+
+## Key Concepts
+
+- **Action tokenization**: turning continuous actions into discrete tokens a Transformer can generate.
+- **Latent action**: action abstractions discovered from unlabeled video.
+- **VLA transfer**: internet VLM semantic knowledge → robot control.
+- **Video pretraining → planning**: V-JEPA 2-style MPC in representation space.
+- **Implicit vs. explicit world models**: the debate between policy-internalized and independently queryable routes.
+
+## Core Equations
+
+Action-conditioned next-state/observation prediction (the world-action model interface):
+
+$$p_\theta(o_{t+1:t+H} \mid o_{\le t},\, a_{t:t+H-1})$$
+
+## University Lecture
+
+| Course | Lecture | Link |
+|---|---|---|
+| UPenn CIS 6280 World Models | L19 Robot Learning II (VLA, latent actions, world-action models; Resources includes V-JEPA 2) | [Course page](https://jiataogu.me/cis6280-world-models/) |
+
+## Papers
+
+- **Must Read**: Brohan et al. (2023), *RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control* ([arXiv:2307.15818](https://arxiv.org/abs/2307.15818)).
+- **Recommended**: Octo Model Team (2024), *Octo: An Open-Source Generalist Robot Policy* ([arXiv:2405.12213](https://arxiv.org/abs/2405.12213)); Black et al. (2024), *π₀: A Vision-Language-Action Flow Model for General Robot Control* ([arXiv:2410.24164](https://arxiv.org/abs/2410.24164)).
+- **Optional**: Kim et al. (2024), *OpenVLA: An Open-Source Vision-Language-Action Model* ([arXiv:2406.09246](https://arxiv.org/abs/2406.09246)); Meta AI (2025), *V-JEPA 2* (search the title + the official blog).
+
+## Hands-on
+
+Lab 9's closed loop is the basic version of this module. For now: run inference with OpenVLA's public checkpoint on a simulation benchmark to get a direct feel for the output format of action tokens.
+
+**Open Lab**: <ColabBadge lab="lab09_world_model_policy" />
+
+## Check Your Understanding
+
+1. Why does RT-2 need to turn actions into tokens?
+2. What is the relationship between latent actions and real action labels?
+3. What are the strongest argument and the weakest link of the "implicit world model" claim?
+
+<details>
+<summary>Show answer</summary>
+
+1. To reuse the entire VLM infrastructure: once actions are discretized into tokens, control and language generation share the same autoregressive Transformer and pretrained weights, and internet-scale visual-semantic knowledge flows into the control policy with no architectural change. The cost is precision lost to discretization — π₀'s flow matching is exactly a response to this.
+2. A latent action is a "pseudo-action" inferred unsupervised from changes between adjacent frames: it captures "what changed" but does not know the real motor commands. After training, a small amount of data with real action labels is needed to align latent actions with real actions (post-training/mapping), achieving "learn the world from unlabeled video, learn control from few labels."
+3. Strongest argument: large-scale VLAs do show emergent scene understanding and generalization (semantic grasping of unseen objects). Weakest link: implicit knowledge is not queryable and not independently evaluable — you cannot ask a policy "what happens if I go left," nor measure the calibration of its consequence predictions; in safety-critical settings this is a fatal flaw.
+</details>
+
+## Takeaway
+
+- VLA turns robot control into sequence modeling, inheriting internet-scale semantic knowledge.
+- World-action models and latent actions turn unlabeled video into interaction data.
+- The implicit vs. explicit world-model debate is unsettled — a frontier topic for the Capstone.
+
+## Next Module
+
+[Module 13: Capstone — Build Your Own Spatial World Model](./13-capstone.mdx) — Track B's graduation exercise.

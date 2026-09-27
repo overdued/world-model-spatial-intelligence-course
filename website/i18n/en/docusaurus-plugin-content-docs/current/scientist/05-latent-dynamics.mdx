@@ -1,0 +1,82 @@
+---
+title: Latent Dynamics
+sidebar_label: 05 · Latent Dynamics
+description: Modeling dynamics in a learned latent space — the minimal closed loop of observation → latent state → prediction.
+---
+
+<ModuleProgress id="a05" label="Latent Dynamics" />
+
+## Why this matters
+
+Dynamics in pixel space are both high-dimensional and full of irrelevant detail. Latent dynamics splits the world model into two steps — "learn a representation + learn dynamics inside it" — the shared skeleton from PlaNet/Dreamer to modern video models, and the first world model you will train with your own hands.
+
+## Visual Intuition
+
+![Latent dynamics](/img/latent-dynamics.svg)
+
+The encoder compresses the observation $o_t$ into a latent state $z_t$; the dynamics model predicts $z_{t+1}$ in latent space; the decoder translates latent states back into observations for supervision. Prediction happens entirely in the low-dimensional latent space — the key to computational efficiency and predictability.
+
+## Core Idea
+
+A latent-dynamics model has three learnable components: an **encoder** $q(z_t \mid o_t)$ (inferring the current latent state), a **transition model** $p(z_{t+1} \mid z_t, a_t)$ (predicting in latent space), and a **decoder** $p(o_t \mid z_t)$ (providing the training signal). The whole system is trained jointly under the VAE/ELBO framework: the reconstruction term keeps the representation faithful, and the KL term aligns the posterior with the prior (i.e., the transition model's prediction).
+
+This structure answers Module 02's history-compression question: $z_t$ is the learned belief state — it compresses the observation history (via an RNN or a filtered sequence), retains what prediction needs, at a dimensionality far below pixels.
+
+The choice of training objective shapes the model's character: a **one-step** objective (predict only the next frame) is simple and stable but errors compound at rollout time; a **multi-step** objective (roll out open-loop for several steps during training) optimizes the deployment scenario directly but is harder to train. This one-step-vs-rollout fault line erupts fully in Module 12.
+
+## Key Concepts
+
+- **Encoder / Decoder**: bidirectional translators between observations and latent states.
+- **Latent-state design criteria**: inferable, predictable, information-sufficient — the three pull against each other.
+- **ELBO**: the variational objective with a reconstruction term and a KL regularizer.
+- **One-step vs rollout objectives**: the mismatch between the training objective and the deployment scenario.
+- **Error compounding**: tiny per-step errors are compounded and amplified through recursive rollout.
+
+## Core Equations
+
+The ELBO for latent dynamics:
+
+$$\log p(o_{1:T} \mid a_{1:T}) \geq \sum_{t=1}^{T} \mathbb{E}_{q(z_t \mid \cdot)}\big[\log p(o_t \mid z_t)\big] - D_{KL}\big(q(z_t \mid \cdot) \,\|\, p(z_t \mid z_{t-1}, a_{t-1})\big)$$
+
+## University Lecture
+
+| Course | Lecture | Link |
+|---|---|---|
+| UPenn CIS 6280 World Models | L07 Latent-Variable and Adversarial Models (VAE/ELBO) | [slides](https://jiataogu.me/cis6280-world-models/lectures/lecture-07-generative-models-i.pdf) |
+| UPenn CIS 6280 World Models | L08 Latent World Models | [slides](https://jiataogu.me/cis6280-world-models/lectures/lecture-08-latent-world-models.pdf) |
+
+## Papers
+
+- **Must Read**: Hafner et al. (2019), *Learning Latent Dynamics for Planning from Pixels* (PlaNet, [arXiv:1811.04551](https://arxiv.org/abs/1811.04551)) — the paper that established the latent-dynamics paradigm.
+- **Recommended**: Kingma & Welling (2014), *Auto-Encoding Variational Bayes* ([arXiv:1312.6114](https://arxiv.org/abs/1312.6114)) — the original source of the ELBO derivation.
+- **Optional**: Deisenroth & Rasmussen (2011), *PILCO* (ICML; search the title) — the pioneer of non-image latent dynamics with uncertainty propagation.
+
+## Hands-on
+
+<ColabBadge lab="lab02_latent_dynamics" />
+
+Lab 2 is this module's full hands-on: train an encoder + MLP/GRU dynamics on image rollouts collected in the Lab 0 environment, and plot one-step and 10-step open-loop prediction error curves — you will see error compounding with your own eyes.
+
+## Check Your Understanding
+
+1. Why not learn $p(o_{t+1} \mid o_t, a_t)$ directly in pixel space?
+2. What does the KL term of the ELBO do in latent dynamics?
+3. If the one-step error is small, why can a 10-step rollout still diverge completely?
+
+<details>
+<summary>Show answer</summary>
+
+1. Pixel space is high-dimensional and full of prediction-irrelevant stochastic detail (textures, noise); modeling there directly wastes capacity and confronts the dynamics learner with irrelevant randomness. The latent space first compresses out a "predictable core," and dynamics are easier to learn in a low-dimensional space.
+2. The KL term pulls the posterior $q(z_t \mid o_t)$ toward the prior $p(z_t \mid z_{t-1}, a_{t-1})$ — forcing "states that can be inferred" to coincide with "states that the dynamics can predict." Without it, the encoder could encode unpredictable information and rollout would fail immediately.
+3. Rollout is closed-loop: the model's prediction error at step $t$ becomes the input at step $t+1$, so errors are compounded and amplified by the dynamics; moreover, the input distribution during rollout drifts away from the training distribution (OOD), so one-step accuracy cannot guarantee multi-step stability.
+</details>
+
+## Takeaway
+
+- Latent dynamics = encoder + latent-space transition + decoder; $z_t$ is the learned belief state.
+- The ELBO's KL term aligns "inferable" with "predictable" — the invisible pillar of latent dynamics.
+- One-step accuracy does not imply usable rollouts — error compounding is a theme running through the whole course.
+
+## Next Module
+
+[Module 06: RSSM](./06-rssm.mdx) — add the hybrid "deterministic memory + stochasticity" structure to latent dynamics.

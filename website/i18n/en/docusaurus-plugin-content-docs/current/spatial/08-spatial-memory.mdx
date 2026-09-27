@@ -1,0 +1,82 @@
+---
+title: Spatial Memory
+sidebar_label: 08 · Spatial Memory
+description: Spatial memory for agents — persistent scene representations, place recognition, and semantic maps.
+---
+
+<ModuleProgress id="b08" label="Spatial Memory" />
+
+## Why this matters
+
+An agent without memory understands the world from scratch every frame. Spatial memory — remembering "what the world looks like and where I have been" — is a prerequisite for long-term autonomy, and the storage layer of world models in open worlds.
+
+## Visual Intuition
+
+![Spatial memory](/img/spatial-memory.svg)
+
+The three layers of spatial memory: the **metric layer** (point clouds/occupancy grids — precise but fragile), the **topological layer** (place nodes + edges — robust and scalable), and the **semantic layer** (object and scene labels — supports task queries). Place recognition is the cross-layer retrieval mechanism — see a familiar view, wake up the corresponding map region.
+
+## Core Idea
+
+**Place recognition** is the classical core of spatial memory: retrieving the most similar location in the historical map for the current observation. The classical method is Bag of (Binary) Words — an image is encoded as a visual bag-of-words vector, and DBoW2 achieves millisecond retrieval; FAB-MAP handles perceptual aliasing with a probabilistic appearance model. The difficulty is the trade-off between recall under **appearance change** (lighting, season, viewpoint) and the catastrophic cost of false loop closures (a single wrong loop closure can tear an entire map apart).
+
+**Persistent scene representations** answer "in what format is memory stored": occupancy grids/OctoMap serve obstacle avoidance directly; neural fields and Gaussians (Modules 04–05) support rendering queries; the scene graph (object nodes + relation edges) is the structured memory of the semantic layer, supporting symbolic queries like "the cup is on the table." Incremental updating and forgetting are the engineering crux — a map cannot grow forever, and change detection and map maintenance are open problems.
+
+The contrastive view from cognitive science is worth knowing: human spatial memory is a **cognitive map** — primarily topological, secondarily metric, with hippocampal place cells providing positional coding. Wayfinding research from Columbia Spatial AI suggests that the legibility of machine maps matters too in spaces shared by humans and machines (guide robots, AR navigation). This echoes the human-centered view from Module 01.
+
+## Key Concepts
+
+- **Place recognition**: appearance-based retrieval that awakens map memory — the front end of loop closure.
+- **BoW / DBoW2**: fast place recognition with visual bags of words.
+- **Metric vs. topological maps**: the representation trade-off between precise geometry and robust connectivity.
+- **Scene graph**: structured semantic memory of objects + relations.
+- **Forgetting and map maintenance**: change detection, incremental updates, capacity management.
+
+## Core Equations
+
+The similarity score for bag-of-words retrieval (TF-IDF weighted):
+
+$$s(q, d) = \frac{q^\top d}{\|q\| \|d\|}, \qquad q, d \in \mathbb{R}^{|\mathcal{V}|}$$
+
+## University Lecture
+
+| Course | Lecture | Link |
+|---|---|---|
+| MIT 16.485 VNAV | L21–L22 Place Recognition / Bag of Visual Words + Lab 8 | [Course page](https://vnav.mit.edu/) |
+| UPenn CIS 6280 World Models | L15 Spatial World Models I (options for persistent scene representation) | [Course page](https://jiataogu.me/cis6280-world-models/) |
+
+## Papers
+
+- **Must Read**: Gálvez-López & Tardós (2012), *Bags of Binary Words for Fast Place Recognition in Image Sequences* (DBoW2, IEEE T-RO; search the title).
+- **Recommended**: Cummins & Newman (2008), *FAB-MAP* (search the title); Hornung et al. (2013), *OctoMap: An Efficient Probabilistic 3D Mapping Framework* ([arXiv:1204.3116](https://arxiv.org/abs/1204.3116)).
+- **Optional**: Wayne et al. (2018), *Unsupervised Predictive Memory in a Goal-Directed Agent* (MERLIN, [arXiv:1803.10760](https://arxiv.org/abs/1803.10760)) — the neural-side counterpart of spatial memory.
+
+## Hands-on
+
+Lab 8's navigation pipeline includes a place-recognition component; for now, you can run a loop-closure experiment yourself with the open-source DBoW3 library on EuRoC sequences.
+
+**Open Lab**: <ColabBadge lab="lab08_navigation_world_model" />
+
+## Check Your Understanding
+
+1. Why is a false loop closure more dangerous than a missed one?
+2. What are the advantages and costs of topological maps relative to metric maps?
+3. Why is the scene graph well suited as the semantic layer of memory?
+
+<details>
+<summary>Show answer</summary>
+
+1. A miss just lets drift keep accumulating (recoverable); a false loop closure forcibly aligns two different places, injecting contradictory constraints into the factor graph, and the whole map can be torn apart in a way that is hard to repair. Loop-closure verification (geometric consistency checks) must therefore be extremely conservative.
+2. A topological map stores only "connectivity between places": it is robust to lighting/season change and geometric error, scales with constant memory, and supports planning directly (graph search); the cost is losing precise geometry, so it cannot support obstacle-avoidance-level accuracy. Engineering systems usually keep both layers.
+3. A scene graph compresses a scene into object nodes and relation edges: compact storage, support for symbolic queries ("find all chairs"), updates that touch only the affected nodes when something changes, and natural compatibility with language interfaces (the grounding layer for VLA and navigation instructions).
+</details>
+
+## Takeaway
+
+- Spatial memory has three layers — metric (geometry), topological (connectivity), semantic (objects) — each irreplaceable.
+- Place recognition is memory's retrieval mechanism; its precision–recall trade-off determines the safety of loop closure.
+- Persistent representations need incremental updates and forgetting mechanisms — memory engineering matters as much as modeling.
+
+## Next Module
+
+[Module 09: Affordance](./09-affordance.mdx) — from "what the world is" to "what the world lets me do."

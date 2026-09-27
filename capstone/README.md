@@ -1,5 +1,7 @@
 # Build Your Own World Model
 
+**中文** | [English](README_EN.md)
+
 > 课程毕业项目（Capstone）：把 Lab 0–10 的全部技能组装成一个完整的世界模型系统。
 > 适用对象：Scientist Track 与 Spatial Track 的共同毕业项目。
 

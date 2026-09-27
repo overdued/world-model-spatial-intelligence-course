@@ -1,0 +1,39 @@
+---
+title: Deep Learning
+sidebar_label: Deep Learning
+description: The building blocks of representation learning — MLP/CNN, optimization, an introduction to VAEs; consult on demand.
+---
+
+# Deep Learning
+
+> This page is a **reference manual**. A world model is a "deep-learning system that can predict"; this page only fills in the components the main tracks actually use.
+
+## Minimal knowledge set
+
+- **MLP / CNN**: the difference in inductive bias between fully connected and convolutional layers; why encoders use CNNs and latent dynamics use MLPs/GRUs.
+- **Backpropagation and optimization**: the chain rule; SGD vs Adam; intuition for learning rate and warmup.
+- **Normalization and initialization**: BatchNorm/LayerNorm, Xavier/He initialization — check here first when training is unstable.
+- **Overfitting and regularization**: weight decay, dropout, data augmentation; the OOD problem of world models (Track A Module 12) is its sequential version.
+- **VAE and ELBO basics**: $\log p(x) \geq \mathbb{E}_q[\log p(x\mid z)] - D_{KL}(q \| p)$ — the mathematical foundation of Lab 2 and RSSM; make sure you understand it.
+
+## When to consult
+
+| Main-track module | Deep-learning skills used |
+|---|---|
+| Track A 04 Representation Learning | CNN encoders, normalization, SSL training tricks |
+| Track A 05–08 | VAE/ELBO, GRUs, training stability |
+| Track B 03–04 | CNN features, gradient flow in differentiable rendering |
+
+## Best external resources
+
+- **Stanford CS231n** ([cs231n.github.io](https://cs231n.github.io/)): the classic public lecture notes on CNNs and backpropagation.
+- ***Dive into Deep Learning*** ([d2l.ai](https://d2l.ai/)): free, runnable, PyTorch edition; the VAE chapter maps directly onto this course's needs.
+- **CIS6280 L07 Latent-Variable and Adversarial Models** ([PDF](https://jiataogu.me/cis6280-world-models/lectures/lecture-07-generative-models-i.pdf)): VAE/ELBO in the world-model context.
+
+## Self-check
+
+You are ready when you can hand-derive backpropagation through one MLP layer, explain the role of each of the two ELBO terms, and name the first three things to check when the training loss stops decreasing.
+
+## Next
+
+Back to the main tracks: [Track A Module 04](../scientist/04-representation-learning.mdx)

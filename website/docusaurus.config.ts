@@ -6,7 +6,7 @@ import rehypeKatex from 'rehype-katex';
 
 const config: Config = {
   title: 'World Models & Spatial Intelligence',
-  tagline: 'From Representation to Prediction, Planning and Physical Intelligence',
+  tagline: '从表征到预测、规划与物理智能',
   url: 'https://overdued.github.io',
   baseUrl: '/world-model-spatial-intelligence-course/',
   organizationName: 'overdued',
@@ -25,8 +25,17 @@ const config: Config = {
   },
 
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
+    defaultLocale: 'zh-Hans',
+    locales: ['zh-Hans', 'en'],
+    localeConfigs: {
+      'zh-Hans': {
+        label: '简体中文',
+      },
+      en: {
+        label: 'English',
+        htmlLang: 'en',
+      },
+    },
   },
 
   presets: [
@@ -65,7 +74,7 @@ const config: Config = {
         indexDocs: true,
         indexBlog: false,
         indexPages: true,
-        language: ['en'],
+        language: ['en', 'zh'],
         highlightSearchTermsOnTargetPage: true,
         searchResultLimits: 10,
       }),
@@ -97,12 +106,12 @@ const config: Config = {
       items: [
         {
           to: '/docs/start-here/',
-          label: 'Start Here',
+          label: '从这里开始',
           position: 'left',
         },
         {
           type: 'dropdown',
-          label: 'Tracks',
+          label: '学习路线',
           position: 'left',
           items: [
             {
@@ -117,29 +126,29 @@ const config: Config = {
         },
         {
           to: '/roadmap',
-          label: 'Roadmap',
+          label: '路线图',
           position: 'left',
         },
         {
           to: '/docs/labs',
-          label: 'Labs',
+          label: '实验',
           position: 'left',
         },
         {
           type: 'dropdown',
-          label: 'Resources',
+          label: '资源',
           position: 'left',
           items: [
             {
-              label: 'University Courses',
+              label: '大学课程',
               to: '/docs/resources/university-courses',
             },
             {
-              label: 'Papers',
+              label: '论文',
               to: '/docs/resources/papers',
             },
             {
-              label: 'Research Archive',
+              label: '研究资料库',
               to: '/docs/resources/research-archive',
             },
           ],
@@ -149,31 +158,35 @@ const config: Config = {
           label: 'GitHub',
           position: 'right',
         },
+        {
+          type: 'localeDropdown',
+          position: 'right',
+        },
       ],
     },
     footer: {
       style: 'dark',
       links: [
         {
-          title: 'Learn',
+          title: '学习',
           items: [
-            {label: 'Start Here', to: '/docs/start-here/'},
+            {label: '从这里开始', to: '/docs/start-here/'},
             {label: 'World Model Scientist', to: '/docs/scientist/'},
             {label: 'Spatial & Embodied Engineer', to: '/docs/spatial/'},
-            {label: 'Roadmap', to: '/roadmap'},
+            {label: '路线图', to: '/roadmap'},
           ],
         },
         {
-          title: 'Resources',
+          title: '资源',
           items: [
-            {label: 'University Courses', to: '/docs/resources/university-courses'},
-            {label: 'Papers', to: '/docs/resources/papers'},
-            {label: 'Research Archive', to: '/docs/resources/research-archive'},
-            {label: 'Labs', to: '/docs/labs'},
+            {label: '大学课程', to: '/docs/resources/university-courses'},
+            {label: '论文', to: '/docs/resources/papers'},
+            {label: '研究资料库', to: '/docs/resources/research-archive'},
+            {label: '实验', to: '/docs/labs'},
           ],
         },
         {
-          title: 'Project',
+          title: '项目',
           items: [
             {
               label: 'GitHub',
@@ -183,13 +196,15 @@ const config: Config = {
               label: 'Issues',
               href: 'https://github.com/overdued/world-model-spatial-intelligence-course/issues',
             },
+            {
+              label: 'CUHK(SZ)',
+              href: 'https://www.cuhk.edu.cn/',
+            },
           ],
         },
       ],
       copyright:
-        'Course content (docs, roadmaps, slides text) is licensed under CC BY 4.0 · ' +
-        'Lab code and notebooks are licensed under MIT · ' +
-        'Third-party university course materials are indexed by link only and are not redistributed.',
+        'Copyright © 2026 CUHK(SZ) SAI BL&SP Group. Docs CC BY 4.0 · Code MIT.',
     },
     prism: {
       theme: prismThemes.github,

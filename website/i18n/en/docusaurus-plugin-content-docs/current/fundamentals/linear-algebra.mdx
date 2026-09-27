@@ -1,0 +1,39 @@
+---
+title: Linear Algebra
+sidebar_label: Linear Algebra
+description: The minimal set of linear algebra for world models — consult on demand; not a full course.
+---
+
+# Linear Algebra
+
+> This page is a **reference manual**, not a full course. Come back to the relevant section whenever a main-track module stalls you.
+
+## Minimal knowledge set
+
+- **Vector spaces and bases**: the state vector $s_t$ and observation vector $o_t$ are points in vector spaces; a change of basis is a change of coordinate system.
+- **Matrix factorization**: eigendecomposition explains the modes of linear dynamics (in $s_{t+1} = A s_t$, the eigenvalues of $A$ determine stability or divergence); SVD powers dimensionality reduction and least squares.
+- **Linear least squares**: the update step of the Kalman filter is essentially recursive weighted least squares.
+- **Coordinate transforms and homogeneous coordinates**: everything in Track B's camera model $K[R|t]$ and rigid-body transforms rests on these.
+
+## When to consult
+
+| Main-track module | Linear algebra used |
+|---|---|
+| Track A 03 State Space Models | Matrix multiplication, covariance matrices, eigenvalues and stability |
+| Track A 04 Representation Learning | Rank, spectra, geometry of embedding spaces |
+| Track B 02 Camera and Geometry | Homogeneous coordinates, projection matrix factorization |
+| Track B 06 State Estimation | Jacobians, least squares, covariance propagation |
+
+## Best external resources
+
+- **3Blue1Brown, *Essence of Linear Algebra***: the first choice for geometric intuition — watch this first.
+- **Gilbert Strang, MIT 18.06** ([MIT OCW](https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/)): a systematic course with a textbook.
+- ***Mathematics for Machine Learning*** (Deisenroth et al., [mml-book.github.io](https://mml-book.github.io/)), Chapters 2–4: a crash course in linear algebra from an ML perspective; free PDF.
+
+## Self-check
+
+You are ready when you can compute the eigenvalues of a $2\times2$ matrix by hand, explain the geometric meaning of SVD, and write the vector expression for point-to-plane distance.
+
+## Next
+
+Back to the main tracks: [Track A Module 03](../scientist/03-state-space-models.mdx) or [Track B Module 02](../spatial/02-camera-and-geometry.mdx)

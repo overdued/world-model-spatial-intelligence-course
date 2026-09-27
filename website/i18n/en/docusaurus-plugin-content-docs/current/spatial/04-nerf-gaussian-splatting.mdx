@@ -1,0 +1,86 @@
+---
+title: NeRF and Gaussian Splatting
+sidebar_label: 04 · NeRF and Gaussian Splatting
+description: Neural radiance fields and 3D Gaussian Splatting — the implicit and explicit routes to differentiable rendering.
+---
+
+<ModuleProgress id="b04" label="NeRF and Gaussian Splatting" />
+
+## Why this matters
+
+NeRF and 3D Gaussian Splatting are the twin stars of modern 3D scene representation: one implicit and continuous, the other explicit and real-time. They are the storage format of the "spatial world model" — what can be rendered can predict novel views, and predicting novel views is the spatial version of a world model.
+
+## Visual Intuition
+
+![NeRF](/img/nerf.svg)
+
+NeRF represents a scene with an MLP: given a 3D position and viewing direction, it outputs density and color. To render, it samples points along each pixel's ray and accumulates density-weighted colors via the volume-rendering equation — the entire pipeline is differentiable and trained directly on photometric error.
+
+![Gaussian Splatting](/img/gaussian-splatting.svg)
+
+3DGS represents a scene explicitly with hundreds of thousands of anisotropic Gaussian primitives, each with a position, covariance, color, and opacity. Rendering projects them onto the image plane, sorts them, and alpha-blends — pure rasterization, in real time.
+
+## Core Idea
+
+**NeRF** (2020) represents a scene as a continuous function $F_\theta: (x, y, z, \theta, \phi) \to (c, \sigma)$: given a spatial position and viewing direction, it outputs color and volume density. Novel views are synthesized by **volume rendering**: integrating density-weighted color along each ray. Training requires no 3D annotation whatsoever — the photometric reconstruction error on multi-view photos is the entire supervision; multi-view consistency (the core constraint from Module 01) becomes the training signal. Positional encoding fixes the spectral bias of MLPs, letting the network express high-frequency detail.
+
+**3D Gaussian Splatting** (2023) takes the opposite, explicit route: the scene is a set of hundreds of thousands of 3D Gaussians, rendering is classical splatting rasterization, and training allocates capacity automatically through **adaptive density control** (splitting large Gaussians, cloning small ones, pruning transparent ones). Compared to NeRF it trains an order of magnitude faster and renders in real time, at the cost of memory footprint and discretization artifacts.
+
+From the world-model perspective, both are **queryable world states**: given any camera pose they produce an observation — exactly the spatial version of the state → observation interface. Their limitations (per-scene optimization, static-scene assumption) are addressed respectively by feed-forward reconstruction (DUSt3R/VGGT) and by the 4D representations of Module 05.
+
+## Key Concepts
+
+- **Radiance field**: a continuous field mapping position + direction → color + density.
+- **Volume-rendering equation**: a differentiable integral of density-weighted color along a ray.
+- **Positional encoding**: the encoding trick that lets an MLP learn high-frequency detail.
+- **3D Gaussian parameterization**: position / covariance / spherical-harmonic color / opacity.
+- **Adaptive density control**: the primitive creation/removal mechanism in 3DGS training.
+
+## Core Equations
+
+Volume-rendering equation:
+
+$$C(r) = \int_{t_n}^{t_f} T(t)\, \sigma(r(t))\, c(r(t), d)\, dt, \qquad T(t) = \exp\Big(-\int_{t_n}^{t} \sigma(r(s))\, ds\Big)$$
+
+## University Lecture
+
+| Course | Lecture | Link |
+|---|---|---|
+| CMU 16-825 Learning for 3D Vision | L08–L09 (volume rendering derivation + NeRF), L11 (3DGS), A3/A4 hand-written implementations | [Course page](https://learning3d.github.io/) |
+| Stanford CS231A | L16 NeRF, L17 Gaussian Splatting | [Course page](https://web.stanford.edu/class/cs231a/) |
+
+## Papers
+
+- **Must Read**: Mildenhall et al. (2020), *NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis* ([arXiv:2003.08934](https://arxiv.org/abs/2003.08934)).
+- **Recommended**: Kerbl et al. (2023), *3D Gaussian Splatting for Real-Time Radiance Field Rendering* ([arXiv:2308.04079](https://arxiv.org/abs/2308.04079)).
+- **Optional**: the [nerfstudio](https://docs.nerf.studio/) documentation — the entry point to the engineering ecosystem; Wang et al. (2024), *DUSt3R: Geometric 3D Vision Made Easy* ([arXiv:2312.14132](https://arxiv.org/abs/2312.14132)) — the new feed-forward reconstruction paradigm.
+
+## Hands-on
+
+Lab 5: first run the volume-rendering pipeline end to end with a simplified NeRF, then achieve real-time rendering with 3DGS, and produce a PSNR and speed–quality comparison report.
+
+**Open Lab**: <ColabBadge lab="lab05_nerf_gaussian_splatting" />
+
+## Check Your Understanding
+
+1. What is NeRF's training supervision signal, and why is no 3D ground truth needed?
+2. Why is 3DGS faster than NeRF?
+3. As "world states," what downstream tasks is each representation suited for?
+
+<details>
+<summary>Show answer</summary>
+
+1. The supervision is the photometric reconstruction error on multi-view photos: the L2 difference between rendered and real pixels. Geometry and appearance must simultaneously agree with every view to minimize this error — multi-view consistency itself provides 3D supervision, with no human annotation needed.
+2. NeRF must query the MLP hundreds of times along each ray to render a single pixel; 3DGS stores the scene explicitly as Gaussian primitives, so rendering is rasterization — project, sort, alpha-blend — natively supported by GPUs, and training converges an order of magnitude faster thanks to explicit parameters rather than a global MLP.
+3. NeRF-style implicit fields are continuous and compact, well suited as differentiable query interfaces (e.g., collision/visibility queries in planning); 3DGS is explicit, editable, and renders in real time, suiting digital twins, AR, and closed-loop simulation that needs interactive frame rates. Both are still being extended toward dynamics and interactivity (Module 05).
+</details>
+
+## Takeaway
+
+- NeRF = implicit continuous radiance field + differentiable volume rendering; 3DGS = explicit Gaussian primitives + real-time rasterization.
+- Multi-view consistency is the shared supervision signal of both — no 3D annotation required.
+- A renderable world state is the storage layer of a spatial world model — Module 05 adds the time axis.
+
+## Next Module
+
+[Module 05: Dynamic 3D / 4D Worlds](./05-dynamic-4d-worlds.mdx) — set the world in motion.

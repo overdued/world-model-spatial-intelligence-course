@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import Translate from '@docusaurus/Translate';
 import {isCompleted, setCompleted, subscribeProgress} from '@site/src/utils/progress';
 import styles from './ModuleProgress.module.css';
 
@@ -32,7 +33,15 @@ export default function ModuleProgress({id, label}) {
       </span>
       <span className={styles.text}>
         <span className={styles.action}>
-          {done ? 'Completed' : 'Mark as completed'}
+          {done ? (
+            <Translate id="moduleProgress.completed" description="State label when a module is marked completed">
+              已完成
+            </Translate>
+          ) : (
+            <Translate id="moduleProgress.markCompleted" description="Button label to mark a module as completed">
+              标记为已完成
+            </Translate>
+          )}
         </span>
         {label && <span className={styles.label}>{label}</span>}
       </span>

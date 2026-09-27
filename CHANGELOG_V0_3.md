@@ -32,3 +32,12 @@ README（六方向、统一设计十问、三里程碑、rubric）+ template/（
 - 11 个 notebook 全部在干净 venv 从头 `Run All` 通过（CPU，最长 Lab 3 约 3 分钟）
 - `npm run build` 严格模式通过
 - 闭环路径打通：Observation(L0) → State Estimation(L1) → Representation(L2) → Dynamics+Imagination(L3) → Planning(L4) → Policy(L9) → Evaluation(L10)；Spatial：L0 → 3D(L5) → 4D(L6) → Navigation(L8) → Evaluation(L10)
+
+---
+
+## V0.3.1 补丁（2026-09-27）— 双语版本与课题组标注
+
+- **中英双语**：网站接入 Docusaurus i18n（默认中文 zh-Hans，English 为第二 locale），navbar 语言切换器；26 个 Track A 模块、13+ 个 Track B 模块、Start Here、Foundations、Resources 全部英译（website/i18n/en/）；首页与全部自定义组件（TrackRoadmap/ModuleProgress/CourseMatrix/UniversityCards/PapersFilter/ColabBadge）语言感知
+- **仓库文档双语**：README_EN.md、11 个 labs/*/README_EN.md、capstone/README_EN.md、report_template_en.md；中文文件顶部加语言切换行
+- **课题组标注**：仓库 description/topics（cuhk-sz 等 7 个 topic）、README 头部、网站 Hero 徽章行与 footer copyright 均标注 CUHK(SZ) · SAI · BL&SP
+- 验证：双 locale `npm run build` 通过（各 42 个 docs 页面）；英文页零中文残留（除语言切换器）

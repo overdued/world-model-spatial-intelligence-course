@@ -1,0 +1,9 @@
+{
+  "label": "Foundations",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "title": "Foundations (On-Demand Reference)",
+    "description": "The mathematical and machine-learning foundations for world models and spatial intelligence. Not a mandatory starting point — consult it on demand when the main tracks get stuck."
+  }
+}

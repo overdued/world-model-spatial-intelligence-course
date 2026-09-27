@@ -1,0 +1,83 @@
+---
+title: Video World Models
+sidebar_label: 10 · Video World Models
+description: Large-scale video generation models as general world simulators — Genie, Sora, and diffusion video.
+---
+
+<ModuleProgress id="a10" label="Video World Models" />
+
+## Why this matters
+
+After 2024, the narrative center of "world models" shifted from Dreamer-style latent spaces to large-scale video generation: Sora calls itself a "world simulator," and Genie turns video into an interactive environment. This route represents the scaling frontier of world models — and brings new problems of drift and evaluation.
+
+## Visual Intuition
+
+![Video world model](/img/video-world-model.svg)
+
+A video world model = a spatiotemporal generative architecture (DiT / spatiotemporal attention) + conditioning signals (actions, camera trajectories, text). Open-loop, it generates future frames; closed-loop, it feeds its own generated frames back as input — and that is where drift begins.
+
+## Core Idea
+
+Formulate "predicting the future" as **conditional video generation**: given past frames and action/camera control signals, train a spatiotemporal generative model with a diffusion or flow-matching objective (usually a DiT-class architecture, with video cut into spatiotemporal patch tokens). Compared with the Dreamer route, it models directly in pixel space — giving up compact latent states in exchange for fidelity and generality.
+
+Two landmark systems define this route. **Sora** (2024), in the technical report *Video Generation Models as World Simulators*, claimed that scaled video models exhibit emergent physical intuition (object permanence, simple interactions), sparking the great debate over "whether video models understand physics." **Genie** (DeepMind, 2024) went further: it learns a **latent action space** from unlabeled gameplay videos, making the generated video "playable" — the first time a generative model became an interactive environment, and GameNGen proved end-to-end playability on DOOM.
+
+The core open problem is **closed-loop drift**: autoregressively feeding generated frames back as inputs, errors and artifacts accumulate frame by frame, and the picture breaks down within tens of seconds. Long-horizon consistency techniques (anchor frames, resynchronization, history conditioning) and the quantitative evaluation of drift lead straight into Module 12.
+
+## Key Concepts
+
+- **DiT / spatiotemporal attention**: the contemporary backbone architecture of video generation.
+- **Action-conditioned generation**: predicting future frames conditioned on actions — the video version of the world-model interface.
+- **Latent actions (Genie)**: discovering an action space unsupervised from unlabeled video.
+- **Closed-loop drift**: error accumulation and visual breakdown in autoregressive closed-loop generation.
+- **Generation quality ≠ decision usefulness**: a high FVD score does not imply the model can support planning (Module 12).
+
+## Core Equations
+
+The diffusion training objective (score/denoising view):
+
+$$\mathcal{L} = \mathbb{E}_{x_0, \epsilon, t}\big\| \epsilon - \epsilon_\theta(x_t, t, c) \big\|^2$$
+
+where $c$ is the conditioning (action/text/history frames). Flow matching instead regresses the velocity field of the probability path directly with $\| v_\theta(x_t, t) - (x_1 - x_0) \|^2$.
+
+## University Lecture
+
+| Course | Lecture | Link |
+|---|---|---|
+| UPenn CIS 6280 World Models | L11 Diffusion & Flow Matching; L12–L13 Video World Models I/II | [course homepage](https://jiataogu.me/cis6280-world-models/) (L11–L13 slides released with the semester) |
+
+## Papers
+
+- **Must Read**: Bruce et al. (2024), *Genie: Generative Interactive Environments* ([arXiv:2402.15391](https://arxiv.org/abs/2402.15391)).
+- **Recommended**: Ho et al. (2022), *Video Diffusion Models* ([arXiv:2204.03458](https://arxiv.org/abs/2204.03458)); Brooks et al. (2024), *Video Generation Models as World Simulators* (the Sora technical report, [OpenAI](https://openai.com/index/video-generation-models-as-world-simulators/)).
+- **Optional**: Lipman et al. (2023), *Flow Matching for Generative Modeling* ([arXiv:2210.02747](https://arxiv.org/abs/2210.02747)); Valevski et al. (2024), *GameNGen* ([arXiv:2408.14837](https://arxiv.org/abs/2408.14837)).
+
+## Hands-on
+
+Lab 7: train a small action-conditioned video model on moving-ball videos and visualize drift over long open-loop rollouts.
+
+**Open Lab**: <ColabBadge lab="lab07_video_world_model" />
+
+## Check Your Understanding
+
+1. How does the object being modeled differ between video world models and Dreamer-style world models?
+2. What data-source problem does Genie's latent action solve?
+3. Why is closed-loop drift a particularly severe disease of video world models?
+
+<details>
+<summary>Show answer</summary>
+
+1. Dreamer models dynamics in a compressed latent space — the state is a vector; video world models model the joint distribution of frames directly in pixel space — the state is the picture itself. The former is compact and controllable, suited to planning; the latter is faithful and general, but a compact state for decision-making is hard to extract.
+2. Massive internet/gameplay videos have no action labels, so action-conditioned models cannot be trained directly. Genie uses a latent-action model to unsupervisedly infer "what action happened" between adjacent frames, turning unlabeled video into pseudo-labeled interaction data.
+3. Because the model consumes its own outputs: tiny artifacts in generated frames become the conditioning input for the next step, the distribution drifts progressively away from the training distribution (self-induced OOD), and artifacts are amplified frame by frame. Open-loop generation has no such problem; only closed-loop interaction exposes it — exactly why drift needs dedicated evaluation.
+</details>
+
+## Takeaway
+
+- Video world model = conditional generation in pixel space, trading compactness for fidelity and generality.
+- Genie proved a generative model can become an interactive environment; Sora sparked the "generation is understanding" debate.
+- Closed-loop drift is this route's Achilles' heel — Module 12 deals with it specifically.
+
+## Next Module
+
+[Module 11: World Model + Policy](./11-world-model-policy.mdx) — connecting the world model and the policy into the full MBRL loop.

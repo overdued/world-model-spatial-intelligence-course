@@ -1,0 +1,40 @@
+---
+title: Probability
+sidebar_label: Probability
+description: The minimal probabilistic language of world models — uncertainty is the native tongue of this field; consult on demand.
+---
+
+# Probability
+
+> This page is a **reference manual**. The formal language of world models is probability: belief states, observation noise, stochastic dynamics, and uncertainty quantification all rest on the minimal set below.
+
+## Minimal knowledge set
+
+- **Conditional distributions and Bayes**: $p(s \mid o) \propto p(o \mid s)\, p(s)$ — the entire content of the observation update.
+- **Gaussian distributions and covariance**: the Kalman filter, the stochastic state of RSSM, and 3D Gaussian Splatting are all Gaussian; be able to read the geometric meaning of mean/covariance.
+- **Markov property**: $p(s_{t+1} \mid s_t, s_{t-1}, \dots) = p(s_{t+1} \mid s_t)$ — the mathematical statement of "the state is a sufficient statistic for the future."
+- **Latent variables and marginalization**: $p(o) = \int p(o \mid z)\, p(z)\, dz$ — VAEs, belief states, and particle filters all share this structure.
+- **Expectations and Monte Carlo estimation**: CEM/MPPI planners and gradient estimation in policy gradients both approximate expectations by sampling.
+
+## When to consult
+
+| Main-track module | Probability used |
+|---|---|
+| Track A 02 Observation, State and POMDP | Bayes, belief states, marginalization |
+| Track A 05/06 Latent Dynamics / RSSM | Latent-variable models, KL divergence, ELBO |
+| Track A 09 Planning | Sampling-based estimation, expected return |
+| Track A 12 / Track B 06 | Uncertainty (aleatoric vs epistemic), calibration |
+
+## Best external resources
+
+- ***Probabilistic Machine Learning: Basics*** (Kevin Murphy, [probml.github.io/pml-book](https://probml.github.io/pml-book/)), Chapters 2–4: free PDF, ML perspective.
+- **Seeing Theory** ([seeing-theory.brown.edu](https://seeing-theory.brown.edu/)): interactive visualizations — the fastest way to rebuild intuition.
+- **CIS6280 L02 History, Foundations, Probabilistic Formulation** ([PDF](https://jiataogu.me/cis6280-world-models/lectures/lecture-02-world-models-history-foundations-probabilistic-formulation.pdf)): a demonstration of probabilistic formulation in the world-model context.
+
+## Self-check
+
+You are ready when you can derive a conditional distribution from a joint, explain the orientation and axes of a covariance-matrix ellipse, and articulate the relationship between the Markov property and "compressing history."
+
+## Next
+
+Back to the main tracks: [Track A Module 02](../scientist/02-observation-state-pomdp.mdx) or [Track B Module 06](../spatial/06-state-estimation.mdx)

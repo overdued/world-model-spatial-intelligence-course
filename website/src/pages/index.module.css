@@ -22,7 +22,28 @@
   font-size: 1.15rem;
   opacity: 0.9;
   max-width: 640px;
+  margin: 0 auto 0.75rem;
+}
+
+.heroBadge {
+  font-size: 0.85rem;
   margin: 0 auto 2rem;
+  opacity: 0.85;
+}
+
+.heroBadge a {
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 999px;
+  padding: 0.25rem 0.9rem;
+  text-decoration: none;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+.heroBadge a:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
 }
 
 .heroButtons {

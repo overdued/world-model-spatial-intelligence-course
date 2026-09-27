@@ -1,0 +1,40 @@
+---
+title: PyTorch
+sidebar_label: PyTorch
+description: The implementation tool for every lab — engineering competence is enough; consult on demand.
+---
+
+# PyTorch
+
+> This page is a **reference manual**. Every lab (except Lab 0) uses PyTorch. The goal is not framework mastery, but never getting stuck on engineering details.
+
+## Minimal knowledge set
+
+- **Tensors and autograd**: the standard loop of `tensor.requires_grad`, `loss.backward()`, `optimizer.step()`; understand when the computation graph is built and when it is freed.
+- **`nn.Module`**: modular implementations of encoder/decoder/dynamics; `forward` and parameter registration.
+- **DataLoader**: `Dataset`/`DataLoader`, shuffling and batching; this is what feeds the rollout data in Lab 2.
+- **GPU memory basics**: batch size, mixed precision (`torch.autocast`), and `checkpoint` recomputation; the free Colab T4 has only 15GB.
+- **Device management**: consistency of `.to(device)` — 90% of lab errors come from mixing CPU and GPU tensors.
+
+## When to consult
+
+| Scenario | What to look up |
+|---|---|
+| Training the encoder in Lab 2 | `nn.Module`, the reparameterization trick for VAEs |
+| Rollout prediction in Labs 2/3 | Batch-dimension management for sequential data, `pack_padded_sequence` (optional) |
+| Any lab hits OOM | Mixed precision, gradient checkpointing, smaller batches |
+| Getting things running on Colab | Selecting a GPU runtime, sanity check with `torch.cuda.is_available()` |
+
+## Best external resources
+
+- **The official PyTorch 60-minute tutorial** ([pytorch.org/tutorials](https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html)): one pass through and you can start building.
+- **Official PyTorch Docs**: the `torch.distributions` section is a must-read — RSSM's prior/posterior are written directly with it.
+- **Karpathy's *Zero to Hero*** (YouTube series): hand-writing backpropagation and GPT from scratch — engineering and principles together.
+
+## Self-check
+
+You are ready when you can write the full "define model → forward → compute loss → backward → update" loop without a tutorial, and port a training script from CPU to GPU without blowing up memory.
+
+## Next
+
+Back to the main tracks: [Track A Module 05](../scientist/05-latent-dynamics.mdx) or start [Lab 0](../start-here/index.mdx)

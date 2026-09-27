@@ -1,11 +1,16 @@
 /**
  * Course matrix for the homepage — Module | Learn | Watch | Read | Build.
  * Sources: synthesis/proposed_course_v0_1.md and metadata/courses.json.
+ *
+ * i18n: `learn` is Chinese (default locale), `learnEn` is the English
+ * override; `module` / `watch` / `read` / `build` are proper names and
+ * stay in English in both locales.
  */
 export const matrixRows = [
   {
     module: 'State Space Models',
-    learn: 'Kalman filter & LGSSM, belief-state inference',
+    learn: '卡尔曼滤波与线性高斯状态空间模型、信念状态推断',
+    learnEn: 'Kalman filter & LGSSM, belief-state inference',
     watch: 'UPenn CIS6280 L04',
     watchUrl: 'https://jiataogu.me/cis6280-world-models/',
     read: 'Kalman (1960)',
@@ -15,7 +20,8 @@ export const matrixRows = [
   },
   {
     module: 'Latent Dynamics',
-    learn: 'VAE + latent prediction, observation → latent state',
+    learn: 'VAE + 隐变量预测，观测 → 隐状态',
+    learnEn: 'VAE + latent prediction, observation → latent state',
     watch: 'UPenn CIS6280 L07–08',
     watchUrl: 'https://jiataogu.me/cis6280-world-models/',
     read: 'PlaNet (Hafner et al. 2019)',
@@ -25,7 +31,8 @@ export const matrixRows = [
   },
   {
     module: 'RSSM',
-    learn: 'Recurrent + stochastic latent state, prior/posterior KL',
+    learn: '循环 + 随机隐状态，先验/后验 KL',
+    learnEn: 'Recurrent + stochastic latent state, prior/posterior KL',
     watch: 'UPenn CIS6280 L08',
     watchUrl: 'https://jiataogu.me/cis6280-world-models/',
     read: 'DreamerV1 (Hafner et al. 2020)',
@@ -35,7 +42,8 @@ export const matrixRows = [
   },
   {
     module: 'Planning with World Models',
-    learn: 'MPC / CEM / MPPI in latent space',
+    learn: '隐空间中的 MPC / CEM / MPPI',
+    learnEn: 'MPC / CEM / MPPI in latent space',
     watch: 'UPenn CIS6280 L09',
     watchUrl: 'https://jiataogu.me/cis6280-world-models/',
     read: 'TD-MPC (Hansen et al. 2022)',
@@ -45,7 +53,8 @@ export const matrixRows = [
   },
   {
     module: 'Spatial Representation',
-    learn: 'Volume rendering, NeRF / 3D Gaussian Splatting',
+    learn: '体渲染、NeRF / 3D 高斯泼溅',
+    learnEn: 'Volume rendering, NeRF / 3D Gaussian Splatting',
     watch: 'CMU 16-825 (NeRF & Differentiable Rendering)',
     watchUrl: 'https://learning3d.github.io/',
     read: 'NeRF (Mildenhall et al. 2020)',
@@ -55,7 +64,8 @@ export const matrixRows = [
   },
   {
     module: 'Dynamic 3D / 4D Worlds',
-    learn: 'Scene flow, deformation fields, 4D Gaussians',
+    learn: '场景流、形变场、4D 高斯',
+    learnEn: 'Scene flow, deformation fields, 4D Gaussians',
     watch: 'CMU 16-825 (Dynamic 3D Representations)',
     watchUrl: 'https://learning3d.github.io/',
     read: '4D Gaussian Splatting (Wu et al. 2024)',
@@ -65,7 +75,8 @@ export const matrixRows = [
   },
   {
     module: 'Video World Models',
-    learn: 'Diffusion / flow matching, action-conditioned prediction',
+    learn: '扩散 / 流匹配、动作条件预测',
+    learnEn: 'Diffusion / flow matching, action-conditioned prediction',
     watch: 'UPenn CIS6280 L11–13',
     watchUrl: 'https://jiataogu.me/cis6280-world-models/',
     read: 'Genie (Bruce et al. 2024)',
@@ -75,7 +86,8 @@ export const matrixRows = [
   },
   {
     module: 'SLAM / VIO',
-    learn: 'Factor graphs, visual-inertial odometry, loop closure',
+    learn: '因子图、视觉惯性里程计、回环检测',
+    learnEn: 'Factor graphs, visual-inertial odometry, loop closure',
     watch: 'MIT 16.485 VNAV (VIO & SLAM)',
     watchUrl: 'https://vnav.mit.edu/',
     read: 'ORB-SLAM (Mur-Artal et al. 2015)',
@@ -85,7 +97,8 @@ export const matrixRows = [
   },
   {
     module: 'World Model + Policy',
-    learn: 'Actor-critic in imagination, MBRL closed loop',
+    learn: '想象中的 Actor-Critic、MBRL 闭环',
+    learnEn: 'Actor-critic in imagination, MBRL closed loop',
     watch: 'UPenn CIS6280 L10',
     watchUrl: 'https://jiataogu.me/cis6280-world-models/',
     read: 'DreamerV3 (Hafner et al. 2023)',
@@ -95,7 +108,8 @@ export const matrixRows = [
   },
   {
     module: 'OOD, Drift & Evaluation',
-    learn: 'Calibration, rollout error, closed-loop drift',
+    learn: '校准、rollout 误差、闭环漂移',
+    learnEn: 'Calibration, rollout error, closed-loop drift',
     watch: 'UPenn CIS6280 L23',
     watchUrl: 'https://jiataogu.me/cis6280-world-models/',
     read: 'MBPO (Janner et al. 2019)',

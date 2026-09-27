@@ -1,0 +1,86 @@
+---
+title: Observation, State and POMDP
+sidebar_label: 02 · Observation, State and POMDP
+description: The first-principles question of world models — the observation/state distinction, belief states, and the POMDP seven-tuple.
+---
+
+<ModuleProgress id="a02" label="Observation, State and POMDP" />
+
+## Why this matters
+
+Are you modeling what is "seen" or what is "real"? Confusing observation with state is the most common beginner mistake in world models — and the root of every difficulty in partially observable environments (robotics, first-person video).
+
+## Visual Intuition
+
+![Observation vs state](/img/observation-vs-state.svg)
+
+The true state $s_t$ hides behind the scenes (the ball's real velocity and position); the observation $o_t$ is only its noisy projection (a frame of pixels). The agent can only infer the state from its observation history — and that inference is the belief state $b_t$.
+
+## Core Idea
+
+The **state** is a complete description of the world right now: given $s_t$ and the action $a_t$, the distribution over the future is uniquely determined (the Markov property). An **observation** is a lossy sample of the state passed through the observation model $p(o_t \mid s_t)$ — a camera cannot see occluded objects; radar cannot measure color.
+
+In the **fully observable** case (MDP) $o_t = s_t$, and deciding requires only the current frame; in the **partially observable** case (POMDP), a single-frame observation does not determine the state, so the agent must maintain a **belief state**: $b_t = p(s_t \mid o_{1:t}, a_{1:t-1})$, the posterior over the state conditioned on the entire history.
+
+The belief state is the classical prototype of the "learned latent state": it is itself a sufficient statistic and can be updated recursively (the Bayes filter). All the later latent-dynamics modules (05–08) are, in essence, learning a differentiable, compact belief state.
+
+## Key Concepts
+
+- **Markov property**: the state is a sufficient statistic for the future; history can be discarded.
+- **Observation model**: $p(o_t \mid s_t)$, the bridge between "real" and "seen."
+- **Belief state $b_t$**: the posterior over the state under partial observability, updated recursively.
+- **History compression**: compressing $o_{1:t}, a_{1:t-1}$ into a fixed-dimensional $b_t$ — the motivation for representation learning.
+- **Sufficient statistic**: whether a belief or latent state retains all information needed for prediction.
+
+## Core Equations
+
+The POMDP seven-tuple:
+
+$$(\mathcal{S}, \mathcal{A}, \mathcal{O}, P, \Omega, R, \gamma)$$
+
+where $\mathcal{S}$ is the state space, $\mathcal{A}$ the action space, $\mathcal{O}$ the observation space, $P(s' \mid s,a)$ the transition, $\Omega(o \mid s', a)$ the observation model, $R$ the reward, and $\gamma$ the discount.
+
+Recursive belief update (Bayes filter):
+
+$$b_{t+1}(s') \propto \Omega(o_{t+1} \mid s', a_t) \sum_{s} P(s' \mid s, a_t)\, b_t(s)$$
+
+## University Lecture
+
+| Course | Lecture | Link |
+|---|---|---|
+| UPenn CIS 6280 World Models | L02 History, Foundations, Probabilistic Formulation | [slides](https://jiataogu.me/cis6280-world-models/lectures/lecture-02-world-models-history-foundations-probabilistic-formulation.pdf) |
+
+## Papers
+
+- **Must Read**: Kaelbling, Littman & Cassandra (1998), *Planning and Acting in Partially Observable Stochastic Domains* (classic journal paper; search the title for the PDF) — the bible of POMDPs; §2 suffices.
+- **Recommended**: Ha & Schmidhuber (2018), *World Models* ([arXiv:1803.10122](https://arxiv.org/abs/1803.10122)) §2 — see how an RNN compresses history into a hidden state.
+
+## Hands-on
+
+<ColabBadge lab="lab00_tiny_world" />
+
+Try one change in the Lab 0 environment: make the observation contain position but not velocity — you have just manufactured a POMDP by hand, and a random policy's performance will degrade immediately.
+
+## Check Your Understanding
+
+1. Is a single Atari game frame a state or an observation?
+2. What is the relationship between a belief state and an RNN's hidden state?
+3. Why is "remembering history" necessary in a POMDP?
+
+<details>
+<summary>Show answer</summary>
+
+1. An observation. A single frame does not reveal state components such as the ball's velocity direction or the opponent's intent; this is exactly why Atari agents usually stack 4 frames — using short-term history to approximate a sufficient statistic.
+2. An RNN's hidden state is a learnable, deterministic approximation of a belief state: it likewise compresses history into a fixed-dimensional vector and updates recursively, but discards the explicit representation of uncertainty (RSSM will bring that back).
+3. Because a single-frame observation is not a sufficient statistic: two different true states can produce the same observation (perceptual aliasing). Only history can disambiguate — for instance, estimating velocity from consecutive frames.
+</details>
+
+## Takeaway
+
+- Observation ≠ state: an observation is a noisy, lossy projection of the state; confusing the two is a common error.
+- The belief state $b_t$ is the correct "internal state" under partial observability and is updated recursively.
+- Learned latent states are differentiable approximations of belief states — this foreshadows Modules 05–08.
+
+## Next Module
+
+[Module 03: State Space Models](./03-state-space-models.mdx) — the closed-form solution of recursive belief updating in the Gaussian case.

@@ -1,0 +1,62 @@
+{
+  "link.title.学习": {
+    "message": "Learn",
+    "description": "The title of the footer links column with title=学习 in the footer"
+  },
+  "link.title.资源": {
+    "message": "Resources",
+    "description": "The title of the footer links column with title=资源 in the footer"
+  },
+  "link.title.项目": {
+    "message": "Project",
+    "description": "The title of the footer links column with title=项目 in the footer"
+  },
+  "link.item.label.从这里开始": {
+    "message": "Start Here",
+    "description": "The label of footer link with label=从这里开始 linking to /docs/start-here/"
+  },
+  "link.item.label.World Model Scientist": {
+    "message": "World Model Scientist",
+    "description": "The label of footer link with label=World Model Scientist linking to /docs/scientist/"
+  },
+  "link.item.label.Spatial & Embodied Engineer": {
+    "message": "Spatial & Embodied Engineer",
+    "description": "The label of footer link with label=Spatial & Embodied Engineer linking to /docs/spatial/"
+  },
+  "link.item.label.路线图": {
+    "message": "Roadmap",
+    "description": "The label of footer link with label=路线图 linking to /roadmap"
+  },
+  "link.item.label.大学课程": {
+    "message": "University Courses",
+    "description": "The label of footer link with label=大学课程 linking to /docs/resources/university-courses"
+  },
+  "link.item.label.论文": {
+    "message": "Papers",
+    "description": "The label of footer link with label=论文 linking to /docs/resources/papers"
+  },
+  "link.item.label.研究资料库": {
+    "message": "Research Archive",
+    "description": "The label of footer link with label=研究资料库 linking to /docs/resources/research-archive"
+  },
+  "link.item.label.实验": {
+    "message": "Labs",
+    "description": "The label of footer link with label=实验 linking to /docs/labs"
+  },
+  "link.item.label.GitHub": {
+    "message": "GitHub",
+    "description": "The label of footer link with label=GitHub linking to https://github.com/overdued/world-model-spatial-intelligence-course"
+  },
+  "link.item.label.Issues": {
+    "message": "Issues",
+    "description": "The label of footer link with label=Issues linking to https://github.com/overdued/world-model-spatial-intelligence-course/issues"
+  },
+  "link.item.label.CUHK(SZ)": {
+    "message": "CUHK(SZ)",
+    "description": "The label of footer link with label=CUHK(SZ) linking to https://www.cuhk.edu.cn/"
+  },
+  "copyright": {
+    "message": "Copyright © 2026 CUHK(SZ) SAI BL&SP Group. Docs CC BY 4.0 · Code MIT.",
+    "description": "The footer copyright"
+  }
+}

@@ -2,7 +2,11 @@
 
 **From Representation to Prediction, Planning and Physical Intelligence**
 
+> 🏫 **CUHK(SZ) · SAI · BL&SP Research Group** — 香港中文大学（深圳）人工智能学院 BL&SP 课题组
+
 一门开源课程：从世界表征（Representation）到预测（Prediction）、规划（Planning）与物理智能（Physical Intelligence）。
+
+**中文版**（本页） | [English Version](README_EN.md)
 
 > 📖 **课程网站（主入口）**：https://overdued.github.io/world-model-spatial-intelligence-course/
 >

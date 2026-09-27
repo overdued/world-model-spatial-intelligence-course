@@ -1,0 +1,50 @@
+{
+  "title": {
+    "message": "WM & SI",
+    "description": "The title in the navbar"
+  },
+  "item.label.从这里开始": {
+    "message": "Start Here",
+    "description": "Navbar item with label 从这里开始"
+  },
+  "item.label.学习路线": {
+    "message": "Tracks",
+    "description": "Navbar item with label 学习路线"
+  },
+  "item.label.路线图": {
+    "message": "Roadmap",
+    "description": "Navbar item with label 路线图"
+  },
+  "item.label.实验": {
+    "message": "Labs",
+    "description": "Navbar item with label 实验"
+  },
+  "item.label.资源": {
+    "message": "Resources",
+    "description": "Navbar item with label 资源"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  },
+  "item.label.🧑‍🔬 World Model Scientist": {
+    "message": "🧑‍🔬 World Model Scientist",
+    "description": "Navbar item with label 🧑‍🔬 World Model Scientist"
+  },
+  "item.label.👷 Spatial & Embodied Engineer": {
+    "message": "👷 Spatial & Embodied Engineer",
+    "description": "Navbar item with label 👷 Spatial & Embodied Engineer"
+  },
+  "item.label.大学课程": {
+    "message": "University Courses",
+    "description": "Navbar item with label 大学课程"
+  },
+  "item.label.论文": {
+    "message": "Papers",
+    "description": "Navbar item with label 论文"
+  },
+  "item.label.研究资料库": {
+    "message": "Research Archive",
+    "description": "Navbar item with label 研究资料库"
+  }
+}

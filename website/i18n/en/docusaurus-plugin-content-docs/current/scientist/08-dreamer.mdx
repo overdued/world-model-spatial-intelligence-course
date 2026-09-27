@@ -1,0 +1,85 @@
+---
+title: Dreamer
+sidebar_label: 08 · Dreamer
+description: The benchmark of latent-space imagination — the evolution from DreamerV1 to V3 and actor-critic in imagination.
+---
+
+<ModuleProgress id="a08" label="Dreamer" />
+
+## Why this matters
+
+The Dreamer family proved that "imagining in a learned latent space and training the policy there" can sweep Atari, DM Control, robotics, and even Minecraft. It is the engineering pinnacle of MBRL and an unavoidable system for understanding how world models serve decision-making.
+
+## Visual Intuition
+
+![Dreamer architecture](/img/dreamer.svg)
+
+Three loops run simultaneously: the **world model** learns an RSSM from replay data; the **actor-critic** trains entirely on the RSSM's imagination rollouts; the **real environment** is touched only to collect data. Real interaction and policy learning are decoupled by imagination.
+
+## Core Idea
+
+DreamerV1 (*Dream to Control*, 2020) took the key step: instead of a planner (PlaNet's CEM), **train an actor-critic in imagination**. Imagination rollouts are fully differentiable (the RSSM is a neural network), so value gradients can backpropagate through the dynamics directly into the actor — policy learning becomes far more efficient than gradient-free evolution or sampling-based planning.
+
+DreamerV2 replaced the stochastic state with discrete categoricals, proving the power of discrete latent variables by reaching human-level Atari within a 200M-frame budget. DreamerV3 (2023) solved "generality": symlog prediction (unifying reward scales), percentile return normalization, free bits, unimix and other tricks let **one set of hyperparameters** work tuning-free across 150+ tasks — the first time a world model showed "foundation model"-style transfer.
+
+Reading the three generations together, the evolution is: policy learning in imagination (V1) → latent-variable form and robustness (V2) → cross-domain universal hyperparameters and scale (V3). This thread is also a microcosm of the field's journey "from demo to system."
+
+## Key Concepts
+
+- **Actor-critic in imagination**: policy and value trained entirely on in-model rollouts.
+- **Differentiable imagination**: value gradients backpropagate through the RSSM to the actor.
+- **Discrete latent variables**: DreamerV2's key change (see Module 06).
+- **Symlog and return normalization**: DreamerV3's core tricks for tuning-free cross-domain performance.
+- **$\lambda$-return**: the multi-step value target in imagination, balancing bias and variance.
+
+## Core Equations
+
+$\lambda$-return (the value target in imagination):
+
+$$G_t^\lambda = (1-\lambda)\sum_{n=1}^{H-1} \lambda^{n-1} G_t^{(n)} + \lambda^{H-1} G_t^{(H)}, \quad G_t^{(n)} = \sum_{k=0}^{n-1}\gamma^k r_{t+k} + \gamma^n V(s_{t+n})$$
+
+The symlog transform (DreamerV3):
+
+$$\mathrm{symlog}(x) = \mathrm{sign}(x)\ln(|x|+1)$$
+
+## University Lecture
+
+| Course | Lecture | Link |
+|---|---|---|
+| UPenn CIS 6280 World Models | L10 Policy & Value Learning with World Models (Dreamer, TD-MPC, model bias) | [course homepage](https://jiataogu.me/cis6280-world-models/) (L10 slides released with the semester) |
+
+## Papers
+
+- **Must Read**: Hafner et al. (2023), *Mastering Diverse Domains through World Models* (DreamerV3, [arXiv:2301.04104](https://arxiv.org/abs/2301.04104)).
+- **Recommended**: Hafner et al. (2020), *Dream to Control* ([arXiv:1912.01603](https://arxiv.org/abs/1912.01603)); Hafner et al. (2021), *Mastering Atari with Discrete World Models* ([arXiv:2010.02193](https://arxiv.org/abs/2010.02193)).
+- **Optional**: Hansen et al. (2024), *TD-MPC2: Scalable, Robust World Models for Continuous Control* ([arXiv:2310.16828](https://arxiv.org/abs/2310.16828)) — the parallel route for contrast.
+
+## Hands-on
+
+Lab 3: tiny RSSM is Dreamer's skeleton. The full MBRL loop (imagination + actor-critic) is in Lab 9.
+
+**Open Lab**: <ColabBadge lab="lab03_tiny_rssm" /> <ColabBadge lab="lab09_world_model_policy" />
+
+## Check Your Understanding
+
+1. What is the essential difference between Dreamer's and PlaNet's decision-making?
+2. Why does differentiable imagination matter for policy learning?
+3. What problem does DreamerV3's symlog solve?
+
+<details>
+<summary>Show answer</summary>
+
+1. PlaNet uses decision-time planning: at every real step it runs CEM to search for actions; Dreamer learns an actor-critic in the background and emits an action with a single forward pass at decision time. The former is flexible but slow; the latter deploys fast and distills "planning experience" into the network.
+2. Differentiability means gradients of value with respect to actions can backpropagate exactly through the RSSM rollout — the actor receives analytic gradients rather than sampled estimates, with significantly better sample efficiency and convergence than gradient-free methods.
+3. Reward scales differ enormously across tasks (0–1 up to thousands), and a single value network cannot fit them all at once. Symlog logarithmically compresses large values while keeping small values linear, unifying the scales — one of the keys to "one hyperparameter set across 150 tasks."
+</details>
+
+## Takeaway
+
+- Dreamer = RSSM world model + actor-critic in imagination; real interaction exists only to collect data.
+- V1 solved "how to learn a policy in dreams," V2 the latent-variable form, V3 cross-domain generality.
+- DreamerV3's tuning-free cross-domain performance is a landmark step of world models toward "foundation models."
+
+## Next Module
+
+[Module 09: Planning with World Models](./09-planning-with-world-models.mdx) — the other decision route: no policy training, just plan directly with the model.

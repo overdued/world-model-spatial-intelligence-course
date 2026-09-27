@@ -1,5 +1,7 @@
 # Lab 7 · Video World Model
 
+**中文** | [English](README_EN.md)
+
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab07_video_world_model/notebook.ipynb)
 
 ## Goal

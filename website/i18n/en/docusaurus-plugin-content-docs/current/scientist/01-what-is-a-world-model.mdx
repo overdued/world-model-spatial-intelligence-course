@@ -1,0 +1,86 @@
+---
+title: What is a World Model?
+sidebar_label: 01 · What is a World Model?
+description: The definition, lineage, and course-wide map of world models — the starting module of Track A.
+---
+
+<ModuleProgress id="a01" label="What is a World Model?" />
+
+## Why this matters
+
+Between 2018 and 2026, the term "world model" grew from a workshop paper into a broad field spanning RL, video generation, 3D, and robotics. Without a global map first, every later module becomes an isolated buzzword. This module gives you that map.
+
+## Visual Intuition
+
+![World model overview](/img/world-model-overview.svg)
+
+The agent observes the world (observation), maintains an internal predictable representation (world model), and uses it to imagine the future and plan actions. The world's "true state" is never directly accessible — the model is the only world the agent has.
+
+![World model taxonomy](/img/world-model-taxonomy.svg)
+
+The taxonomy shows the families this course covers: classical state-space models → latent-space world models (RSSM/Dreamer) → generative video world models → spatial/4D world models. Track A advances along the taxonomy from left to right.
+
+## Core Idea
+
+A world model is a **learned representation and predictor of the environment's dynamics** (the official CIS6280 definition): it learns an internal state $s_t$ and how that state evolves given an action $a_t$, so that future trajectories can be "imagined" without the real environment. The definition has two key components: **representation** (how the state is represented) and **prediction** (how the state evolves) — the first half of Track A covers representation, the second half prediction and use.
+
+A world model is not one specific model but an **abstract interface**: any system that can answer "what happens if I execute this action sequence from the current state" is a world model. A hand-built physics engine (MuJoCo), a Kalman filter, Dreamer's RSSM, and Sora-class video models are all different implementations of this interface.
+
+Its value lies in **decoupling learning from trial and error**: a model-free agent must trial-and-error in the real world; a model-based agent can trial-and-error in "dreams" (imagination), trading expensive real interaction for cheap in-model rollouts. This is exactly where model-based RL's sample-efficiency advantage comes from.
+
+## Key Concepts
+
+- **Observation**: the signal the agent actually receives — a lossy projection of the state.
+- **State**: a sufficient statistic for the future; the true state is usually not directly observable.
+- **Transition**: $p(s_{t+1} \mid s_t, a_t)$, the core object a world model learns.
+- **Imagination**: rolling out trajectories inside the model without interacting with the real environment.
+- **Interface**: the four elements state / transition / action / evaluation — the Capstone requires you to define them explicitly.
+
+## Core Equations
+
+The probabilistic formulation of a world model (trajectory distribution):
+
+$$p_\theta(\tau) = p(s_0) \prod_{t=0}^{T-1} p_\theta(s_{t+1} \mid s_t, a_t)\, p_\theta(o_t \mid s_t)$$
+
+## University Lecture
+
+| Course | Lecture | Link |
+|---|---|---|
+| UPenn CIS 6280 World Models | L01 World Models: An Overview | [slides](https://jiataogu.me/cis6280-world-models/lectures/lecture-01-world-models-overview.pdf) |
+| UPenn CIS 6280 World Models | L02 History, Foundations, Probabilistic Formulation | [slides](https://jiataogu.me/cis6280-world-models/lectures/lecture-02-world-models-history-foundations-probabilistic-formulation.pdf) |
+
+## Papers
+
+- **Must Read**: Ha & Schmidhuber (2018), *World Models* ([arXiv:1803.10122](https://arxiv.org/abs/1803.10122)) — the origin of the field, written as a 30-page blog post; readable in one evening.
+- **Recommended**: Hafner et al. (2023), *Mastering Diverse Domains through World Models* (DreamerV3, [arXiv:2301.04104](https://arxiv.org/abs/2301.04104)) — the contemporary benchmark; start with the abstract and figures.
+- **Optional**: Wong et al. (2023), *From Word Models to World Models* (search the paper title) — a perspective extending the world-model concept to language.
+
+## Hands-on
+
+<ColabBadge lab="lab00_tiny_world" />
+
+Lab 0 has you implement a small Gymnasium-compatible environment from scratch, defining observation / action / transition yourself — the fastest way to internalize the "world model interface."
+
+## Check Your Understanding
+
+1. What is the essential difference between a world model and an ordinary "regression model"?
+2. Why does having a model improve sample efficiency?
+3. Does a physics simulator count as a world model?
+
+<details>
+<summary>Show answer</summary>
+
+1. A world model models the **closed-loop conditional distribution** $p(s_{t+1} \mid s_t, a_t)$: its outputs feed back as inputs to the next step (rollout), so errors compound. Ordinary regression only fits a single open-loop step and has no such recursive structure.
+2. Because the policy can be trained on in-model rollouts (imagination): most trial and error no longer consumes real environment interactions, and real data is only needed to calibrate the model itself.
+3. Yes. A simulator is a "hand-written world model" — it satisfies the state/transition/action interface. The evaluation standard for learned world models is often precisely "can it replace the simulator."
+</details>
+
+## Takeaway
+
+- A world model = a predictable representation of the world, with state / transition / action / evaluation as its core interface.
+- The field has a complete lineage from classical filtering to generative video models; this course advances along it.
+- The value of a model is trading real trial-and-error for imagined trial-and-error, at the cost of model error (Module 12 settles that account).
+
+## Next Module
+
+[Module 02: Observation, State and POMDP](./02-observation-state-pomdp.mdx) — before modeling, get clear on whether what you see is an observation or a state.

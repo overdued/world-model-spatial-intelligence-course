@@ -1,0 +1,76 @@
+---
+title: What is Spatial Intelligence?
+sidebar_label: 01 · What is Spatial Intelligence?
+description: A definition and map of spatial intelligence — from Fei-Fei Li's framing to the split between the robotics view and the human-centered view.
+---
+
+<ModuleProgress id="b01" label="What is Spatial Intelligence?" />
+
+## Why this matters
+
+"Spatial intelligence" is one of the most important new narratives in AI since 2024: Fei-Fei Li calls it the next frontier of AI. Without first pinning down what it does and does not mean, the 3D vision and robotics modules that follow would lose their sense of direction.
+
+## Visual Intuition
+
+![Track B roadmap](/img/spatial-roadmap.svg)
+
+This roadmap is the panoramic view of Track B: starting from camera geometry (Module 02) and 3D representations (03–05), through state estimation and SLAM (06–07) and spatial memory (08), and on to action — affordance, navigation, robot world models, and VLA (09–12).
+
+## Core Idea
+
+In her TED 2024 talk, Fei-Fei Li defines **spatial intelligence** as AI's ability to understand the 3D physical world and to reason and act within it — "seeing" is only the starting point; "acting in the world" is the finish line. World Labs, the company she co-founded, frames this agenda as "from pixels to worlds" (generating and understanding persistent 3D worlds). This is naturally isomorphic to the world-model framework of this course: spatial intelligence is the instantiation of world models in the 3D/4D physical world.
+
+Note the **two complementary perspectives**. The robotics/AI view (the main line of this course) treats spatial intelligence as an engineering problem: perception → state estimation → representation → action, evaluated by task success rate and estimation accuracy. The architecture/human-centered view (Columbia Spatial AI, Harvard GSD) focuses on what space means to people: legibility, wayfinding, spatial behavior — a reminder that "maps are made for humans and machines alike." This course takes the first view as its main thread; Modules 08–09 borrow concepts from the second.
+
+Why can't spatial intelligence be solved by 2D video models alone? 3D structure provides **multi-view consistency** as a free supervision signal and test criterion: a true world state must render consistently from any viewpoint. This constraint is the shared foundation of every method from Module 04 (NeRF/3DGS) to Module 07 (SLAM).
+
+## Key Concepts
+
+- **Spatial intelligence**: the ability to perceive, understand, reason about, and act in the 3D physical world.
+- **Robotics view vs. human-centered view**: engineering closed loop vs. spatial cognition — two complementary threads.
+- **Multi-view consistency**: the natural supervision and validation signal for 3D world models.
+- **Embodiment**: perception and action are defined by the form of the body; spatial intelligence is the foundation of embodied intelligence.
+- **Persistent world representation**: the "storage layer" of spatial intelligence (developed in Module 08).
+
+## Core Equations
+
+This module is intuition-first.
+
+## University Lecture
+
+| Course | Lecture | Link |
+|---|---|---|
+| UPenn CIS 6280 World Models | L15 Spatial World Models I (3D representations and the spatial intelligence agenda; Resources collects Fei-Fei Li's TED 2024 talk and World Labs material) | [Course page](https://jiataogu.me/cis6280-world-models/) |
+
+## Papers
+
+- **Must Read**: Fei-Fei Li, TED 2024 talk *With Spatial Intelligence, AI Will Understand the Real World* ([TED](https://www.ted.com/talks/fei_fei_li_with_spatial_intelligence_ai_will_understand_the_real_world)); World Labs' official writing on spatial intelligence ([worldlabs.ai](https://www.worldlabs.ai/)).
+- **Recommended**: Gibson (1979), *The Ecological Approach to Visual Perception* (classic book; find it in a library or online) — the origin of the affordance concept, and a seed for Module 09.
+
+## Hands-on
+
+Track B's hands-on work starts at Lab 0 (see the next module). For this module, do just one thing: use your phone to shoot a video circling an object — that is the raw data for Module 04.
+
+## Check Your Understanding
+
+1. What is the difference between spatial intelligence and "computer vision"?
+2. Why is multi-view consistency a free supervision signal for 3D world models?
+3. What evaluation criteria do the robotics view and the human-centered view of spatial intelligence each care about?
+
+<details>
+<summary>Show answer</summary>
+
+1. Computer vision ends at "extracting information from images"; spatial intelligence ends at "acting in the world" — perception is only the first link of the loop, and a system counts as spatial intelligence only when it also has state estimation, memory, and an action interface.
+2. Any internal representation of a real 3D scene must be consistent with observations from all viewpoints simultaneously; a representation that violates consistency is necessarily wrong. This constraint needs no human annotation, which is why NeRF and SLAM can both be trained self-supervised on purely geometric/photometric error.
+3. Robotics view: task success rate, localization error (ATE/RPE), real-time performance. Human-centered view: spatial legibility, wayfinding efficiency, and how people behave in and experience a space. The former optimizes machine performance; the latter optimizes the relationship between people and space.
+</details>
+
+## Takeaway
+
+- Spatial intelligence = the instantiation of world models in the 3D/4D physical world; the finish line is action, not perception.
+- The robotics view and the human-centered view are complementary; this course follows the former.
+- Multi-view consistency is the core constraint and supervision signal running through all of Track B.
+
+## Next Module
+
+[Module 02: Camera and Geometry](./02-camera-and-geometry.mdx) — everything begins with "how the world becomes an image."

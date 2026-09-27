@@ -1,0 +1,92 @@
+---
+title: State Space Models
+sidebar_label: 03 · State Space Models
+description: The classical state–observation framework and the Kalman filter — the baseline and forerunner of learned world models.
+---
+
+<ModuleProgress id="a03" label="State Space Models" />
+
+## Why this matters
+
+Long before deep learning, "world models" had already existed for sixty years in the form of state-space models. The Kalman filter's predict–update loop is the closed-form optimum of belief-state updating, and the classical benchmark against which all learned dynamics are judged.
+
+## Visual Intuition
+
+![State space model](/img/state-space-model.svg)
+
+The hidden state $x_t$ evolves along the transition equation; the observation $z_t$ is generated along the observation equation. The task of learning/inference runs in reverse: recover the state trajectory from the observation sequence.
+
+![Kalman filter](/img/kalman-filter.svg)
+
+Each KF step has two halves: **predict** (push the belief forward through the dynamics; uncertainty inflates) and **update** (pull the belief back with an observation; uncertainty contracts). The ellipses represent covariance — uncertainty breathes between the two operations.
+
+## Core Idea
+
+A state-space model (SSM) consists of two equations: the **transition equation** describes how the state evolves; the **observation equation** describes how the state is seen. In the linear-Gaussian case (LGSSM), the belief $p(x_t \mid z_{1:t})$ is always Gaussian, and its mean and covariance can be computed recursively in closed form by the Kalman filter — the exact solution of the previous module's Bayes filter under Gaussian assumptions.
+
+The essence of the KF is the **Kalman gain**: it automatically weighs trusting the model against trusting the observation according to the relative size of prediction uncertainty and observation uncertainty. With noisy observations, trust the model more; with an inaccurate model, trust the observations more — this idea recurs throughout the uncertainty evaluation of Module 12.
+
+Real-world dynamics are almost never linear-Gaussian: the EKF (local linearization), UKF (unscented transform), and particle filter (Monte Carlo approximation) are the three classical generalizations; and one step further — "just learn the transition and observation with a neural network" — is the latent dynamics of Module 05.
+
+## Key Concepts
+
+- **LGSSM**: linear transition + linear observation + Gaussian noise — the only case with closed-form optimal inference.
+- **Filtering / Smoothing / Prediction**: estimate the present from the past / the past from the full sequence / the future from the present.
+- **Kalman gain**: the adaptive weight between model trust and observation trust.
+- **EKF / UKF**: two classical approximations for nonlinear dynamics.
+- **From LGSSM to learned SSM**: replacing the known matrices $A, C$ with neural networks is the main storyline of this course.
+
+## Core Equations
+
+LGSSM:
+
+$$x_t = A x_{t-1} + B a_t + w_t, \qquad z_t = C x_t + v_t$$
+
+Kalman filter predict–update:
+
+$$\hat{x}_{t|t-1} = A \hat{x}_{t-1|t-1} + B a_t, \qquad P_{t|t-1} = A P_{t-1|t-1} A^\top + Q$$
+
+$$K_t = P_{t|t-1} C^\top (C P_{t|t-1} C^\top + R)^{-1}, \qquad \hat{x}_{t|t} = \hat{x}_{t|t-1} + K_t (z_t - C\hat{x}_{t|t-1})$$
+
+## University Lecture
+
+| Course | Lecture | Link |
+|---|---|---|
+| UPenn CIS 6280 World Models | L04 State-Space Models (with handwritten derivation notes) | [slides](https://jiataogu.me/cis6280-world-models/lectures/lecture-04-state-space-models.pdf) |
+| Stanford CS231A | L14–L15 Optimal Estimation (KF/EKF/UKF) | [course homepage](https://web.stanford.edu/class/cs231a/) |
+
+## Papers
+
+- **Must Read**: Kalman (1960), *A New Approach to Linear Filtering and Prediction Problems* (classic paper; search the title for the PDF) — even §1–4 alone convey the elegance of the "recursive" idea.
+- **Recommended**: Gu, Goel & Ré (2022), *Efficiently Modeling Long Sequences with Structured State Spaces* (S4, [arXiv:2111.00396](https://arxiv.org/abs/2111.00396)) — the revival of SSMs on the deep-learning side, the forerunner of Mamba.
+- **Optional**: the Kalman tracking notebook of the [dynamax](https://github.com/probml/dynamax) library — turning the formulas into 30 lines of JAX.
+
+## Hands-on
+
+<ColabBadge lab="lab01_kalman_filter" />
+
+Lab 1 asks you to hand-write the KF predict–update loop to track a moving 2D target, and compare RMSE against dynamax's implementation — tune $Q$ and $R$ once by hand and you will understand the Kalman gain better than from reading ten derivations.
+
+## Check Your Understanding
+
+1. If the observation noise $R$ is increased, how do the Kalman gain and the state estimate change?
+2. Why is the KF optimal only under LGSSM?
+3. What is the relationship between the KF's covariance $P_t$ and the "uncertainty" of Module 12?
+
+<details>
+<summary>Show answer</summary>
+
+1. $K_t$ shrinks: the filter trusts observations less, the estimate relies more on model predictions, the curve becomes smoother but responds more slowly to real abrupt changes.
+2. Because only the combination of linear transforms and Gaussian noise keeps the belief Gaussian forever; one nonlinear step squeezes a Gaussian into a non-Gaussian, and mean and covariance no longer suffice to characterize the belief — EKF/UKF are only approximations.
+3. $P_t$ is the explicit expression of belief uncertainty, and it is **calibrated** (under Gaussian assumptions, the true error does follow that distribution). Uncertainty quantification for learned models (Module 12) is about recovering this property that the KF provides for free.
+</details>
+
+## Takeaway
+
+- State-space model = transition equation + observation equation — the classical prototype of all world models.
+- The Kalman filter is the closed-form optimum of recursive belief updating under LGSSM, with the Kalman gain's adaptive trade-off at its core.
+- Replace the known matrices with neural networks, and this module leads into all of Track A.
+
+## Next Module
+
+[Module 04: Representation Learning](./04-representation-learning.mdx) — before swapping in neural networks, ask first: what makes a representation "good"?

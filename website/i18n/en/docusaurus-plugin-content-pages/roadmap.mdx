@@ -1,0 +1,67 @@
+---
+title: Course Roadmap
+description: The interactive map of World Models & Spatial Intelligence — click any node to jump to its module.
+hide_table_of_contents: true
+---
+
+# Course Roadmap
+
+The whole course on one map. The **trunk** is the world-model pipeline every intelligent system runs; the **branches** are where the two tracks diverge and specialize. **Click any node** to jump into the corresponding module.
+
+```mermaid
+flowchart LR
+  subgraph TRUNK["World-Model Pipeline"]
+    direction LR
+    OBS["Observation"] --> STATE["World State"] --> REP["Representation"] --> DYN["Dynamics"] --> PRED["Prediction"] --> PLAN["Planning"] --> ACT["Action"]
+  end
+
+  REP --> REP_LAT["Latent Representation"]
+  REP --> REP_3D["3D Representation"]
+  REP --> REP_SPA["Spatial Representation"]
+
+  PRED --> P_RSSM["RSSM"]
+  PRED --> P_DREAM["Dreamer"]
+  PRED --> P_VIDEO["Video World Model"]
+  PRED --> P_4D["4D World Model"]
+  PRED --> P_PHYS["Physics World Model"]
+
+  ACT --> A_MPC["MPC"]
+  ACT --> A_MBRL["Model-Based RL"]
+  ACT --> A_NAV["Navigation"]
+  ACT --> A_MAN["Manipulation"]
+  ACT --> A_VLA["VLA"]
+  ACT --> A_WAM["World-Action Model"]
+
+  click OBS href "/world-model-spatial-intelligence-course/docs/scientist/02-observation-state-pomdp" "Observation, State and POMDP"
+  click STATE href "/world-model-spatial-intelligence-course/docs/scientist/02-observation-state-pomdp" "Observation, State and POMDP"
+  click REP href "/world-model-spatial-intelligence-course/docs/scientist/04-representation-learning" "Representation Learning"
+  click DYN href "/world-model-spatial-intelligence-course/docs/scientist/05-latent-dynamics" "Latent Dynamics"
+  click PRED href "/world-model-spatial-intelligence-course/docs/scientist/06-rssm" "RSSM"
+  click PLAN href "/world-model-spatial-intelligence-course/docs/scientist/09-planning-with-world-models" "Planning with World Models"
+  click ACT href "/world-model-spatial-intelligence-course/docs/scientist/11-world-model-policy" "World Model + Policy"
+
+  click REP_LAT href "/world-model-spatial-intelligence-course/docs/scientist/04-representation-learning" "Representation Learning"
+  click REP_3D href "/world-model-spatial-intelligence-course/docs/spatial/04-nerf-gaussian-splatting" "NeRF and Gaussian Splatting"
+  click REP_SPA href "/world-model-spatial-intelligence-course/docs/spatial/08-spatial-memory" "Spatial Memory"
+
+  click P_RSSM href "/world-model-spatial-intelligence-course/docs/scientist/06-rssm" "RSSM"
+  click P_DREAM href "/world-model-spatial-intelligence-course/docs/scientist/08-dreamer" "Dreamer"
+  click P_VIDEO href "/world-model-spatial-intelligence-course/docs/scientist/10-video-world-models" "Video World Models"
+  click P_4D href "/world-model-spatial-intelligence-course/docs/spatial/05-dynamic-4d-worlds" "Dynamic 3D / 4D Worlds"
+  click P_PHYS href "/world-model-spatial-intelligence-course/docs/spatial/05-dynamic-4d-worlds" "Dynamic 3D / 4D Worlds"
+
+  click A_MPC href "/world-model-spatial-intelligence-course/docs/scientist/09-planning-with-world-models" "Planning with World Models"
+  click A_MBRL href "/world-model-spatial-intelligence-course/docs/scientist/11-world-model-policy" "World Model + Policy"
+  click A_NAV href "/world-model-spatial-intelligence-course/docs/spatial/10-navigation" "Navigation"
+  click A_MAN href "/world-model-spatial-intelligence-course/docs/spatial/11-robot-world-models" "Robot World Models"
+  click A_VLA href "/world-model-spatial-intelligence-course/docs/spatial/12-vla-world-action-models" "VLA and World-Action Models"
+  click A_WAM href "/world-model-spatial-intelligence-course/docs/spatial/12-vla-world-action-models" "VLA and World-Action Models"
+```
+
+## How to read this map
+
+- **🧑‍🔬 World Model Scientist** owns the trunk — representation, latent dynamics, prediction and planning — plus the video/generative branch. Start with [Track A](/docs/scientist/).
+- **👷 Spatial & Embodied Engineer** owns the spatial branches — 3D/4D representation, spatial memory, navigation and robot action. Start with [Track B](/docs/spatial/).
+- **🧩 Foundations** ([/docs/fundamentals/](/docs/fundamentals/)) sits underneath everything — optional, non-linear, consult it when a module assumes something you don't have.
+
+The two tracks are **parallel, not sequential**: they share the same questions (what is the state of the world, how do we predict it, what happens when the prediction is wrong) and the same reliability layer (OOD, drift, evaluation).

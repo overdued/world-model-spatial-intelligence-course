@@ -1,0 +1,86 @@
+---
+title: Planning with World Models
+sidebar_label: 09 · Planning with World Models
+description: MPC, CEM, MPPI and latent-space planning — the plainest paradigm of "if you have a model, you can plan."
+---
+
+<ModuleProgress id="a09" label="Planning with World Models" />
+
+## Why this matters
+
+With a world model, decisions do not require a policy network: at each step, search action sequences inside the model, execute the first action, and plan again. The MPC paradigm is simple, flexible, and interpretable — the standard toolkit of latent planning, and the most direct touchstone of world-model quality.
+
+## Visual Intuition
+
+![MPC loop](/img/mpc.svg)
+
+Each MPC step does three things: from the current state, roll out multiple candidate action sequences inside the model (a branching tree), pick the best sequence by cumulative reward, but **execute only the first action** — once the next real observation arrives, plan again from scratch (receding horizon).
+
+## Core Idea
+
+The core of **model predictive control (MPC)** is the receding horizon: plan $H$ steps but execute only one, using the latest observation to continually correct model error. This "open-loop planning + closed-loop execution" structure makes MPC inherently more robust to model error than a pure open-loop rollout — errors are reset by real observations at every step.
+
+The dynamics learned by a world model are usually non-differentiable, high-dimensional, and stochastic, so gradient planning does not apply and **zero-order sampling planners** became the standard. **CEM (cross-entropy method)** maintains a Gaussian distribution over action sequences: sample → evaluate inside the model → refit the distribution on the elites, iterating a few rounds until convergence. **MPPI** derives a soft weighted update from information theory (exponential weights instead of a hard elite cutoff), is GPU-parallel-friendly, and is common in real-time robot control.
+
+**TD-MPC** represents a third route: MPC + a learned value function. Within a short horizon, roll out in latent space with CEM/MPPI, and attach a value function $V(s_{t+H})$ at the horizon's end as a backstop — the trade-off between planning depth and model error is automatically resolved by value learning. This is also the bridge from "planning" smoothly over to "policy learning" (Module 11).
+
+## Key Concepts
+
+- **Receding horizon**: plan H steps, execute 1 step, replan.
+- **CEM**: a distribution-iterating zero-order planner — elite selection + resampling.
+- **MPPI**: exponentially importance-weighted sampling MPC with good real-time properties.
+- **Latent planning**: rolling out in the latent space of an RSSM/encoder, not in pixels or the true state.
+- **Value expansion (TD-MPC)**: a value function at the end of the planning horizon — short planning, long sight.
+
+## Core Equations
+
+The per-step MPC optimization:
+
+$$a_t^* = \arg\max_{a_{t:t+H}} \sum_{k=0}^{H-1} \gamma^k\, r_\theta(s_{t+k}, a_{t+k}), \qquad s_{t+k+1} \sim p_\theta(s_{t+k+1} \mid s_{t+k}, a_{t+k})$$
+
+The MPPI weight update:
+
+$$a_t \leftarrow \frac{\sum_i w_i\, a_t^{(i)}}{\sum_i w_i}, \qquad w_i = \exp\big(R^{(i)}/\lambda\big)$$
+
+## University Lecture
+
+| Course | Lecture | Link |
+|---|---|---|
+| UPenn CIS 6280 World Models | L09 Planning and Control with World Models (MPC/CEM/MPPI) | [slides](https://jiataogu.me/cis6280-world-models/lectures/lecture-09-planning-control-world-models.pdf) |
+| MIT 16.485 VNAV | L08–L10 Trajectory Optimization (the classical counterpart in continuous spaces) | [course homepage](https://vnav.mit.edu/) |
+
+## Papers
+
+- **Must Read**: Hansen, Wang & Su (2022), *Temporal Difference Learning for Model Predictive Control* (TD-MPC, [arXiv:2203.04955](https://arxiv.org/abs/2203.04955)).
+- **Recommended**: Williams et al. (2017), *Information Theoretic MPC for Model-Based Reinforcement Learning* (MPPI, [arXiv:1707.02342](https://arxiv.org/abs/1707.02342)); Chua et al. (2018), *Deep RL in a Handful of Trials* (PETS, [arXiv:1805.12114](https://arxiv.org/abs/1805.12114)) — the classic combination of probabilistic ensembles + CEM.
+- **Optional**: Schrittwieser et al. (2020), *Mastering Atari, Go, Chess and Shogi by Planning with a Learned Model* (MuZero, [arXiv:1911.08265](https://arxiv.org/abs/1911.08265)) — the pinnacle of the tree-search route.
+
+## Hands-on
+
+Lab 4: implement CEM and MPPI on the latent dynamics from Labs 2/3, and systematically compare how horizon and sample count affect return.
+
+**Open Lab**: <ColabBadge lab="lab04_mpc_cem_planning" />
+
+## Check Your Understanding
+
+1. Why is MPC more robust to model error than open-loop rollout?
+2. How do the update rules of CEM and MPPI differ?
+3. Why can TD-MPC use a shorter planning horizon?
+
+<details>
+<summary>Show answer</summary>
+
+1. Because after every executed action it re-anchors the state with a real observation before replanning — model error never gets a chance to compound over time. Open-loop rollout errors accumulate all the way, and the longer the horizon, the more absurd the result.
+2. CEM refits the Gaussian on the top-return elite subset (a hard cutoff); MPPI softly weights all samples by $\exp(R/\lambda)$, with temperature $\lambda$ controlling exploration. MPPI uses information more fully, needs no elite fraction, and is empirically smoother.
+3. Because the value function $V(s_{t+H})$ at the horizon's end compresses "the long-term return beyond" into one estimate: planning only needs to cover short-term detail while the learned value covers the long term. The tension between planning depth and model error is thereby relieved.
+</details>
+
+## Takeaway
+
+- MPC = plan inside the model + execute only the first step + keep resetting with real observations — the natural antidote to model error.
+- CEM/MPPI are the standard zero-order planners on learned dynamics; vectorized, they are extremely fast on GPUs.
+- TD-MPC bridges planning and policy learning with a value function — the bridge to Module 11.
+
+## Next Module
+
+[Module 10: Video World Models](./10-video-world-models.mdx) — upgrading "predict the future" to "generate the future."

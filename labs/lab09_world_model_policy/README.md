@@ -1,5 +1,7 @@
 # Lab 9 · World Model + Policy（Tiny Dreamer）
 
+**中文** | [English](README_EN.md)
+
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab09_world_model_policy/notebook.ipynb)
 
 Scientist 主线的闭环实验：把 Lab 0–2 的部件（环境、latent dynamics）接上 policy，做一个 Tiny Dreamer-style 实验——**policy 主要在 world model 的 imagined trajectories 上训练**，并与 model-free baseline 对比样本效率，最后复现 model bias。

@@ -1,5 +1,7 @@
 # Lab 6 · Dynamic 3D / 4D Worlds
 
+**中文** | [English](README_EN.md)
+
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab06_dynamic_4d_worlds/notebook.ipynb)
 
 Spatial 线：给静态 3D 表示加上时间轴。在代码内生成的三物体动态点云场景（刚性 cube / 圆周 sphere / 呼吸形变 blob，带噪声观测）上，完成 **motion estimation（centroid tracking + 手写 ICP 配准 + scene flow）→ temporal interpolation → MLP dynamics 学习 → 未来 10 帧外推**，并用 3D 动画把全程可视化。

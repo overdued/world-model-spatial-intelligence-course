@@ -1,0 +1,40 @@
+---
+title: Reinforcement Learning
+sidebar_label: Reinforcement Learning
+description: The minimal RL background for using world models in decision-making — this is not an RL course; consult on demand.
+---
+
+# Reinforcement Learning
+
+> This page is a **reference manual**. To borrow CIS6280's official disclaimer: **this is not an RL course**. You only need enough vocabulary to follow "how world models serve decision-making."
+
+## Minimal knowledge set
+
+- **MDP**: the five-tuple $(\mathcal{S}, \mathcal{A}, P, R, \gamma)$; a POMDP is its partially observable version (expanded in Track A Module 02).
+- **Bellman equation**: $V^\pi(s) = \mathbb{E}_\pi[r + \gamma V^\pi(s')]$ — the recursive definition of the value function.
+- **Value / Policy**: the relationship among $V(s)$, $Q(s,a)$, and $\pi(a \mid s)$; TD-MPC's "model + value function" combination rests on this distinction.
+- **Model-free vs model-based**: everything in this course sits on the model-based side; understanding the contrast is enough.
+- **Policy gradients and actor-critic**: Dreamer trains an actor-critic in imagination; you only need to know the structure, not to derive it.
+
+## When to consult
+
+| Main-track module | RL used |
+|---|---|
+| Track A 02 | MDP/POMDP formalism |
+| Track A 08 Dreamer | Actor-critic, return estimation |
+| Track A 09 Planning | The return-maximization view of trajectory optimization |
+| Track A 11 World Model + Policy | Dyna architecture, model bias |
+
+## Best external resources
+
+- **Sutton & Barto, *Reinforcement Learning: An Introduction*** ([free PDF](http://incompleteideas.net/book/the-book.html)): Chapters 1–6 plus Chapter 8 (Dyna) cover everything needed.
+- **OpenAI Spinning Up** ([spinningup.openai.com](https://spinningup.openai.com/)): the friendliest introduction to policy gradients and actor-critic.
+- **CIS6280 L09–L10** ([course homepage](https://jiataogu.me/cis6280-world-models/)): RL machinery explained in the context of "using world models."
+
+## Self-check
+
+You are ready when you can write the Bellman equation and explain each term, articulate where the sample-efficiency gap between model-free and model-based comes from, and sketch what each of the two actor-critic networks outputs.
+
+## Next
+
+Back to the main tracks: [Track A Module 02](../scientist/02-observation-state-pomdp.mdx)

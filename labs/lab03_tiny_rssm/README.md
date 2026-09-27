@@ -1,5 +1,7 @@
 # Lab 3 · Tiny RSSM
 
+**中文** | [English](README_EN.md)
+
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab03_tiny_rssm/notebook.ipynb)
 
 ## Goal

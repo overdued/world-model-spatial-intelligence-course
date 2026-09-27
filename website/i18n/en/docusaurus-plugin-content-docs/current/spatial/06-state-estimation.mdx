@@ -1,0 +1,86 @@
+---
+title: State Estimation
+sidebar_label: 06 · State Estimation
+description: Kalman/EKF/UKF and factor graphs — the inference engine of spatial intelligence.
+---
+
+<ModuleProgress id="b06" label="State Estimation" />
+
+## Why this matters
+
+If a robot does not know where it is, no 3D representation has anywhere to live. State estimation is the inference engine of spatial intelligence: it turns noisy sensor streams into continuous, trustworthy estimates of pose and map. This module mirrors Track A Module 03 — there you learn the theory, here you learn the systems.
+
+## Visual Intuition
+
+![Kalman filter](/img/kalman-filter.svg)
+
+The meaning of the predict–update loop in robotics: the IMU/wheel odometry propagates the belief forward (uncertainty inflates), and camera/GPS observations pull it back (uncertainty shrinks). The ellipse is the covariance — how confident the robot is about its own position.
+
+## Core Idea
+
+State estimation for spatial intelligence faces a reality of **nonlinearity + multiple sensors + real time**. Nonlinearity comes from rotation and perspective projection: the EKF linearizes with a first-order Taylor expansion at the current estimate — simple, but it diverges under large errors; the UKF propagates the distribution through a small set of sigma points — no Jacobians needed, and accurate to second order. Both are "filtering" approaches — they maintain a belief over the current state only, and history is marginalized out.
+
+The **optimization route** (smoothing) keeps the entire trajectory: all measurements are written into a **factor graph** — variable nodes are poses and landmarks, factor nodes are measurement constraints — and the whole graph is solved as a nonlinear least-squares problem. The factor-graph view unifies everything: the EKF is a factor graph that keeps only the newest node, sliding-window VIO is a factor graph with a fixed window, and the SLAM back end is the full factor graph. MIT VNAV's L16–L19 (ML/MAP estimation → nonlinear least squares) present this derivation chain most thoroughly.
+
+The engineering crux is the **correct use of uncertainty**: covariance is not just an output — it sets the weights of sensor fusion (a noisier sensor is automatically down-weighted), decides when to trust the model (the spatial version of the Kalman gain), and determines the safety margin for downstream planning. VIO (Module 07) is exactly the system integration of this module's theory + IMU preintegration + a visual front end.
+
+## Key Concepts
+
+- **EKF**: locally linearized filtering — simple, fragile, but ubiquitous.
+- **UKF**: the sigma-point unscented transform — Jacobian-free, second-order accuracy.
+- **Factor graph**: a graphical model of variables + measurement constraints — the unifying language of SLAM/VIO.
+- **Filtering vs. smoothing**: marginalizing history vs. jointly optimizing the whole trajectory.
+- **Covariance as weight**: uncertainty drives sensor fusion and planning safety margins.
+
+## Core Equations
+
+The EKF's linearized update ($F_t, H_t$ are Jacobians):
+
+$$P_{t|t-1} = F_t P_{t-1|t-1} F_t^\top + Q, \qquad K_t = P_{t|t-1} H_t^\top (H_t P_{t|t-1} H_t^\top + R)^{-1}$$
+
+The MAP objective of a factor graph:
+
+$$X^* = \arg\min_X \sum_i \big\| h_i(X) - z_i \big\|_{\Sigma_i}^2$$
+
+## University Lecture
+
+| Course | Lecture | Link |
+|---|---|---|
+| Stanford CS231A | L14–L15 Optimal Estimation (KF/EKF/UKF, flipped format) + PS4 | [Course page](https://web.stanford.edu/class/cs231a/) |
+| MIT 16.485 VNAV | L16–L19 ML/MAP Estimation and nonlinear least squares | [Course page](https://vnav.mit.edu/) |
+
+## Papers
+
+- **Must Read**: Kalman (1960), *A New Approach to Linear Filtering and Prediction Problems* (classic paper; search the title).
+- **Recommended**: Thrun, Burgard & Fox, *Probabilistic Robotics* (textbook; search the title) — the bible of robot state estimation, Chapter 3.
+- **Optional**: tutorials for [dynamax](https://github.com/probml/dynamax) (an SSM library in the JAX ecosystem) and [GTSAM](https://gtsam.org/) (a factor-graph optimization library).
+
+## Hands-on
+
+<ColabBadge lab="lab01_kalman_filter" />
+
+Lab 1 hand-implements a KF to track a 2D target and compares it against dynamax. Extra suggestion for Track B learners: make the observations available only at certain times (simulating GPS dropout) and watch the covariance inflate and shrink.
+
+## Check Your Understanding
+
+1. Under what circumstances does the EKF diverge?
+2. In the factor-graph view, what is the difference between the EKF and full-smoothing SLAM?
+3. Why are the IMU and vision complementary sensors?
+
+<details>
+<summary>Show answer</summary>
+
+1. When the initial error is large enough that first-order linearization fails (large-angle rotations, strongly nonlinear observations): the linearization point sits far from the true posterior mode, updates go in the wrong direction, and error feeds back positively into divergence. The UKF, iterated EKF, and the optimization route are all patches for this.
+2. At each step the EKF marginalizes history into the current belief — equivalent to a factor graph that keeps only the newest variable; once discarded, information cannot be recovered. Full smoothing keeps all variables and constraints and optimizes them jointly — more accurate but more expensive. Sliding-window optimization is the compromise between the two.
+3. The IMU is high-frequency and short-term accurate but drifts (integrated noise accumulates); vision is low-frequency and drift-free but has scale ambiguity and texture dependence. Fused, the IMU provides high-frequency inter-frame constraints while vision provides long-term anchoring and recovers scale — exactly the design logic of VIO (Module 07).
+</details>
+
+## Takeaway
+
+- State estimation = recursive/batch inference of beliefs from noisy sensor streams; EKF/UKF/factor graphs are three generations of tools.
+- Filtering and smoothing are unified in the language of factor graphs; the sliding window is the engineering compromise.
+- Covariance is the source of fusion weights and safety margins — uncertainty is the fuel of the system, not an accessory.
+
+## Next Module
+
+[Module 07: SLAM and VIO](./07-slam-vio.mdx) — assembling state estimation into a complete localization-and-mapping system.

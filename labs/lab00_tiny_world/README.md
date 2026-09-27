@@ -1,5 +1,7 @@
 # Lab 0 — Build a Tiny World
 
+**中文** | [English](README_EN.md)
+
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab00_tiny_world/notebook.ipynb)
 
 ## Objective

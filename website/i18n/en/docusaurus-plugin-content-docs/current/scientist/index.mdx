@@ -1,0 +1,26 @@
+---
+title: Track A · World Model Scientist
+description: Build world models — from representation learning and latent dynamics to video prediction, planning and evaluation.
+---
+
+import TrackRoadmap from '@site/src/components/TrackRoadmap';
+
+# 🧑‍🔬 World Model Scientist
+
+<TrackRoadmap track="scientist" />
+
+## Why this order
+
+The track follows the **real research pipeline**, not a textbook table of contents:
+
+1. **Foundations of state** (a01–a03) — what a world model even is, the observation/state distinction, and the classical state-space baseline you will beat and borrow from.
+2. **Representation & dynamics** (a04–a08) — learn a latent space worth predicting in, then the RSSM lineage: World Models 2018 → PlaNet → Dreamer.
+3. **Using the model** (a09–a11) — planning (MPC/CEM/MPPI), video-scale prediction, and closing the loop with a policy.
+4. **Trusting the model** (a12) — OOD, drift and evaluation, because a world model you can't audit is a liability.
+5. **Capstone** (a13) — build your own, with state / transition / action / evaluation made explicit.
+
+## Exit criteria
+
+You are done with this track when you can reproduce a Dreamer / TD-MPC-class system on a new environment and write a standardized evaluation report for it (Lab 10 protocol). Career narrative: *World Model Researcher / Research Engineer*.
+
+Not your track? The parallel [Spatial & Embodied Engineer](/docs/spatial/) track builds systems instead of models — same foundations, different exit.
