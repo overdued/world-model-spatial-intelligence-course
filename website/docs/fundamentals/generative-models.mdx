@@ -1,10 +1,11 @@
 ---
+sidebar_position: 6
 title: 生成模型：VAE、自回归、扩散与流匹配
-sidebar_label: Generative Models
+sidebar_label: 生成模型
 description: 世界模型的"生成"一半：VAE、自回归 token 模型、扩散模型与流匹配的最小知识集，按需回查。
 ---
 
-# Generative Models（生成模型）
+# 生成模型（Generative Models）
 
 > 本页是**回查手册**。世界模型要回答"接下来会发生什么"，而未来往往不止一种可能——这就需要一个能**表示并采样一个分布**的模型，而不是只给出一个点估计。从 Lab 3 的 RSSM 到 Genie、Sora、Cosmos，生成模型是世界模型的另一半。本页只补主线真正用到的部分。
 
@@ -75,11 +76,11 @@ def sample(model, shape, cond):
 
 | 主线模块 | 用到的生成模型知识 |
 |---|---|
-| Track A 04 Representation Learning | 自编码器、VQ 离散化、生成式 vs 判别式表征 |
-| Track A 06 RSSM、07 World Models 2018 | VAE、ELBO、KL 平衡，MDN（混合密度网络）作为多模态预测 |
-| Track A 10 Video World Models | 扩散、流匹配、latent diffusion、DiT |
-| Track A 10b Interactive World Models | 条件扩散、少步采样、CFG、自回归 token 模型 |
-| Track B 12 VLA & World-Action Models | 扩散 / 流匹配作为动作生成头（diffusion policy） |
+| 路线 A 04 表征学习 | 自编码器、VQ 离散化、生成式 vs 判别式表征 |
+| 路线 A 06 RSSM、07 World Models 2018 | VAE、ELBO、KL 平衡，MDN（混合密度网络）作为多模态预测 |
+| 路线 A 10 视频世界模型 | 扩散、流匹配、latent diffusion、DiT |
+| 路线 A 10b 交互式世界模型 | 条件扩散、少步采样、CFG、自回归 token 模型 |
+| 路线 B 12 VLA 与世界-动作模型 | 扩散 / 流匹配作为动作生成头（diffusion policy） |
 | Lab 3、Lab 7 | "确定性预测 → 模糊均值"的反面教材 |
 
 ## 最佳外部资源
@@ -111,4 +112,4 @@ def sample(model, shape, cond):
 
 ## Next
 
-回到主线：[Track A 模块 10 · Video World Models](../scientist/10-video-world-models.mdx) → [模块 10b · Interactive World Models](../scientist/10b-interactive-world-models.mdx)
+回到主线：[路线 A 模块 10 · 视频世界模型](../scientist/10-video-world-models.mdx) → [模块 10b · 交互式世界模型](../scientist/10b-interactive-world-models.mdx)

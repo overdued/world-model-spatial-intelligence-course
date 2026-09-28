@@ -1,10 +1,10 @@
 ---
-title: Interactive World Models
-sidebar_label: 10b · Interactive World Models
+title: 交互式世界模型
+sidebar_label: 10b · 交互式世界模型
 description: 从"生成一段视频"到"可以玩的世界"：GameNGen、DIAMOND、Genie 2/3、Oasis 与 Cosmos——可控性、实时性与一致性。
 ---
 
-<ModuleProgress id="a10b" label="Interactive World Models" />
+<ModuleProgress id="a10b" label="交互式世界模型" />
 
 ## Why this matters
 
@@ -24,7 +24,7 @@ description: 从"生成一段视频"到"可以玩的世界"：GameNGen、DIAMOND
 
 **2. 实时性（real time）：采样速度是硬约束。** 24 FPS 意味着每帧只有约 42 ms，而标准扩散要迭代几十上百步去噪。实际系统靠几种手段压缩：只生成一帧而非整段视频、在低维 latent 里生成、把去噪步数蒸馏到个位数（GameNGen 推理用 4 步 DDIM），以及因果注意力 + KV cache 让每一帧只算增量。这也是 [流匹配](../fundamentals/generative-models.mdx) 受欢迎的原因之一：路径越直，需要的步数越少。
 
-**3. 一致性（consistency）：离开再回来，世界还是那个世界。** 自回归生成天然有两个敌人。一是**漂移**：生成帧里的小瑕疵成为下一步的输入，训练时却只见过真实帧（exposure bias）。GameNGen 的对策是训练时给上下文帧**加随机噪声**，并把噪声强度作为条件告诉模型，使它学会纠正而不是放大瑕疵；**Diffusion Forcing** 把这个思路一般化，给序列里每个 token 独立的噪声水平。二是**遗忘**：上下文窗口只有几秒，转身再转回来，房间可能已经变了。早期模型（GameNGen、Oasis）的记忆只有几秒；Genie 3 报告了分钟级的视觉一致性。显式记忆（检索过去的帧、维护 3D 或地图状态）是当前的研究前沿，这与 Track B 的 [空间记忆](../spatial/08-spatial-memory.mdx) 是同一个问题。
+**3. 一致性（consistency）：离开再回来，世界还是那个世界。** 自回归生成天然有两个敌人。一是**漂移**：生成帧里的小瑕疵成为下一步的输入，训练时却只见过真实帧（exposure bias）。GameNGen 的对策是训练时给上下文帧**加随机噪声**，并把噪声强度作为条件告诉模型，使它学会纠正而不是放大瑕疵；**Diffusion Forcing** 把这个思路一般化，给序列里每个 token 独立的噪声水平。二是**遗忘**：上下文窗口只有几秒，转身再转回来，房间可能已经变了。早期模型（GameNGen、Oasis）的记忆只有几秒；Genie 3 报告了分钟级的视觉一致性。显式记忆（检索过去的帧、维护 3D 或地图状态）是当前的研究前沿，这与路线 B 的 [空间记忆](../spatial/08-spatial-memory.mdx) 是同一个问题。
 
 **为什么这对世界模型研究重要。** 交互式世界模型把"世界模型能否支持决策"变成了可以直接检验的问题：DIAMOND 在 Atari 100k 上完全在想象中训练 agent 并取得很强的成绩，说明**视觉细节**（扩散模型保留、VAE 常常抹掉的那些像素）对下游策略确实重要；UniSim 与 Cosmos 则把交互式模拟用于机器人策略的训练与评估。但生成得逼真不等于物理正确，也不等于能支撑规划——可控性、一致性和下游效用需要分别评估（[模块 12](./12-ood-drift-evaluation.mdx)）。
 
@@ -98,4 +98,4 @@ Lab 7 的 video world model 是一个**开环**预测器，但把它改造成可
 
 ## Next Module
 
-[模块 11：World Model + Policy](./11-world-model-policy.mdx)——把世界模型与策略接成完整 MBRL 闭环。
+[模块 11：世界模型 + 策略](./11-world-model-policy.mdx)——把世界模型与策略接成完整 MBRL 闭环。

@@ -15,13 +15,13 @@
     "message": "Start Here",
     "description": "The label of footer link with label=从这里开始 linking to /docs/start-here/"
   },
-  "link.item.label.World Model Scientist": {
+  "link.item.label.世界模型科学家": {
     "message": "World Model Scientist",
-    "description": "The label of footer link with label=World Model Scientist linking to /docs/scientist/"
+    "description": "The label of footer link with label=世界模型科学家 linking to /docs/scientist/"
   },
-  "link.item.label.Spatial & Embodied Engineer": {
+  "link.item.label.空间与具身工程师": {
     "message": "Spatial & Embodied Engineer",
-    "description": "The label of footer link with label=Spatial & Embodied Engineer linking to /docs/spatial/"
+    "description": "The label of footer link with label=空间与具身工程师 linking to /docs/spatial/"
   },
   "link.item.label.路线图": {
     "message": "Roadmap",
@@ -47,13 +47,13 @@
     "message": "GitHub",
     "description": "The label of footer link with label=GitHub linking to https://github.com/overdued/world-model-spatial-intelligence-course"
   },
-  "link.item.label.Issues": {
+  "link.item.label.问题反馈": {
     "message": "Issues",
-    "description": "The label of footer link with label=Issues linking to https://github.com/overdued/world-model-spatial-intelligence-course/issues"
+    "description": "The label of footer link with label=问题反馈 linking to https://github.com/overdued/world-model-spatial-intelligence-course/issues"
   },
-  "link.item.label.CUHK(SZ)": {
+  "link.item.label.港中大（深圳）": {
     "message": "CUHK(SZ)",
-    "description": "The label of footer link with label=CUHK(SZ) linking to https://www.cuhk.edu.cn/"
+    "description": "The label of footer link with label=港中大（深圳） linking to https://www.cuhk.edu.cn/"
   },
   "copyright": {
     "message": "Copyright © 2026 CUHK(SZ) SAI BL&SP Group. Docs CC BY 4.0 · Code MIT.",

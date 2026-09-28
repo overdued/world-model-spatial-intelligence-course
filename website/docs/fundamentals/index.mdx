@@ -1,12 +1,46 @@
 ---
-title: Foundations
-description: 地基轨道总览——线性代数、概率、PyTorch、深度学习、Transformer、计算机视觉与强化学习的最小集。
+title: 基础
+description: 基础路线总览：线性代数、概率、PyTorch、深度学习、Transformer、生成模型、计算机视觉与强化学习的最小集，按需回查。
 ---
 
-# 🧩 Foundations（地基轨道）
+# 🧩 基础（Foundations）
 
-> **占位索引页**：本页由站点脚手架代理创建，供内容代理随后替换为完整版本。
+> 基础路线是**回查手册，不是强制起点**。八个模块覆盖学习世界模型与空间智能所需的数学与机器学习最小集。主线读到卡壳时，回来补对应的一页，然后直接跳回去。
 
-Foundations 是**回查手册，不是强制起点**——七个模块覆盖学习世界模型所需的数学与机器学习最小集。任何一章学完后都可以直接跳回 [Track A](/docs/scientist/) 或 [Track B](/docs/spatial/) 的对应节点。
+## 怎么用这一部分
 
-学习验证标准：能读懂主线对应章节的公式与代码即可，不设作业。
+1. 先做[从这里开始](/docs/start-here/)里的**先修自查清单**。全部打勾就直接进主线，不必读这里。
+2. 哪一项没打勾，就只读对应的那一页。每页都有：**最小知识集**、**何时回查**（哪些主线模块会用到）、**最佳外部资源**、**自查**标准。
+3. 达到自查标准就回主线。这里不设作业，能读懂主线对应章节的公式和代码就够了。
+
+## 八个模块
+
+| 模块 | 你会补上什么 | 主要服务的主线模块 |
+|---|---|---|
+| [线性代数](./linear-algebra.mdx) | 向量空间、特征值与稳定性、SVD、最小二乘、齐次坐标 | 路线 A 03、路线 B 02 / 06 |
+| [概率论](./probability.mdx) | 贝叶斯、高斯与协方差、马尔可夫性、隐变量与边际化 | 路线 A 02 / 05 / 06、路线 B 06 |
+| [PyTorch](./pytorch.mdx) | 张量与自动求导、训练循环、DataLoader、调试与复现 | 所有 Lab |
+| [深度学习](./deep-learning.mdx) | MLP / CNN、优化、归一化、正则化、VAE 与 ELBO | 路线 A 04 / 05、Lab 2 |
+| [Transformer](./transformers.mdx) | 注意力、位置编码、自回归与掩码建模、ViT | 路线 A 04 / 10、路线 B 12 |
+| [生成模型](./generative-models.mdx) | VAE 与 ELBO、VQ token 与自回归、扩散、流匹配、guidance、latent diffusion | 路线 A 06 / 07 / 10 / 10b、路线 B 12、Lab 3 / 7 |
+| [计算机视觉](./computer-vision.mdx) | 图像形成、针孔相机、特征与匹配、卷积特征、视觉编码器 | 路线 B 02 / 03、路线 A 04 |
+| [强化学习](./reinforcement-learning.mdx) | MDP、Bellman 方程、价值与策略、model-free 与 model-based | 路线 A 08 / 09 / 11 |
+
+## 按背景推荐的补课顺序
+
+- **来自 NLP / 大语言模型**：通常缺计算机视觉和强化学习。先读[计算机视觉](./computer-vision.mdx)，再读[强化学习](./reinforcement-learning.mdx)。
+- **来自计算机视觉**：通常缺概率建模和强化学习。先读[概率论](./probability.mdx)，再读[强化学习](./reinforcement-learning.mdx)。
+- **来自机器人 / 控制**：通常缺现代深度学习。先读[深度学习](./deep-learning.mdx)，再读 [Transformer](./transformers.mdx) 和 [PyTorch](./pytorch.mdx)。
+- **刚学完一门机器学习课**：按表格顺序从上往下读，大约两周业余时间。
+
+## 通用参考书（免费）
+
+- **《Mathematics for Machine Learning》**（Deisenroth et al., [mml-book.github.io](https://mml-book.github.io/)）：线代与概率。
+- **《Probabilistic Machine Learning: An Introduction》**（Kevin Murphy, [probml.github.io/pml-book](https://probml.github.io/pml-book/)）：概率视角的机器学习。
+- **《Dive into Deep Learning》**（[d2l.ai](https://d2l.ai/)）：带可运行代码的深度学习教材，有[中文版](https://zh.d2l.ai/)。
+- **《Computer Vision: Algorithms and Applications》**（Richard Szeliski, [szeliski.org/Book](https://szeliski.org/Book/)）：计算机视觉。
+- **《Reinforcement Learning: An Introduction》**（Sutton & Barto, [incompleteideas.net/book](http://incompleteideas.net/book/the-book-2nd.html)）：强化学习。
+
+## 下一步
+
+补完就回主线：[路线 A · 世界模型科学家](/docs/scientist/) 或 [路线 B · 空间与具身工程师](/docs/spatial/)。

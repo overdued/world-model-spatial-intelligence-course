@@ -1,22 +1,22 @@
 ---
-title: SLAM and VIO
-sidebar_label: 07 · SLAM and VIO
+title: SLAM 与 VIO
+sidebar_label: 07 · SLAM 与 VIO
 description: 同时定位与建图——ORB-SLAM、Kimera、MSCKF 与视觉惯性融合的系统工程。
 ---
 
-<ModuleProgress id="b07" label="SLAM and VIO" />
+<ModuleProgress id="b07" label="SLAM 与 VIO" />
 
-## Why this matters
+## 为什么重要
 
 SLAM 是最经典的"边感知边建模"系统：机器人一边建世界模型（地图），一边在其中定位自己。它是空间智能第一个完整闭环，也是检验前面所有模块（几何、估计、表示）的综合考场。
 
-## Visual Intuition
+## 直观理解
 
 ![SLAM 系统](/img/slam.svg)
 
 SLAM 的经典分工：**前端**做实时里程计（特征跟踪/光流 → 帧间运动），**后端**做全局一致性优化（因子图），**回环检测**识别"回到老地方"以消除累积漂移。三个子系统对应前面三个模块的知识汇合。
 
-## Core Idea
+## 核心思想
 
 **SLAM 问题**的形式化：同时估计轨迹 $x_{1:t}$ 与地图 $M$，给定观测 $z_{1:t}$ 与控制 $u_{1:t}$。两条技术路线沿用模块 06 的分野：滤波派（EKF-SLAM、MSCKF——把路标塞进状态向量，边际化历史）与优化派（因子图 + 关键帧 BA，iSAM2 增量求解）。现代系统（ORB-SLAM3、VINS、Kimera）全部是优化派主导 + 滤波思想的局部保留。
 
@@ -24,7 +24,7 @@ SLAM 的经典分工：**前端**做实时里程计（特征跟踪/光流 → �
 
 **回环检测**是对抗漂移的终极机制：VIO/里程计的误差随路径长度无限累积，唯有识别"我来过这里"才能把误差闭环清零——位置识别（place recognition，模块 08）因此是 SLAM 的记忆子系统。评估文化同样重要：EuRoC 数据集 + evo 工具 + ATE/RPE 指标是定量比较的系统标准。
 
-## Key Concepts
+## 关键概念
 
 - **前端 / 后端**：实时里程计 vs 全局优化。
 - **IMU 预积分**：把高频惯性读数压成关键帧间的一个因子。
@@ -32,7 +32,7 @@ SLAM 的经典分工：**前端**做实时里程计（特征跟踪/光流 → �
 - **回环检测**：位置识别驱动的漂移清零机制。
 - **ATE / RPE**：轨迹精度与相对运动误差的评估标准。
 
-## Core Equations
+## 核心公式
 
 VIO 滑窗优化目标：
 
@@ -40,24 +40,24 @@ $$\min_X \sum_{k} \big\| r_{\mathcal{I}}^{(k)} \big\|_{\Sigma}^2 + \sum_{(i,j)} 
 
 其中 $r_{\mathcal{I}}$ 为 IMU 预积分残差，$r_{\mathcal{V}}$ 为视觉重投影残差。
 
-## University Lecture
+## 大学课程
 
 | 课程 | Lecture | 链接 |
 |---|---|---|
 | MIT 16.485 VNAV | L20 Visual-Inertial Odometry、L23–L24 SLAM（factor graphs、marginalization）、Lab 9/9.5（ORB-SLAM3 vs Kimera-VIO 对比） | [课程主页](https://vnav.mit.edu/) |
 | ETH/UZH VAMR | L13 Visual-Inertial Fusion、L14 SLAM + mini-project（完整 VO） | [课程主页](https://rpg.ifi.uzh.ch/teaching.html) |
 
-## Papers
+## 论文
 
 - **Must Read**：Mur-Artal, Montiel & Tardós (2015), *ORB-SLAM: A Versatile and Accurate Monocular SLAM System*（[arXiv:1502.00956](https://arxiv.org/abs/1502.00956)）。
 - **Recommended**：Cadena et al. (2016), *Past, Present, and Future of SLAM*（[arXiv:1606.05830](https://arxiv.org/abs/1606.05830)）；Qin, Li & Shen (2018), *VINS-Mono*（[arXiv:1708.03852](https://arxiv.org/abs/1708.03852)）。
 - **Optional**：Mourikis & Roumeliotis (2007), *MSCKF*（ICRA，搜索论文名）；Teed & Deng (2021), *DROID-SLAM*（[arXiv:2108.10869](https://arxiv.org/abs/2108.10869)）——学习化 SLAM 的代表。
 
-## Hands-on
+## 动手实践
 
 暂无专属 Lab。建议路径：先完成 Lab 1 建立滤波直觉，然后按 MIT VNAV Lab 9 的思路在 EuRoC 序列上跑 ORB-SLAM3 与 Kimera-VIO 的开源镜像并用 evo 评估。
 
-## Check Your Understanding
+## 自测
 
 1. 为什么 SLAM 必须做回环检测，而 VIO 可以不做？
 2. IMU 预积分解决了什么计算问题？
@@ -71,12 +71,12 @@ $$\min_X \sum_{k} \big\| r_{\mathcal{I}}^{(k)} \big\|_{\Sigma}^2 + \sum_{(i,j)} 
 3. ATE（绝对轨迹误差）度量估计轨迹与真值全局对齐后的位置偏差——全局一致性；RPE（相对位姿误差）度量固定时间窗内的局部位姿漂移——局部精度。一个系统可以 ATE 差而 RPE 好（无回环漂移）或反之（回环强行对齐但局部抖动）。
 </details>
 
-## Takeaway
+## 要点回顾
 
 - SLAM = 前端里程计 + 后端因子图 + 回环检测，是几何/估计/表示的系统集成。
 - VIO 用 IMU 预积分与视觉重投影残差在滑窗内融合两种互补传感器。
 - 回环是漂移的解药；ATE/RPE + EuRoC 是定量评估的标准文化。
 
-## Next Module
+## 下一模块
 
-[模块 08：Spatial Memory](./08-spatial-memory.mdx)——SLAM 记住几何，智能体还需要记住"我到过哪里"。
+[模块 08：空间记忆](./08-spatial-memory.mdx)——SLAM 记住几何，智能体还需要记住"我到过哪里"。

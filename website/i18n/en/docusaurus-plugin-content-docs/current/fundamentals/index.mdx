@@ -1,12 +1,46 @@
 ---
 title: Foundations
-description: Overview of the Foundations track — the minimal set of linear algebra, probability, PyTorch, deep learning, Transformers, computer vision, and reinforcement learning.
+description: Overview of the Foundations track — the minimal set of linear algebra, probability, PyTorch, deep learning, Transformers, generative models, computer vision, and reinforcement learning, consulted on demand.
 ---
 
 # 🧩 Foundations
 
-> **Placeholder index page**: this page was created by the site scaffolding agent and will be replaced with a complete version by the content agent.
+> Foundations is a **reference manual, not a mandatory starting point**. Eight modules cover the minimal math and machine learning you need for world models and spatial intelligence. When a main-track module loses you, read the matching page here, then jump straight back.
 
-Foundations is a **reference manual, not a mandatory starting point** — seven modules cover the minimal mathematics and machine learning needed for learning world models. After any chapter you can jump straight back to the corresponding node in [Track A](/docs/scientist/) or [Track B](/docs/spatial/).
+## How to use this track
 
-Completion standard: being able to read the formulas and code in the corresponding main-track chapters is enough — there are no assignments.
+1. Start with the **prerequisite checklist** in [Start Here](/docs/start-here/). If you can tick every box, skip this track and go straight to the main tracks.
+2. For each box you can't tick, read only the matching page. Every page has a **minimal knowledge set**, a **when to consult** table (which main-track modules use it), the **best external resources**, and a **self-check**.
+3. Once you meet the self-check, go back to the main track. There are no assignments here. Being able to read the formulas and code in the main-track modules is enough.
+
+## The eight modules
+
+| Module | What you'll fill in | Main-track modules it serves |
+|---|---|---|
+| [Linear Algebra](./linear-algebra.mdx) | Vector spaces, eigenvalues and stability, SVD, least squares, homogeneous coordinates | Track A 03, Track B 02 / 06 |
+| [Probability](./probability.mdx) | Bayes, Gaussians and covariance, the Markov property, latent variables and marginalization | Track A 02 / 05 / 06, Track B 06 |
+| [PyTorch](./pytorch.mdx) | Tensors and autograd, the training loop, DataLoader, debugging and reproducibility | Every lab |
+| [Deep Learning](./deep-learning.mdx) | MLP / CNN, optimization, normalization, regularization, VAE and ELBO | Track A 04 / 05, Lab 2 |
+| [Transformers](./transformers.mdx) | Attention, positional encoding, autoregressive and masked modeling, ViT | Track A 04 / 10, Track B 12 |
+| [Generative Models](./generative-models.mdx) | VAE and ELBO, VQ tokens and autoregression, diffusion, flow matching, guidance, latent diffusion | Track A 06 / 07 / 10 / 10b, Track B 12, Labs 3 / 7 |
+| [Computer Vision](./computer-vision.mdx) | Image formation, the pinhole camera, features and matching, convolutional features, visual encoders | Track B 02 / 03, Track A 04 |
+| [Reinforcement Learning](./reinforcement-learning.mdx) | MDPs, the Bellman equation, values and policies, model-free vs model-based | Track A 08 / 09 / 11 |
+
+## Suggested order by background
+
+- **Coming from NLP / LLMs**: usually missing computer vision and RL. Read [Computer Vision](./computer-vision.mdx), then [Reinforcement Learning](./reinforcement-learning.mdx).
+- **Coming from computer vision**: usually missing probabilistic modeling and RL. Read [Probability](./probability.mdx), then [Reinforcement Learning](./reinforcement-learning.mdx).
+- **Coming from robotics / control**: usually missing modern deep learning. Read [Deep Learning](./deep-learning.mdx), then [Transformers](./transformers.mdx) and [PyTorch](./pytorch.mdx).
+- **Just finished an ML course**: read top to bottom in table order, about two weeks part-time.
+
+## General references (free)
+
+- ***Mathematics for Machine Learning*** (Deisenroth et al., [mml-book.github.io](https://mml-book.github.io/)): linear algebra and probability.
+- ***Probabilistic Machine Learning: An Introduction*** (Kevin Murphy, [probml.github.io/pml-book](https://probml.github.io/pml-book/)): machine learning from the probabilistic view.
+- ***Dive into Deep Learning*** ([d2l.ai](https://d2l.ai/)): a deep learning textbook with runnable code.
+- ***Computer Vision: Algorithms and Applications*** (Richard Szeliski, [szeliski.org/Book](https://szeliski.org/Book/)): computer vision.
+- ***Reinforcement Learning: An Introduction*** (Sutton & Barto, [incompleteideas.net/book](http://incompleteideas.net/book/the-book-2nd.html)): reinforcement learning.
+
+## Next
+
+Once you've filled the gap, head back: [Track A · World Model Scientist](/docs/scientist/) or [Track B · Spatial & Embodied Engineer](/docs/spatial/).

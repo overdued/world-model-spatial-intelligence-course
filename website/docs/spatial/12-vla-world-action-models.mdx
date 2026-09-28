@@ -1,30 +1,30 @@
 ---
-title: VLA and World-Action Models
-sidebar_label: 12 · VLA and World-Action Models
+title: VLA 与世界-动作模型
+sidebar_label: 12 · VLA 与世界-动作模型
 description: Vision-Language-Action 模型与世界-动作模型——隐式与显式世界模型的路线之争。
 ---
 
-<ModuleProgress id="b12" label="VLA and World-Action Models" />
+<ModuleProgress id="b12" label="VLA 与世界-动作模型" />
 
-## Why this matters
+## 为什么重要
 
 RT-2、Octo、π₀ 用互联网规模的视觉-语言预训练直接输出机器人动作，V-JEPA 2 用视频预测模型做规划。VLA 与世界模型的交汇处是当前具身智能最热的战场，也是"隐式 vs 显式世界模型"争论的前线。
 
-## Visual Intuition
+## 直观理解
 
 ![VLA 与世界-动作模型](/img/vla-world-action.svg)
 
 两个方向的同一枚硬币：**VLA** 从世界理解出发输出动作（理解 → 行动）；**world-action model** 从动作出发预测世界演化（行动 → 后果）。前者是策略，后者是世界模型——完整的具身智能体两者都需要。
 
-## Core Idea
+## 核心思想
 
 **VLA（Vision-Language-Action）** 把机器人控制表述为序列建模：RT-2 把动作离散化为 token，与视觉-语言 token 一起进 Transformer 自回归生成，互联网 VLM 预训练的语义知识（"什么是可乐罐"）直接迁移到控制。Octo 与 OpenVLA 把这条路线开源化、通用化（多机器人 embodiment）；π₀ 用 flow matching 输出连续动作块，兼顾精度与频率。
 
-**World-action model** 走相反方向：以动作为条件预测世界演化。关键创新是 **latent action**——从无标注视频无监督发现"动作"的抽象（Genie 的遗产），使海量无动作标签的视频变成可学习的交互数据。V-JEPA 2（Meta, 2025）展示了第三条路：JEPA 式视频预测预训练 + 少量机器人数据微调，在表示空间做 MPC 式规划——Track A 模块 04 的"重建 vs 预测"之争在机器人上重演。
+**World-action model** 走相反方向：以动作为条件预测世界演化。关键创新是 **latent action**——从无标注视频无监督发现"动作"的抽象（Genie 的遗产），使海量无动作标签的视频变成可学习的交互数据。V-JEPA 2（Meta, 2025）展示了第三条路：JEPA 式视频预测预训练 + 少量机器人数据微调，在表示空间做 MPC 式规划——路线 A 模块 04 的"重建 vs 预测"之争在机器人上重演。
 
 **隐式 vs 显式之争**是本模块的思辨核心：VLA 阵营认为足够大的策略网络内隐地学到了所需的世界模型（"预测动作的模型必然理解后果"）；显式阵营（本课程的立场倾向）认为动作后果的可查询模型带来规划、评估与反事实能力，且预测精度可独立度量。2026 年的实证共识尚在形成中——这本身就是 Capstone 的好选题。
 
-## Key Concepts
+## 关键概念
 
 - **Action tokenization**：把连续动作变成 Transformer 可生成的离散 token。
 - **Latent action**：从无标注视频发现的动作抽象。
@@ -32,31 +32,31 @@ RT-2、Octo、π₀ 用互联网规模的视觉-语言预训练直接输出机�
 - **视频预训练 → 规划**：V-JEPA 2 式的表示空间 MPC。
 - **隐式 vs 显式世界模型**：策略内化 vs 独立可查询的路线之争。
 
-## Core Equations
+## 核心公式
 
 动作条件的下一状态/观测预测（world-action model 接口）：
 
 $$p_\theta(o_{t+1:t+H} \mid o_{\le t},\, a_{t:t+H-1})$$
 
-## University Lecture
+## 大学课程
 
 | 课程 | Lecture | 链接 |
 |---|---|---|
 | UPenn CIS 6280 World Models | L19 Robot Learning II（VLA、latent actions、world-action models；Resources 含 V-JEPA 2） | [课程主页](https://jiataogu.me/cis6280-world-models/) |
 
-## Papers
+## 论文
 
 - **Must Read**：Brohan et al. (2023), *RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control*（[arXiv:2307.15818](https://arxiv.org/abs/2307.15818)）。
 - **Recommended**：Octo Model Team (2024), *Octo: An Open-Source Generalist Robot Policy*（[arXiv:2405.12213](https://arxiv.org/abs/2405.12213)）；Black et al. (2024), *π₀: A Vision-Language-Action Flow Model for General Robot Control*（[arXiv:2410.24164](https://arxiv.org/abs/2410.24164)）。
 - **Optional**：Kim et al. (2024), *OpenVLA: An Open-Source Vision-Language-Action Model*（[arXiv:2406.09246](https://arxiv.org/abs/2406.09246)）；Meta AI (2025), *V-JEPA 2*（搜索论文名 + 官方博客）。
 
-## Hands-on
+## 动手实践
 
 Lab 9的闭环是本模块的基础版。现阶段建议：用 OpenVLA 的公开 checkpoint 在仿真基准上跑一次推理，直观感受 action token 的输出形式。
 
 **Open Lab**：<ColabBadge lab="lab09_world_model_policy" />
 
-## Check Your Understanding
+## 自测
 
 1. RT-2 为什么需要把动作变成 token？
 2. Latent action 与真实动作标签的关系是什么？
@@ -70,12 +70,12 @@ Lab 9的闭环是本模块的基础版。现阶段建议：用 OpenVLA 的公开
 3. 最强论据：大规模 VLA 确实展现出涌现的场景理解与泛化（未见物体的语义抓取）。最弱环节：内隐知识不可查询、不可独立评估——你无法问一个策略"如果往左会发生什么"，也无法度量其后果预测的校准性；安全关键场景下这是硬伤。
 </details>
 
-## Takeaway
+## 要点回顾
 
 - VLA 把机器人控制变成序列建模，继承互联网规模语义知识。
 - World-action model 与 latent action 把无标注视频变成交互数据。
 - 隐式 vs 显式世界模型之争尚无定论——这是 Capstone 的前沿选题。
 
-## Next Module
+## 下一模块
 
-[模块 13：Capstone — Build Your Own Spatial World Model](./13-capstone.mdx)——Track B 的毕业演练。
+[模块 13：毕业项目：构建你自己的空间世界模型](./13-capstone.mdx)——路线 B 的毕业演练。

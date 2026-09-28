@@ -1,16 +1,16 @@
 ---
-title: Dynamic 3D / 4D Worlds
-sidebar_label: 05 · Dynamic 3D / 4D Worlds
+title: 动态 3D / 4D 世界
+sidebar_label: 05 · 动态 3D / 4D 世界
 description: 给 3D 表示加上时间轴——DynamicFusion、动态 NeRF 与 4D Gaussian Splatting。
 ---
 
-<ModuleProgress id="b05" label="Dynamic 3D / 4D Worlds" />
+<ModuleProgress id="b05" label="动态 3D / 4D 世界" />
 
-## Why this matters
+## 为什么重要
 
 真实世界是动的：人会走、手会抓、车流会变。模块 04 的静态表示在动态场景下直接失效。4D 表示（3D + 时间）是空间智能从"重建照片"走向"建模世界"的关键一步。
 
-## Visual Intuition
+## 直观理解
 
 ```mermaid
 flowchart LR
@@ -23,7 +23,7 @@ flowchart LR
 
 主流 4D 路线共享同一思想：维护一个**规范（canonical）空间**的静态表示，再学习一个**形变场**把每个时刻的场景映射回规范空间。查询 = 选时间 + 选视角。
 
-## Core Idea
+## 核心思想
 
 **DynamicFusion**（2015）是这条思想线的原点：深度相机实时重建非刚性动态场景，把观测帧不断"融合"进规范模型，同时估计逐点的形变场（warp field）。它确立了"规范模型 + 形变 + 实时融合"的范式，后续所有工作都是这一范式在神经表示时代的复兴。
 
@@ -31,7 +31,7 @@ flowchart LR
 
 从世界模型视角看，4D 表示回答了"世界状态如何随时间演化"的空间版问题：scene flow（逐点 3D 运动场）是微观动力学，dynamic occupancy 是占据层面的演化，接触与交互建模则是通往操作任务（模块 09/12）的桥。观测不足是本质困难：单目视频中动态区域被遮挡的部分没有任何监督，只能靠先验与平滑正则。
 
-## Key Concepts
+## 关键概念
 
 - **规范空间 + 形变场**：4D 表示的主导范式。
 - **Scene flow**：逐点 3D 运动场，光流的 3D 版。
@@ -39,36 +39,36 @@ flowchart LR
 - **重建-跟踪统一**：持久高斯同时是表示与跟踪器。
 - **观测不足**：动态+遮挡区域的监督真空，靠先验填补。
 
-## Core Equations
+## 核心公式
 
 形变场范式：
 
 $$x_t^{\text{obs}} = x^{\text{canonical}} + \Delta_\psi(x^{\text{canonical}}, t)$$
 
-## University Lecture
+## 大学课程
 
 | 课程 | Lecture | 链接 |
 |---|---|---|
 | UPenn CIS 6280 World Models | L16 Spatial World Models II / 4D（scene flow、tracking、dynamic occupancy、contact） | [课程主页](https://jiataogu.me/cis6280-world-models/) |
 | CMU 16-825 | L13 Dynamic 3D Representations（Nerfies、Neural Scene Flow Fields） | [课程主页](https://learning3d.github.io/) |
 
-## Papers
+## 论文
 
 - **Must Read**：Park et al. (2021), *Nerfies: Deformable Neural Radiance Fields*（[arXiv:2011.12948](https://arxiv.org/abs/2011.12948)）。
 - **Recommended**：Newcombe, Fox & Seitz (2015), *DynamicFusion*（CVPR，搜索论文名）；Luiten et al. (2024), *Dynamic 3D Gaussians: Tracking by Persistent Dynamic View Synthesis*（[arXiv:2310.08528](https://arxiv.org/abs/2310.08528)）。
 - **Optional**：Wu et al. (2024), *4D Gaussian Splatting for Real-Time Dynamic Scene Rendering*（搜索论文名，2024）。
 
-## Hands-on
+## 动手实践
 
 Lab 6：在 D-NeRF 合成数据集上训练 4D 表示，输出"时间 × 视角"二维渲染网格。
 
 **Open Lab**：<ColabBadge lab="lab06_dynamic_4d_worlds" />
 
-## Check Your Understanding
+## 自测
 
 1. 为什么"规范空间 + 形变场"比"每帧独立重建"更优？
 2. 动态场景的观测不足问题指什么？
-3. 4D 表示与 Track A 的视频世界模型（模块 10）有何本质区别？
+3. 4D 表示与 路线 A 的视频世界模型（模块 10）有何本质区别？
 
 <details>
 <summary>显示答案</summary>
@@ -78,12 +78,12 @@ Lab 6：在 D-NeRF 合成数据集上训练 4D 表示，输出"时间 × 视角"
 3. 视频世界模型学像素分布的生成模型，不保证 3D 一致性；4D 表示显式建模几何并受多视角一致性约束，可查询任意视角但通常不建模"动作条件下的演化"。两者正在汇合（生成式 4D、可交互 3D），是本领域的前沿接缝。
 </details>
 
-## Takeaway
+## 要点回顾
 
 - 4D 表示的主导范式：规范空间 + 形变场，DynamicFusion 是其原型。
 - 重建与跟踪在持久表示中被统一；观测不足由先验填补。
 - 4D 表示是空间世界模型的时间维度，与视频生成路线正在汇合。
 
-## Next Module
+## 下一模块
 
-[模块 06：State Estimation](./06-state-estimation.mdx)——从"世界长什么样"转向"我在哪"。
+[模块 06：状态估计](./06-state-estimation.mdx)——从"世界长什么样"转向"我在哪"。

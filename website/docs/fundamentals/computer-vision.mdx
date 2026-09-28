@@ -1,0 +1,42 @@
+---
+sidebar_position: 7
+title: 计算机视觉
+sidebar_label: 计算机视觉
+description: 从像素到几何的最小集：图像形成、相机模型、特征匹配与视觉编码器，按需回查。
+---
+
+# Computer Vision（计算机视觉）
+
+> 本页是**回查手册**。世界模型的输入大多是图像和视频，空间智能更是建立在"从像素恢复几何"之上。本页只补主线真正用到的部分。
+
+## 最小知识集
+
+- **图像形成与针孔相机**：3D 点经过外参 $[R \mid t]$ 变到相机坐标系，再经内参 $K$ 投影到像素，$\lambda\, \tilde{x} = K [R \mid t]\, \tilde{X}$。深度在投影中丢失，这是单目视觉一切困难的来源。
+- **多视角几何**：两个视角之间的对应点受对极约束；已知两帧位姿就能三角化出 3D 点。SLAM、SfM、NeRF 的训练数据都依赖它。
+- **特征与匹配**：角点、SIFT / ORB 描述子、RANSAC 剔除外点。ORB-SLAM 的前端就是这一套。
+- **卷积特征与视觉编码器**：CNN 的平移等变与层级特征；预训练编码器（ResNet、DINO、ViT）把图像压缩成可以在其上做预测的向量。
+- **稠密预测**：深度估计、光流、分割是"每个像素一个输出"的任务，也是 4D 场景和导航的常用中间表示。
+
+## 何时回查
+
+| 主线模块 | 用到的计算机视觉 |
+|---|---|
+| 路线 B 02 相机与几何 | 针孔模型、内外参、对极几何 |
+| 路线 B 03 深度与点云 | 三角化、深度估计、反投影成点云 |
+| 路线 B 07 SLAM 与 VIO | 特征匹配、RANSAC、光束法平差 |
+| 路线 A 04 表征学习 | 视觉编码器、预训练特征 |
+
+## 最佳外部资源
+
+- **Stanford CS231A**（[课程主页](https://web.stanford.edu/class/cs231a/) · [课程讲义](https://web.stanford.edu/class/cs231a/course_notes.html)）：相机模型、对极几何、SfM，与路线 B 最贴近，第 2 讲 [Camera Models](https://web.stanford.edu/class/cs231a/lectures_2025/lecture2_camera_models.pdf) 值得先看。
+- **Stanford CS231n 课程笔记**（[cs231n.github.io](https://cs231n.github.io/)）：卷积网络与视觉表征的经典入门。
+- **Richard Szeliski《Computer Vision: Algorithms and Applications》第 2 版**（[szeliski.org/Book](https://szeliski.org/Book/)）：免费 PDF，第 2 章（图像形成）、第 7 章（特征检测与匹配）和第 11 章（SfM 与 SLAM）最相关。
+- **《Dive into Deep Learning》第 7 章**（[d2l.ai](https://d2l.ai/chapter_convolutional-neural-networks/index.html)，[中文版](https://zh.d2l.ai/)）：卷积网络的代码化讲解。
+
+## 自查
+
+能写出针孔投影公式并说清内参和外参各管什么，能解释为什么两帧就能三角化而一帧不能，能说出 RANSAC 解决了什么问题，即达标。
+
+## 下一步
+
+回到主线：[路线 B 模块 02](../spatial/02-camera-and-geometry.mdx) 或 [路线 A 模块 04](../scientist/04-representation-learning.mdx)

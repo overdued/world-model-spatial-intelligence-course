@@ -1,0 +1,43 @@
+---
+sidebar_position: 5
+title: Transformer 与注意力
+sidebar_label: Transformer
+description: 现代世界模型的主干架构：注意力、位置编码、自回归与掩码建模，按需回查。
+---
+
+# Transformer（Transformer 与注意力）
+
+> 本页是**回查手册**。从 IRIS、Genie 到 V-JEPA 和 VLA，现代世界模型的主干几乎都是 Transformer。你不需要会从头训练大模型，只需要读懂这些模型的结构图和损失函数。
+
+## 最小知识集
+
+- **注意力机制**：$\mathrm{Attention}(Q,K,V) = \mathrm{softmax}\!\left(QK^\top / \sqrt{d}\right)V$。每个 token 按相似度加权汇聚其他 token 的信息；$\sqrt{d}$ 防止 softmax 饱和。
+- **多头注意力与残差块**：多个注意力头并行看不同的关系；"注意力 + MLP + 残差 + LayerNorm"是反复堆叠的基本单元。
+- **位置编码**：注意力本身不知道顺序，需要把位置（时间步、图像块坐标）编码进 token。NeRF 的位置编码（路线 B 模块 04）是同一个思想。
+- **因果掩码与自回归**：只看过去、预测下一个 token。视频世界模型逐帧 / 逐 token 生成未来就是这个模式。
+- **掩码建模**：遮住一部分输入再预测它。MAE 在像素空间预测，JEPA 在表征空间预测（路线 A 模块 04）。
+- **ViT 与 token 化**：把图像切成 16×16 的块当作 token。视频再加一个时间维度，就得到时空 token。
+
+## 何时回查
+
+| 主线模块 | 用到的 Transformer |
+|---|---|
+| 路线 A 04 表征学习 | ViT、掩码建模、JEPA 的预测器 |
+| 路线 A 10 视频世界模型 | 时空 token、自回归生成、动作条件 |
+| 路线 B 12 VLA 与世界-动作模型 | 多模态 token、动作 token 化 |
+
+## 最佳外部资源
+
+- **3Blue1Brown：Attention in transformers, step-by-step**（[3blue1brown.com/lessons/attention](https://www.3blue1brown.com/lessons/attention)）：先建立几何直觉。
+- **Andrej Karpathy：Let's build GPT from scratch**（[YouTube](https://www.youtube.com/watch?v=kCc8FmEb1nY)）：两小时从零写出一个 GPT，最好的动手入门。
+- **The Annotated Transformer**（[nlp.seas.harvard.edu](https://nlp.seas.harvard.edu/annotated-transformer/)）：原论文逐行配 PyTorch 代码。
+- **《Dive into Deep Learning》第 11 章**（[d2l.ai](https://d2l.ai/chapter_attention-mechanisms-and-transformers/index.html)，[中文版](https://zh.d2l.ai/)）：注意力与 Transformer 的教材式讲解。
+- **原始论文**：[Attention Is All You Need](https://arxiv.org/abs/1706.03762)（Vaswani et al., 2017）与 [ViT](https://arxiv.org/abs/2010.11929)（Dosovitskiy et al., 2021）。
+
+## 自查
+
+能手写一个单头注意力的前向计算并说清每个张量的形状，能解释因果掩码为什么让模型可以自回归生成，能说出 MAE 与 JEPA 的预测目标有什么不同，即达标。
+
+## 下一步
+
+回到主线：[路线 A 模块 04](../scientist/04-representation-learning.mdx) 或 [路线 A 模块 10](../scientist/10-video-world-models.mdx)

@@ -1,22 +1,22 @@
 ---
-title: Video World Models
-sidebar_label: 10 · Video World Models
+title: 视频世界模型
+sidebar_label: 10 · 视频世界模型
 description: 大规模视频生成模型作为通用世界模拟器——Genie、Sora 与扩散视频。
 ---
 
-<ModuleProgress id="a10" label="Video World Models" />
+<ModuleProgress id="a10" label="视频世界模型" />
 
-## Why this matters
+## 为什么重要
 
 2024 年后，"世界模型"的叙事中心从 Dreamer 式潜空间转向大规模视频生成：Sora 自称"世界模拟器"，Genie 把视频变成可交互环境。这条路线代表世界模型的规模化前沿，也带来漂移与评估的新难题。
 
-## Visual Intuition
+## 直观理解
 
 ![视频世界模型](/img/video-world-model.svg)
 
 视频世界模型 = 时空生成架构（DiT/时空注意力）+ 条件信号（动作、相机轨迹、文本）。开环时生成未来帧；闭环时把自己生成的帧喂回输入——漂移由此开始。
 
-## Core Idea
+## 核心思想
 
 把"预测未来"表述为**条件视频生成**：给定过去帧与动作/相机控制信号，用 diffusion 或 flow matching 目标训练时空生成模型（通常是 DiT 类架构，视频被切成时空 patch token）。与 Dreamer 路线相比，它直接在像素空间建模——放弃紧凑潜状态，换取保真度与通用性。
 
@@ -24,7 +24,7 @@ description: 大规模视频生成模型作为通用世界模拟器——Genie�
 
 核心未解问题是 **closed-loop drift**：自回归地把生成帧喂回输入，误差与伪影逐帧累积，几十秒后画面崩坏。长程一致性技术（锚定帧、重同步、历史条件）与漂移的定量评估，直通模块 12。
 
-## Key Concepts
+## 关键概念
 
 - **DiT / 时空注意力**：视频生成的当代主干架构。
 - **动作条件生成**：以动作为条件预测未来帧——世界模型接口的视频版。
@@ -32,7 +32,7 @@ description: 大规模视频生成模型作为通用世界模拟器——Genie�
 - **Closed-loop drift**：自回归闭环生成的误差累积与画面崩坏。
 - **生成质量 ≠ 决策有用性**：FVD 高分不代表能做规划（模块 12）。
 
-## Core Equations
+## 核心公式
 
 扩散模型的训练目标（score/denoising 视角）：
 
@@ -40,25 +40,25 @@ $$\mathcal{L} = \mathbb{E}_{x_0, \epsilon, t}\big\| \epsilon - \epsilon_\theta(x
 
 其中 $c$ 为条件（动作/文本/历史帧）。flow matching 则用 $\| v_\theta(x_t, t) - (x_1 - x_0) \|^2$ 直接回归概率路径的速度场。
 
-## University Lecture
+## 大学课程
 
 | 课程 | Lecture | 链接 |
 |---|---|---|
 | UPenn CIS 6280 World Models | L11 Diffusion & Flow Matching；L12–L13 Video World Models I/II | [课程主页](https://jiataogu.me/cis6280-world-models/)（L11–L13 slides 随学期发布） |
 
-## Papers
+## 论文
 
 - **Must Read**：Bruce et al. (2024), *Genie: Generative Interactive Environments*（[arXiv:2402.15391](https://arxiv.org/abs/2402.15391)）。
 - **Recommended**：Ho et al. (2022), *Video Diffusion Models*（[arXiv:2204.03458](https://arxiv.org/abs/2204.03458)）；Brooks et al. (2024), *Video Generation Models as World Simulators*（Sora 技术报告，[OpenAI 官网](https://openai.com/index/video-generation-models-as-world-simulators/)）。
 - **Optional**：Lipman et al. (2023), *Flow Matching for Generative Modeling*（[arXiv:2210.02747](https://arxiv.org/abs/2210.02747)）；Valevski et al. (2024), *GameNGen*（[arXiv:2408.14837](https://arxiv.org/abs/2408.14837)）。
 
-## Hands-on
+## 动手实践
 
 Lab 7：在移动小球视频上训练小规模动作条件视频模型，可视化 open-loop 长 rollout 的 drift。
 
 **Open Lab**：<ColabBadge lab="lab07_video_world_model" />
 
-## Check Your Understanding
+## 自测
 
 1. 视频世界模型与 Dreamer 式世界模型的建模对象有何不同？
 2. Genie 的 latent action 解决了什么数据来源问题？
@@ -72,12 +72,12 @@ Lab 7：在移动小球视频上训练小规模动作条件视频模型，可视
 3. 因为模型消费自己的输出：生成帧的微小伪影成为下一步的输入条件，分布逐步偏离训练分布（自诱导 OOD），伪影被逐帧放大。开环生成没有这个问题，闭环交互才暴露——这正是漂移需要专门评估的原因。
 </details>
 
-## Takeaway
+## 要点回顾
 
 - 视频世界模型 = 像素空间的条件生成，以保真度和通用性换紧凑性。
 - Genie 证明了生成模型可以成为可交互环境；Sora 引发了"生成即理解"的辩论。
 - Closed-loop drift 是这条路线的阿喀琉斯之踵，模块 12 专门处理。
 
-## Next Module
+## 下一模块
 
-[模块 10b：Interactive World Models](./10b-interactive-world-models.mdx)——从"生成一段视频"到"可以实时玩的世界"：可控性、实时性与一致性。
+[模块 10b：交互式世界模型](./10b-interactive-world-models.mdx)——从"生成一段视频"到"可以实时玩的世界"：可控性、实时性与一致性。

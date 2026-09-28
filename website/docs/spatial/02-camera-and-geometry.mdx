@@ -1,16 +1,16 @@
 ---
-title: Camera and Geometry
-sidebar_label: 02 · Camera and Geometry
+title: 相机与几何
+sidebar_label: 02 · 相机与几何
 description: 针孔相机模型、内外参与对极几何——世界到图像的观测模型。
 ---
 
-<ModuleProgress id="b02" label="Camera and Geometry" />
+<ModuleProgress id="b02" label="相机与几何" />
 
-## Why this matters
+## 为什么重要
 
-相机是最基本的"世界→观测"模型（回想 Track A 模块 02 的观测方程）。不理解投影与多视角约束，后面的深度、NeRF、SLAM 都只是一堆 API。几何是空间智能的母语。
+相机是最基本的"世界→观测"模型（回想 路线 A 模块 02 的观测方程）。不理解投影与多视角约束，后面的深度、NeRF、SLAM 都只是一堆 API。几何是空间智能的母语。
 
-## Visual Intuition
+## 直观理解
 
 ```mermaid
 flowchart LR
@@ -23,7 +23,7 @@ flowchart LR
 
 世界点先经外参 $[R|t]$ 变换到相机坐标系，再经内参 $K$ 投影到像素。两个视角看同一 3D 点产生对极约束——这是无标注情况下多视角监督的来源。
 
-## Core Idea
+## 核心思想
 
 **针孔相机模型**把 3D 点投影为 2D 像素：内参矩阵 $K$ 编码焦距与主点，外参 $[R|t]$ 编码相机在世界中的位姿。真实镜头还有畸变参数；标定（calibration）就是从棋盘格等已知图案反解这些参数——张正友标定法是工业标准。
 
@@ -31,7 +31,7 @@ flowchart LR
 
 几何的另一层纪律是**坐标系管理**：世界系、相机系、本体（body）系的变换链一旦混乱，所有下游结果都是错的。MIT VNAV 用 Lie 群 $SO(3)/SE(3)$ 的严格语言处理旋转——旋转矩阵无奇异但有约束，四元数无奇异性适合优化，这是工程实现的常识起点。
 
-## Key Concepts
+## 关键概念
 
 - **内参 $K$ / 外参 $[R|t]$**：相机自身的光学参数与世界中的位姿。
 - **标定**：从已知图案反解内参（张正友法）。
@@ -39,31 +39,31 @@ flowchart LR
 - **三角化**：从多视角射线交会恢复 3D 点。
 - **旋转表示**：旋转矩阵 / 四元数 / Lie 群，各有奇异与约束的权衡。
 
-## Core Equations
+## 核心公式
 
 针孔投影：
 
 $$s \begin{bmatrix} u \\ v \\ 1 \end{bmatrix} = K [R \mid t] \begin{bmatrix} X \\ Y \\ Z \\ 1 \end{bmatrix}, \qquad K = \begin{bmatrix} f_x & 0 & c_x \\ 0 & f_y & c_y \\ 0 & 0 & 1 \end{bmatrix}$$
 
-## University Lecture
+## 大学课程
 
 | 课程 | Lecture | 链接 |
 |---|---|---|
 | Stanford CS231A | L02–L05（Camera Models、Calibration、多视图几何）+ PS1/PS2 | [课程主页](https://web.stanford.edu/class/cs231a/) |
 | ETH/UZH VAMR | L02–L03（透视投影、DLT、PnP）与 Ex01–Ex02 | [课程主页](https://rpg.ifi.uzh.ch/teaching.html) |
 
-## Papers
+## 论文
 
 - **Must Read**：Hartley & Zisserman, *Multiple View Geometry in Computer Vision*（2004，教材，搜索书名）——第 6、9 章是本模块的完整版。
 - **Recommended**：Zhang (2000), *A Flexible New Technique for Camera Calibration*（IEEE TPAMI，搜索论文名）；Nistér (2004), *An Efficient Solution to the Five-Point Relative Pose Problem*（搜索论文名）。
 
-## Hands-on
+## 动手实践
 
 <ColabBadge lab="lab00_tiny_world" />
 
 Lab 0 的自定义环境是理解"观测接口"的热身；几何手感建议用 VAMR 的公开习题（透视投影与 DLT 手写实现）训练。
 
-## Check Your Understanding
+## 自测
 
 1. 内参未知时两视图约束用 $F$ 还是 $E$，为什么？
 2. 为什么单张图像无法恢复绝对尺度？
@@ -77,12 +77,12 @@ Lab 0 的自定义环境是理解"观测接口"的热身；几何手感建议用
 3. 匹配点中有大量误匹配（outlier），八点法对噪声敏感；RANSAC 随机抽最小子集解假设、统计内点数，迭代保留最大一致集，把估计从脏数据中拯救出来。
 </details>
 
-## Takeaway
+## 要点回顾
 
 - 相机模型 $K[R|t]$ 是"世界→图像"的观测方程，标定就是系统辨识。
 - 对极几何给出无标注的多视角约束，是 SfM/SLAM 的几何地基。
 - 坐标系纪律与旋转表示的选择是工程实现的第一课。
 
-## Next Module
+## 下一模块
 
-[模块 03：Depth and Point Clouds](./03-depth-and-point-clouds.mdx)——从 2D 像素走向第一批显式 3D 表示。
+[模块 03：深度与点云](./03-depth-and-point-clouds.mdx)——从 2D 像素走向第一批显式 3D 表示。

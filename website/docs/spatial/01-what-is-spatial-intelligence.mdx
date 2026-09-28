@@ -1,22 +1,22 @@
 ---
-title: What is Spatial Intelligence?
-sidebar_label: 01 · What is Spatial Intelligence?
+title: 什么是空间智能？
+sidebar_label: 01 · 什么是空间智能？
 description: 空间智能的定义与版图——从 Fei-Fei Li 的论述到机器人视角与人本视角的分野。
 ---
 
-<ModuleProgress id="b01" label="What is Spatial Intelligence?" />
+<ModuleProgress id="b01" label="什么是空间智能？" />
 
-## Why this matters
+## 为什么重要
 
 "Spatial intelligence" 是 2024 年后 AI 领域最重要的新叙事之一：Fei-Fei Li 称之为 AI 的下一个前沿。不先厘清它指什么、不指什么，后面的 3D 视觉与机器人模块会失去方向感。
 
-## Visual Intuition
+## 直观理解
 
-![Track B 路线图](/img/spatial-roadmap.svg)
+![路线 B 路线图](/img/spatial-roadmap.svg)
 
-本路线图是 Track B 的全景：从相机几何（模块 02）与 3D 表示（03–05）出发，经状态估计与 SLAM（06–07）、空间记忆（08），走向行动——affordance、导航、机器人世界模型与 VLA（09–12）。
+本路线图是 路线 B 的全景：从相机几何（模块 02）与 3D 表示（03–05）出发，经状态估计与 SLAM（06–07）、空间记忆（08），走向行动——affordance、导航、机器人世界模型与 VLA（09–12）。
 
-## Core Idea
+## 核心思想
 
 Fei-Fei Li 在 TED 2024 演讲中把**空间智能**定义为：AI 理解 3D 物理世界并在其中推理与行动的能力——"看见"只是起点，"在世界中行动"才是终点。她联合创立的 World Labs 把这个议程表述为"从像素到世界"（生成与理解持久的 3D 世界）。这与本课程的世界模型框架天然同构：空间智能就是世界模型在 3D/4D 物理世界的实例化。
 
@@ -24,7 +24,7 @@ Fei-Fei Li 在 TED 2024 演讲中把**空间智能**定义为：AI 理解 3D 物
 
 为什么空间智能不能只用 2D 视频模型解决？3D 结构带来**多视角一致性**这一免费监督信号与检验标准：一个真实世界状态必须能从任意视角一致地渲染出来。这个约束是模块 04（NeRF/3DGS）到模块 07（SLAM）所有方法的共同地基。
 
-## Key Concepts
+## 关键概念
 
 - **Spatial intelligence**：感知、理解、推理并在 3D 物理世界中行动的能力。
 - **机器人视角 vs 人本视角**：工程闭环 vs 空间认知，两条互补线索。
@@ -32,26 +32,26 @@ Fei-Fei Li 在 TED 2024 演讲中把**空间智能**定义为：AI 理解 3D 物
 - **具身（embodiment）**：感知与行动由身体形态定义，空间智能是具身智能的地基。
 - **持久世界表示**：空间智能的"存储层"（模块 08 展开）。
 
-## Core Equations
+## 核心公式
 
 本模块以直觉为主。
 
-## University Lecture
+## 大学课程
 
 | 课程 | Lecture | 链接 |
 |---|---|---|
 | UPenn CIS 6280 World Models | L15 Spatial World Models I（3D 表示与空间智能议程；Resources 收录 Fei-Fei Li TED 2024 与 World Labs 资料） | [课程主页](https://jiataogu.me/cis6280-world-models/) |
 
-## Papers
+## 论文
 
 - **Must Read**：Fei-Fei Li, TED 2024 演讲 *With Spatial Intelligence, AI Will Understand the Real World*（[TED 官网](https://www.ted.com/talks/fei_fei_li_with_spatial_intelligence_ai_will_understand_the_real_world)）；World Labs 官方博客的空间智能论述（[worldlabs.ai](https://www.worldlabs.ai/)）。
 - **Recommended**：Gibson (1979), *The Ecological Approach to Visual Perception*（经典著作，图书馆/搜索获取）——affordance 概念的源头，模块 09 的伏笔。
 
-## Hands-on
+## 动手实践
 
-Track B 的动手从 Lab 0 开始（见下一模块）；本模块建议先做一件事：用手机绕一个物体拍一圈视频——这就是模块 04 的原始数据。
+路线 B 的动手从 Lab 0 开始（见下一模块）；本模块建议先做一件事：用手机绕一个物体拍一圈视频——这就是模块 04 的原始数据。
 
-## Check Your Understanding
+## 自测
 
 1. 空间智能与"计算机视觉"的差别在哪？
 2. 为什么说多视角一致性是 3D 世界模型的免费监督信号？
@@ -65,12 +65,12 @@ Track B 的动手从 Lab 0 开始（见下一模块）；本模块建议先做�
 3. 机器人视角：任务成功率、定位误差（ATE/RPE）、实时性；人本视角：空间可读性、寻路效率、人在空间中的行为与体验。前者优化机器性能，后者优化人与空间的关系。
 </details>
 
-## Takeaway
+## 要点回顾
 
 - 空间智能 = 世界模型在 3D/4D 物理世界的实例化，终点是行动而非感知。
 - 机器人视角与人本视角互补，本课程以前者为主线。
-- 多视角一致性是贯穿 Track B 的核心约束与监督信号。
+- 多视角一致性是贯穿 路线 B 的核心约束与监督信号。
 
-## Next Module
+## 下一模块
 
-[模块 02：Camera and Geometry](./02-camera-and-geometry.mdx)——一切从"世界如何变成图像"开始。
+[模块 02：相机与几何](./02-camera-and-geometry.mdx)——一切从"世界如何变成图像"开始。
