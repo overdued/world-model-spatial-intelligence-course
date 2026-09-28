@@ -126,7 +126,7 @@
         "lab00_tiny_world"
       ],
       "module": "spatial/04-nerf-gaussian-splatting",
-      "description": "tiny NeRF：camera rays → sampling → volume rendering → novel view synthesis（3DGS 为 Advanced Extension）",
+      "description": "tiny NeRF：camera rays → sampling → volume rendering → novel view synthesis；Advanced Extension 手写并训练 tiny 3DGS，与 NeRF 对比画质与渲染速度",
       "peak_memory": "513 MB (kernel ru_maxrss)",
       "tested": "jupyter nbconvert --execute --to notebook --inplace --ExecutePreprocessor.timeout=1200, 2026-09-27, /tmp/wmsi-labs-venv (py3.9.6, torch 2.8.0, numpy 2.0.2, matplotlib 3.9.4, imageio)",
       "notes": "自包含: 5 球 toy scene 解析渲染 30 train + 6 held-out novel views (48x48, 已知位姿, 零下载); 手写 tiny NeRF (19,348 参数, posenc L_pos=6/L_dir=4, sigma 只看位置/color 看方向, 32 点 ray sampling + volume rendering), 3000 iters 训练 ~2-3 min. 核心结果: train PSNR 32.4±0.9 dB, novel view PSNR 27.4±0.4 dB (gap 5.0 dB), novel view 五球位置/颜色/遮挡/高光全部正确; 深度图无监督涌现且前后关系正确; 60 帧 360° orbit GIF 平滑无漂浮伪影; Section 8 少视角实验: 8 views 时 train 37.9 / novel 24.1 dB (gap 13.8 dB), 直观展示 floater 过拟合. Advanced Extension 含 2D Gaussian splatting α-blending 演示与 3DGS 代码库指引. 图/GIF 存于 assets/ (training_views / posenc_basis / loss_psnr / novel_views / depth_maps / orbit.gif / psnr_hist / few_views / splatting_2d)."

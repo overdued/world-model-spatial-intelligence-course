@@ -2,7 +2,9 @@
 
 **English** | [中文](README.md)
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab05_nerf_gaussian_splatting/notebook.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab05_nerf_gaussian_splatting/notebook_en.ipynb)
+
+> The notebook for this page is [`notebook_en.ipynb`](notebook_en.ipynb) (English). The original Chinese notebook is [`notebook.ipynb`](notebook.ipynb); both run the same code.
 
 ## Goal
 
@@ -15,7 +17,7 @@ Understand the **2D observations → 3D representation → novel view synthesis*
 - The physical constraint behind the architectural choice "σ depends only on position; only color depends on direction" (view-independent geometry vs view-dependent specularity);
 - How depth **emerges without supervision** from the integration weights of σ;
 - View coverage determines novel-view quality: floater artifacts under few views and the train/novel PSNR gap;
-- 3D Gaussian Splatting and NeRF share essentially the same volume-rendering formula — 3DGS just swaps in explicit Gaussians + splatting (α-blending) to gain real-time rendering;
+- 3D Gaussian Splatting and NeRF share essentially the same volume-rendering formula — 3DGS just swaps in explicit Gaussians + splatting (α-blending) to gain real-time rendering. You train a tiny 3DGS yourself (3D→2D covariance projection, depth sorting, α-blending, all in visible PyTorch) and compare it with the NeRF on the same views;
 - **NeRF/3DGS is a spatial world representation (static, passively observed), not a complete world model** (no action, no dynamics) — this comparison with Labs 2–4 runs through the whole course.
 
 ## Concept
@@ -41,12 +43,12 @@ flowchart LR
 
 ```bash
 pip install -r requirements.txt
-jupyter nbconvert --execute --to notebook --inplace notebook.ipynb
+jupyter nbconvert --execute --to notebook --inplace notebook_en.ipynb
 ```
 
 **Colab**
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab05_nerf_gaussian_splatting/notebook.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab05_nerf_gaussian_splatting/notebook_en.ipynb)
 
 ## Experiment
 
@@ -60,6 +62,7 @@ jupyter nbconvert --execute --to notebook --inplace notebook.ipynb
 - Depth maps correctly reflect the front-back ordering of the spheres (near red, far blue), even though training used **no depth supervision at all** (`assets/depth_maps.png`);
 - A 60-frame 360° orbit GIF, smooth with no obvious floating artifacts (`assets/orbit.gif`);
 - The 8-view retrain: novel views degrade noticeably (blur/artifacts), and the train/novel gap widens significantly (`assets/few_views.png`);
+- The tiny 3DGS (Advanced Extension B): 300 Gaussians, 4,200 parameters, trained in about 20 s on CPU; novel-view PSNR ≈ 24–25 dB (NeRF ≈ 27 dB), with softer edges but correct geometry and colours, and each frame renders about 4–6× faster than NeRF (`assets/gaussian_splatting_3d.png`);
 - Entirely on CPU; the notebook runs end-to-end in about 5 minutes.
 
 ## Exercises
@@ -70,7 +73,8 @@ jupyter nbconvert --execute --to notebook --inplace notebook.ipynb
 
 ## Advanced Extension
 
-- **3DGS concept walkthrough + a minimal 2D Gaussian splatting demo**: 8 hand-placed 2D Gaussians α-blended back-to-front by depth, giving an intuitive picture of splatting's compositing mechanism (isomorphic to NeRF's volume-rendering formula); includes a checklist of what is still missing between the 2D demo and real 3DGS (3D→2D projection, SfM initialization, adaptive densification, tile-based rasterization);
+- **3DGS concept walkthrough + a minimal 2D Gaussian splatting demo**: 8 hand-placed 2D Gaussians α-blended back-to-front by depth, giving an intuitive picture of splatting's compositing mechanism (isomorphic to NeRF's volume-rendering formula);
+- **A tiny 3D Gaussian Splatting, trained on CPU** (Advanced Extension B): 300 learnable 3D Gaussians (position, log-scale, quaternion rotation, colour, opacity), initialized from a point cloud back-projected from the NeRF's depth maps (standing in for SfM), rendered with a hand-written differentiable splatting rasterizer (EWA covariance projection $J W \Sigma W^\top J^\top$, depth sort, α-blending) and trained with the same photometric MSE on the same 30 views in under a minute. The notebook compares NeRF and 3DGS on parameter count, train/novel PSNR and render time per frame (`assets/gaussian_splatting_3d.png`), then lists what separates it from real 3DGS (adaptive densification, spherical-harmonics colour, tile-based CUDA rasterization, SfM);
 - Pointers to real codebases: [graphdeco-inria/gaussian-splatting](https://github.com/graphdeco-inria/gaussian-splatting) (official CUDA implementation), [nerfstudio](https://docs.nerf.studio/) `splatfacto`, and the lightweight reproduction [gsplat](https://github.com/nerfstudio-project/gsplat).
 
 ## Related Modules
