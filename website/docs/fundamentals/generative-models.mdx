@@ -1,0 +1,114 @@
+---
+title: 生成模型：VAE、自回归、扩散与流匹配
+sidebar_label: Generative Models
+description: 世界模型的"生成"一半：VAE、自回归 token 模型、扩散模型与流匹配的最小知识集，按需回查。
+---
+
+# Generative Models（生成模型）
+
+> 本页是**回查手册**。世界模型要回答"接下来会发生什么"，而未来往往不止一种可能——这就需要一个能**表示并采样一个分布**的模型，而不是只给出一个点估计。从 Lab 3 的 RSSM 到 Genie、Sora、Cosmos，生成模型是世界模型的另一半。本页只补主线真正用到的部分。
+
+## 为什么世界模型需要生成模型
+
+用 MSE 训练的确定性预测器，最优解是**条件均值** $\mathbb{E}[x_{t+1} \mid x_{\le t}, a_t]$。当未来是多模态的（小球可能向左弹也可能向右弹），均值是一团模糊的"平均未来"——Lab 3 的 deterministic baseline 和 Lab 7 的长程预测都亲手复现了这一点。生成模型改为学习**整个条件分布** $p(x_{t+1} \mid x_{\le t}, a_t)$，然后从中**采样**：每个样本都是清晰的一种可能未来。
+
+四个模型家族回答的是同一个问题——"如何表示一个高维分布并从中采样"——只是取舍不同：
+
+| 家族 | 怎么表示分布 | 采样 | 在世界模型里的位置 |
+|---|---|---|---|
+| **VAE** | 隐变量 $z$ + 解码器 $p(x \mid z)$，用 ELBO 训练 | 一步：采 $z$ 再解码 | World Models 2018 的 V、RSSM 的随机状态 |
+| **自回归（AR）** | 链式法则 $\prod_i p(x_i \mid x_{<i})$，常配 VQ 离散 token | 逐 token 顺序采样 | IRIS、Genie、GAIA-1 等 token 世界模型 |
+| **扩散** | 学会逐步去噪，把噪声变回数据 | 多步迭代去噪 | DIAMOND、GameNGen、Sora、Cosmos |
+| **流匹配** | 学一个把噪声"输运"到数据的速度场 | 解 ODE，步数可以很少 | 新一代视频模型与 VLA 的动作头 |
+
+## 最小知识集
+
+- **VAE 与 ELBO**（[深度学习](./deep-learning.mdx)已介绍）：$\log p(x) \geq \mathbb{E}_{q(z|x)}[\log p(x \mid z)] - D_{KL}(q(z \mid x) \,\|\, p(z))$。重建项要求 $z$ 携带信息，KL 项要求后验贴近先验。RSSM 的训练目标就是它的序列版本（Lab 3）。**已知弱点**：像素级高斯/伯努利似然让样本偏模糊。
+- **离散 token 与 VQ-VAE**：用码本把连续图像切成离散 token $x \mapsto (k_1, \dots, k_n)$，之后就能像语言模型一样用 Transformer 做自回归：$p(k_1, \dots, k_n) = \prod_i p(k_i \mid k_{<i})$。优点是能直接复用 LLM 的训练与采样工具；代价是 tokenizer 的重建质量是上限，逐 token 采样也慢。
+- **扩散模型（DDPM）**：前向过程逐步加高斯噪声，$x_t = \sqrt{\bar\alpha_t}\, x_0 + \sqrt{1 - \bar\alpha_t}\, \epsilon$；网络学习预测噪声，
+  $$\mathcal{L} = \mathbb{E}_{x_0, \epsilon, t} \big\| \epsilon - \epsilon_\theta(x_t, t, c) \big\|^2$$
+  采样时从纯噪声出发反复去噪。$c$ 是条件：文本、过去帧、**动作**——把 $c$ 换成 $(x_{\le t}, a_t)$，扩散模型就成了世界模型。
+- **Score 视角**：预测噪声等价于估计 score $\nabla_x \log p_t(x)$（差一个缩放）。这是把 DDPM、score-based SDE 与 ODE 采样统一起来的语言，读论文时会反复遇到。
+- **流匹配 / Rectified Flow**：在噪声 $x_0$ 与数据 $x_1$ 之间取直线插值 $x_t = (1 - t)\, x_0 + t\, x_1$，回归其速度：
+  $$\mathcal{L} = \mathbb{E}_{x_0, x_1, t} \big\| v_\theta(x_t, t, c) - (x_1 - x_0) \big\|^2$$
+  采样就是从 $t=0$ 到 $t=1$ 数值积分 ODE $\dot x = v_\theta(x, t, c)$。路径越直，需要的步数越少——这对**实时**交互式世界模型至关重要（[模块 10b](../scientist/10b-interactive-world-models.mdx)）。
+- **Classifier-free guidance（CFG）**：训练时随机丢弃条件，采样时外推 $\hat\epsilon = \epsilon_\theta(x_t, \varnothing) + w\,\big(\epsilon_\theta(x_t, c) - \epsilon_\theta(x_t, \varnothing)\big)$。$w > 1$ 让样本更"听条件的话"（比如更严格地执行动作），代价是多样性。
+- **Latent diffusion**：先用自编码器把图像/视频压到低维 latent，再在 latent 里做扩散。Stable Diffusion、Sora、Cosmos 都是这个结构——与"在 latent 空间里预测未来"的世界模型思路一脉相承。
+- **DiT**：把扩散模型的 U-Net 换成 Transformer，输入是（时空）patch token。当代视频世界模型的主干几乎都是它。
+
+## 最小可运行示例
+
+扩散训练的核心只有几行。下面是一个对任意数据张量 `x0` 都成立的 DDPM 训练步与采样循环（去掉了工程细节，便于对照公式）：
+
+```python
+import torch
+
+T = 100
+betas = torch.linspace(1e-4, 0.02, T)
+alphas = 1 - betas
+abar = torch.cumprod(alphas, 0)                                  # \bar\alpha_t
+
+def train_step(model, x0, cond, opt):
+    t = torch.randint(0, T, (x0.shape[0],))
+    eps = torch.randn_like(x0)
+    a = abar[t].view(-1, *[1] * (x0.dim() - 1))
+    xt = a.sqrt() * x0 + (1 - a).sqrt() * eps                    # 前向加噪
+    loss = ((model(xt, t, cond) - eps) ** 2).mean()              # 预测噪声
+    opt.zero_grad(); loss.backward(); opt.step()
+    return loss.item()
+
+@torch.no_grad()
+def sample(model, shape, cond):
+    x = torch.randn(shape)                                       # 从纯噪声出发
+    for t in reversed(range(T)):
+        tt = torch.full((shape[0],), t)
+        eps = model(x, tt, cond)
+        x = (x - betas[t] / (1 - abar[t]).sqrt() * eps) / alphas[t].sqrt()
+        if t > 0:
+            x = x + betas[t].sqrt() * torch.randn_like(x)        # 反向过程的随机项
+    return x
+```
+
+把 `cond` 设成"过去几帧 + 当前动作"、`x0` 设成"下一帧"，这就是 DIAMOND / GameNGen 那一类扩散世界模型的训练循环骨架。把 Lab 7 的 ConvGRU 解码器换成这样一个条件去噪器，长程预测就不会再糊成均值（但会引入新的问题：采样慢、闭环漂移）。
+
+## 何时回查
+
+| 主线模块 | 用到的生成模型知识 |
+|---|---|
+| Track A 04 Representation Learning | 自编码器、VQ 离散化、生成式 vs 判别式表征 |
+| Track A 06 RSSM、07 World Models 2018 | VAE、ELBO、KL 平衡，MDN（混合密度网络）作为多模态预测 |
+| Track A 10 Video World Models | 扩散、流匹配、latent diffusion、DiT |
+| Track A 10b Interactive World Models | 条件扩散、少步采样、CFG、自回归 token 模型 |
+| Track B 12 VLA & World-Action Models | 扩散 / 流匹配作为动作生成头（diffusion policy） |
+| Lab 3、Lab 7 | "确定性预测 → 模糊均值"的反面教材 |
+
+## 最佳外部资源
+
+- **Stanford CS236 Deep Generative Models**（[deepgenerativemodels.github.io](https://deepgenerativemodels.github.io/)）：VAE、自回归、GAN、flow、扩散的系统课程。
+- **MIT 6.S184 Generative AI with Stochastic Differential Equations**（[diffusion.csail.mit.edu](https://diffusion.csail.mit.edu/)）：从 ODE/SDE 出发讲流匹配与扩散，带讲义与练习，是理解"流匹配为什么能少步采样"最直接的材料。
+- **Lilian Weng, *What are Diffusion Models?***（[博客](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/)）：公式推导最完整的一篇综述博客。
+- **Calvin Luo, *Understanding Diffusion Models: A Unified Perspective***（[arXiv:2208.11970](https://arxiv.org/abs/2208.11970)）：从 ELBO 一路推到 score matching，把 VAE 与扩散放在同一框架里。
+- **CIS6280 L07 / L11**（[课程主页](https://jiataogu.me/cis6280-world-models/)）：隐变量生成模型与扩散/流匹配的世界模型语境版。
+
+## 关键论文
+
+- van den Oord et al. (2017), *Neural Discrete Representation Learning*（VQ-VAE，[arXiv:1711.00937](https://arxiv.org/abs/1711.00937)）。
+- Ho et al. (2020), *Denoising Diffusion Probabilistic Models*（DDPM，[arXiv:2006.11239](https://arxiv.org/abs/2006.11239)）。
+- Song et al. (2021), *Score-Based Generative Modeling through Stochastic Differential Equations*（[arXiv:2011.13456](https://arxiv.org/abs/2011.13456)）。
+- Rombach et al. (2022), *High-Resolution Image Synthesis with Latent Diffusion Models*（[arXiv:2112.10752](https://arxiv.org/abs/2112.10752)）。
+- Ho & Salimans (2022), *Classifier-Free Diffusion Guidance*（[arXiv:2207.12598](https://arxiv.org/abs/2207.12598)）。
+- Lipman et al. (2023), *Flow Matching for Generative Modeling*（[arXiv:2210.02747](https://arxiv.org/abs/2210.02747)）；Liu et al. (2023), *Flow Straight and Fast*（Rectified Flow，[arXiv:2209.03003](https://arxiv.org/abs/2209.03003)）。
+- Peebles & Xie (2023), *Scalable Diffusion Models with Transformers*（DiT，[arXiv:2212.09748](https://arxiv.org/abs/2212.09748)）。
+
+## 自查
+
+达标标准：
+
+1. 能解释为什么 MSE 训练的确定性预测器在多模态未来上输出模糊，而扩散模型的样本是清晰的。
+2. 能写出 DDPM 的前向加噪公式和噪声预测损失，并说出条件 $c$ 在世界模型里对应什么。
+3. 能说出流匹配的训练目标，以及"路径更直 → 采样步数更少"为什么对实时世界模型重要。
+4. 能比较 VQ + 自回归与扩散两条路线各自的优缺点（采样速度、质量上限、能否复用 LLM 工具链）。
+
+## Next
+
+回到主线：[Track A 模块 10 · Video World Models](../scientist/10-video-world-models.mdx) → [模块 10b · Interactive World Models](../scientist/10b-interactive-world-models.mdx)
