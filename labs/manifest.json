@@ -68,7 +68,9 @@
       "runtime_t4": "~1–2 min（估计，CPU-bound 小模型，GPU 加速有限）",
       "gpu_required": false,
       "colab": "lab03_tiny_rssm/notebook.ipynb",
+      "colab_en": "lab03_tiny_rssm/notebook_en.ipynb",
       "notebook": "labs/lab03_tiny_rssm/notebook.ipynb",
+      "notebook_en": "labs/lab03_tiny_rssm/notebook_en.ipynb",
       "prerequisites": [
         "lab02_latent_dynamics"
       ],
@@ -90,7 +92,9 @@
       "runtime_t4": "~15-30s (估计; 纯 CPU 小模型负载, GPU 无加速收益)",
       "gpu_required": false,
       "colab": "lab04_mpc_cem_planning/notebook.ipynb",
+      "colab_en": "lab04_mpc_cem_planning/notebook_en.ipynb",
       "notebook": "labs/lab04_mpc_cem_planning/notebook.ipynb",
+      "notebook_en": "labs/lab04_mpc_cem_planning/notebook_en.ipynb",
       "prerequisites": [
         "lab03_tiny_rssm"
       ],
@@ -112,7 +116,9 @@
       "runtime_t4": "~5-8 min (估计; 小 MLP + 小 batch, GPU 无加速收益, Colab CPU 与本地相当)",
       "gpu_required": false,
       "colab": "lab05_nerf_gaussian_splatting/notebook.ipynb",
+      "colab_en": "lab05_nerf_gaussian_splatting/notebook_en.ipynb",
       "notebook": "labs/lab05_nerf_gaussian_splatting/notebook.ipynb",
+      "notebook_en": "labs/lab05_nerf_gaussian_splatting/notebook_en.ipynb",
       "prerequisites": [
         "lab00_tiny_world"
       ],
@@ -120,7 +126,7 @@
         "lab00_tiny_world"
       ],
       "module": "spatial/04-nerf-gaussian-splatting",
-      "description": "tiny NeRF：camera rays → sampling → volume rendering → novel view synthesis（3DGS 为 Advanced Extension）",
+      "description": "tiny NeRF：camera rays → sampling → volume rendering → novel view synthesis；Advanced Extension 手写并训练 tiny 3DGS，与 NeRF 对比画质与渲染速度",
       "peak_memory": "513 MB (kernel ru_maxrss)",
       "tested": "jupyter nbconvert --execute --to notebook --inplace --ExecutePreprocessor.timeout=1200, 2026-09-27, /tmp/wmsi-labs-venv (py3.9.6, torch 2.8.0, numpy 2.0.2, matplotlib 3.9.4, imageio)",
       "notes": "自包含: 5 球 toy scene 解析渲染 30 train + 6 held-out novel views (48x48, 已知位姿, 零下载); 手写 tiny NeRF (19,348 参数, posenc L_pos=6/L_dir=4, sigma 只看位置/color 看方向, 32 点 ray sampling + volume rendering), 3000 iters 训练 ~2-3 min. 核心结果: train PSNR 32.4±0.9 dB, novel view PSNR 27.4±0.4 dB (gap 5.0 dB), novel view 五球位置/颜色/遮挡/高光全部正确; 深度图无监督涌现且前后关系正确; 60 帧 360° orbit GIF 平滑无漂浮伪影; Section 8 少视角实验: 8 views 时 train 37.9 / novel 24.1 dB (gap 13.8 dB), 直观展示 floater 过拟合. Advanced Extension 含 2D Gaussian splatting α-blending 演示与 3DGS 代码库指引. 图/GIF 存于 assets/ (training_views / posenc_basis / loss_psnr / novel_views / depth_maps / orbit.gif / psnr_hist / few_views / splatting_2d)."
@@ -134,7 +140,9 @@
       "runtime_t4": "~10–15 s（负载为小 MLP 训练 + matplotlib 3D 逐帧渲染，GPU 无实质加速，Colab CPU 即可）",
       "gpu_required": false,
       "colab": "lab06_dynamic_4d_worlds/notebook.ipynb",
+      "colab_en": "lab06_dynamic_4d_worlds/notebook_en.ipynb",
       "notebook": "labs/lab06_dynamic_4d_worlds/notebook.ipynb",
+      "notebook_en": "labs/lab06_dynamic_4d_worlds/notebook_en.ipynb",
       "prerequisites": [
         "lab05_nerf_gaussian_splatting"
       ],
@@ -156,7 +164,9 @@
       "runtime_t4": "~1 min (估计)",
       "gpu_required": false,
       "colab": "lab07_video_world_model/notebook.ipynb",
+      "colab_en": "lab07_video_world_model/notebook_en.ipynb",
       "notebook": "labs/lab07_video_world_model/notebook.ipynb",
+      "notebook_en": "labs/lab07_video_world_model/notebook_en.ipynb",
       "prerequisites": [
         "lab02_latent_dynamics"
       ],
@@ -178,7 +188,9 @@
       "runtime_t4": "~30-60s (估计; 纯 CPU 小模型负载, GPU 无加速收益)",
       "gpu_required": false,
       "colab": "lab08_navigation_world_model/notebook.ipynb",
+      "colab_en": "lab08_navigation_world_model/notebook_en.ipynb",
       "notebook": "labs/lab08_navigation_world_model/notebook.ipynb",
+      "notebook_en": "labs/lab08_navigation_world_model/notebook_en.ipynb",
       "prerequisites": [
         "lab00_tiny_world"
       ],
@@ -200,7 +212,9 @@
       "runtime_t4": "~1-2 min（纯小 MLP + Python 循环负载，GPU 无实质加速，Colab CPU 即可）",
       "gpu_required": false,
       "colab": "lab09_world_model_policy/notebook.ipynb",
+      "colab_en": "lab09_world_model_policy/notebook_en.ipynb",
       "notebook": "labs/lab09_world_model_policy/notebook.ipynb",
+      "notebook_en": "labs/lab09_world_model_policy/notebook_en.ipynb",
       "prerequisites": [
         "lab03_tiny_rssm",
         "lab04_mpc_cem_planning"
@@ -224,7 +238,9 @@
       "runtime_t4": "~1 min (估计)",
       "gpu_required": false,
       "colab": "lab10_ood_drift_evaluation/notebook.ipynb",
+      "colab_en": "lab10_ood_drift_evaluation/notebook_en.ipynb",
       "notebook": "labs/lab10_ood_drift_evaluation/notebook.ipynb",
+      "notebook_en": "labs/lab10_ood_drift_evaluation/notebook_en.ipynb",
       "prerequisites": [
         "lab03_tiny_rssm"
       ],

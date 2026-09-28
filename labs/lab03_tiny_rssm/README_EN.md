@@ -2,7 +2,9 @@
 
 **English** | [中文](README.md)
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab03_tiny_rssm/notebook.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab03_tiny_rssm/notebook_en.ipynb)
+
+> The notebook for this page is [`notebook_en.ipynb`](notebook_en.ipynb) (English). The original Chinese notebook is [`notebook.ipynb`](notebook.ipynb); both run the same code.
 
 ## Goal
 
@@ -40,7 +42,7 @@ The real world (even a small ball with random perturbations) is stochastic: the 
 
 ```bash
 pip install -r requirements.txt
-jupyter nbconvert --execute --to notebook --inplace labs/lab03_tiny_rssm/notebook.ipynb
+jupyter nbconvert --execute --to notebook --inplace labs/lab03_tiny_rssm/notebook_en.ipynb
 # or open the notebook and run cell by cell (working directory must be labs/lab03_tiny_rssm/)
 ```
 

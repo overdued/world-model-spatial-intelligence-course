@@ -15,7 +15,7 @@
 - "σ 只看位置、颜色才看方向"这一架构选择背后的物理约束(view-independent 几何 vs view-dependent 高光);
 - 深度如何从 σ 的积分权重中**无监督涌现**;
 - 视角覆盖决定 novel view 质量:少视角下的 floater 伪影与 train/novel PSNR gap;
-- 3D Gaussian Splatting 与 NeRF 的体渲染公式本质相同,只是换成显式高斯 + splatting(α-blending),换来实时渲染;
+- 3D Gaussian Splatting 与 NeRF 的体渲染公式本质相同,只是换成显式高斯 + splatting(α-blending),换来实时渲染;你会亲手训练一个 tiny 3DGS(3D→2D 协方差投影、深度排序、α-blending 全部是可见的 PyTorch 代码),并在同样的视角上与 NeRF 对比;
 - **NeRF/3DGS 是 spatial world representation(静态、被动观察),不是完整的 world model**(无 action、无 dynamics)——与 Lab 2–4 的对比贯穿全课。
 
 ## Concept
@@ -60,6 +60,7 @@ jupyter nbconvert --execute --to notebook --inplace notebook.ipynb
 - 深度图正确反映球的前后关系(近红远蓝),尽管训练时**没有任何深度监督**(`assets/depth_maps.png`);
 - 60 帧 360° 环绕 GIF,画面平滑、无明显漂浮伪影(`assets/orbit.gif`);
 - 8 视角重训:novel view 明显退化(模糊/伪影),train/novel gap 显著拉大(`assets/few_views.png`);
+- tiny 3DGS(Advanced Extension B):300 个高斯、4,200 个参数,CPU 上约 20 秒训完;novel view PSNR ≈ 24–25 dB(NeRF ≈ 27 dB),边缘更软但几何与颜色正确,每帧渲染比 NeRF 快约 4–6 倍(`assets/gaussian_splatting_3d.png`);
 - 全程 CPU,notebook 端到端约 5 分钟。
 
 ## Exercises
@@ -70,7 +71,8 @@ jupyter nbconvert --execute --to notebook --inplace notebook.ipynb
 
 ## Advanced Extension
 
-- **3DGS 概念讲解 + 简版 2D Gaussian splatting 演示**:8 个手工放置的 2D 高斯按深度 back-to-front 做 α-blending,直观展示 splatting 的合成机制(与 NeRF 体渲染公式同构);附从 2D demo 到真实 3DGS 还差什么的清单(3D→2D 投影、SfM 初始化、adaptive densification、tile-based 光栅化);
+- **3DGS 概念讲解 + 简版 2D Gaussian splatting 演示**:8 个手工放置的 2D 高斯按深度 back-to-front 做 α-blending,直观展示 splatting 的合成机制(与 NeRF 体渲染公式同构);
+- **在 CPU 上训练一个 tiny 3D Gaussian Splatting**(Advanced Extension B):300 个可学习的 3D 高斯(位置、log 尺度、四元数旋转、颜色、不透明度),用 NeRF 深度图反投影出的点云初始化(代替 SfM),手写可微 splatting 光栅化(EWA 协方差投影 $J W \Sigma W^\top J^\top$、深度排序、α-blending),在同样 30 个视角上用同样的 photometric MSE 训练,不到一分钟。notebook 对比 NeRF 与 3DGS 的参数量、train/novel PSNR 与每帧渲染耗时(`assets/gaussian_splatting_3d.png`),并列出它与真实 3DGS 的差距(adaptive densification、球谐颜色、tile-based CUDA 光栅化、SfM);
 - 真实代码库指引:[graphdeco-inria/gaussian-splatting](https://github.com/graphdeco-inria/gaussian-splatting)(官方 CUDA 实现)、[nerfstudio](https://docs.nerf.studio/) `splatfacto`、轻量复现 [gsplat](https://github.com/nerfstudio-project/gsplat)。
 
 ## Related Modules

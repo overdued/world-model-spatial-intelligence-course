@@ -54,7 +54,7 @@ Observation → World State → Representation → Dynamics → Prediction → P
 | [Lab 9 · World Model + Policy](labs/lab09_world_model_policy/) | Tiny Dreamer：imagination 中训练 actor-critic | CPU ~45s |
 | [Lab 10 · OOD / Drift Evaluation](labs/lab10_ood_drift_evaluation/) | ID/Mild/Strong OOD + Failure Gallery | CPU ~2.5min |
 
-每个 Lab 的 README 都有 **Open in Colab** 徽章。状态统一由 [`labs/manifest.json`](labs/manifest.json) 维护。最终项目见 [capstone/](capstone/)（Build Your Own World Model）。
+每个 Lab 的 README 都有 **Open in Colab** 徽章。Lab 0–2 的 notebook 为英文；Lab 3–10 另附英文版 notebook（`notebook_en.ipynb`），英文站点会自动链接到英文版。状态统一由 [`labs/manifest.json`](labs/manifest.json) 维护。最终项目见 [capstone/](capstone/)（Build Your Own World Model）。
 
 ## University Sources
 

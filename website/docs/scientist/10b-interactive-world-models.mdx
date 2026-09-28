@@ -1,0 +1,101 @@
+---
+title: 交互式世界模型
+sidebar_label: 10b · 交互式世界模型
+description: 从"生成一段视频"到"可以玩的世界"：GameNGen、DIAMOND、Genie 2/3、Oasis 与 Cosmos——可控性、实时性与一致性。
+---
+
+<ModuleProgress id="a10b" label="交互式世界模型" />
+
+## Why this matters
+
+模块 10 的视频世界模型回答的是"给定过去，未来会是什么样"。2024 年起出现了一条更激进的路线：**让模型直接取代模拟器**。GameNGen 用一个扩散模型以 20 FPS 实时"运行"了 DOOM，DIAMOND 让强化学习 agent 完全在扩散世界模型里训练 Atari，Genie 2 / Genie 3 从一张图或一句话生成可以用键盘探索的 3D 世界，NVIDIA Cosmos 则把同样的思路做成面向机器人与自动驾驶的"世界基础模型"平台。一个能被**实时交互**的生成模型，既是新的内容媒介，也是训练具身智能体的无限数据源——前提是它足够可控、足够快、足够一致。
+
+## Visual Intuition
+
+![Interactive world model](/img/interactive-world-model.svg)
+
+与模块 10 的开环视频生成不同，这里是一个**闭环**：玩家（或智能体）每一帧都给出新动作，模型只生成**下一帧**，画面立即显示，玩家据此做出下一个动作。生成的帧又被喂回模型作为上下文——这正是漂移的来源。底部三个框是这条路线必须同时满足的三个要求。
+
+## Core Idea
+
+**从视频预测到交互式模拟，差的是三件事。**
+
+**1. 可控性（controllability）：动作必须真的改变未来。** 最直接的做法是用带动作标签的数据训练：GameNGen 先让 RL agent 玩 DOOM 并录下"帧 + 按键"，DIAMOND 在 Atari 上用 agent 自己的交互数据。但互联网视频没有动作标签。Genie 的解法是 **latent action**：训练一个逆动力学编码器，从相邻两帧推断"发生了什么动作"，并用极小的离散码本（Genie 用 8 个）做瓶颈，逼它只编码"可控的变化"。推理时，人类按键就映射到这 8 个 latent action 上。检验可控性的标准测试是：同一个起点、不同动作序列，生成的未来是否**正确地不同**。
+
+**2. 实时性（real time）：采样速度是硬约束。** 24 FPS 意味着每帧只有约 42 ms，而标准扩散要迭代几十上百步去噪。实际系统靠几种手段压缩：只生成一帧而非整段视频、在低维 latent 里生成、把去噪步数蒸馏到个位数（GameNGen 推理用 4 步 DDIM），以及因果注意力 + KV cache 让每一帧只算增量。这也是 [流匹配](../fundamentals/generative-models.mdx) 受欢迎的原因之一：路径越直，需要的步数越少。
+
+**3. 一致性（consistency）：离开再回来，世界还是那个世界。** 自回归生成天然有两个敌人。一是**漂移**：生成帧里的小瑕疵成为下一步的输入，训练时却只见过真实帧（exposure bias）。GameNGen 的对策是训练时给上下文帧**加随机噪声**，并把噪声强度作为条件告诉模型，使它学会纠正而不是放大瑕疵；**Diffusion Forcing** 把这个思路一般化，给序列里每个 token 独立的噪声水平。二是**遗忘**：上下文窗口只有几秒，转身再转回来，房间可能已经变了。早期模型（GameNGen、Oasis）的记忆只有几秒；Genie 3 报告了分钟级的视觉一致性。显式记忆（检索过去的帧、维护 3D 或地图状态）是当前的研究前沿，这与路线 B 的 [空间记忆](../spatial/08-spatial-memory.mdx) 是同一个问题。
+
+**为什么这对世界模型研究重要。** 交互式世界模型把"世界模型能否支持决策"变成了可以直接检验的问题：DIAMOND 在 Atari 100k 上完全在想象中训练 agent 并取得很强的成绩，说明**视觉细节**（扩散模型保留、VAE 常常抹掉的那些像素）对下游策略确实重要；UniSim 与 Cosmos 则把交互式模拟用于机器人策略的训练与评估。但生成得逼真不等于物理正确，也不等于能支撑规划——可控性、一致性和下游效用需要分别评估（[模块 12](./12-ood-drift-evaluation.mdx)）。
+
+## Key Concepts
+
+- **Action-conditioned autoregressive generation**：每一步只生成下一帧，条件是过去的帧和动作。
+- **Latent action model**：从无标注视频中无监督地推断离散动作（Genie）。
+- **Context noise augmentation**：训练时对上下文帧加噪，缓解自回归漂移（GameNGen）；Diffusion Forcing 的逐 token 独立噪声是它的推广。
+- **Few-step sampling**：蒸馏、少步 DDIM、流匹配——把生成塞进每帧几十毫秒的预算。
+- **Long-horizon consistency / memory**：上下文窗口之外的世界状态如何保持；"离开再回来"测试。
+- **Training agents in imagination**：DIAMOND、Dreamer 同一思想的像素级版本。
+
+## Core Equations
+
+交互式世界模型把视频分布按时间分解为逐帧的条件分布：
+
+$$p_\theta(x_{1:T} \mid a_{1:T}) = \prod_{t} p_\theta\big(x_{t+1} \mid x_{t-K+1:t},\, a_{t-K+1:t}\big)$$
+
+每一个因子都是一个条件扩散（或流匹配）模型。GameNGen 式的上下文加噪训练目标：
+
+$$\mathcal{L} = \mathbb{E}\,\big\| \epsilon - \epsilon_\theta\big(x^{(\tau)}_{t+1},\, \tau,\, \tilde{x}_{t-K+1:t},\, \sigma,\, a_{t-K+1:t}\big) \big\|^2, \qquad \tilde{x} = x + \sigma\,\xi$$
+
+其中 $\tau$ 是目标帧的扩散步，$\sigma$ 是上下文噪声强度（随机采样并作为条件输入）。Genie 的 latent action 用 VQ 瓶颈从相邻帧提取：
+
+$$\tilde{a}_t = \mathrm{VQ}\big(\mathrm{enc}(x_{\le t},\, x_{t+1})\big) \in \{1, \dots, |A|\}, \qquad \hat{x}_{t+1} = \mathrm{dec}(x_{\le t},\, \tilde{a}_{\le t})$$
+
+## University Lecture
+
+| 课程 | Lecture | 链接 |
+|---|---|---|
+| UPenn CIS 6280 World Models | L11 Diffusion & Flow Matching；L12–L13 Video World Models I/II（Genie、GameNGen、交互与漂移） | [课程主页](https://jiataogu.me/cis6280-world-models/)（slides 随学期发布） |
+
+## Papers
+
+- **Must Read**：Valevski et al. (2024), *Diffusion Models Are Real-Time Game Engines*（GameNGen，[arXiv:2408.14837](https://arxiv.org/abs/2408.14837)）；Alonso et al. (2024), *Diffusion for World Modeling: Visual Details Matter in Atari*（DIAMOND，[arXiv:2405.12399](https://arxiv.org/abs/2405.12399)）。
+- **Recommended**：Bruce et al. (2024), *Genie: Generative Interactive Environments*（[arXiv:2402.15391](https://arxiv.org/abs/2402.15391)）；Chen et al. (2024), *Diffusion Forcing: Next-token Prediction Meets Full-Sequence Diffusion*（[arXiv:2407.01392](https://arxiv.org/abs/2407.01392)）；NVIDIA (2025), *Cosmos World Foundation Model Platform for Physical AI*（[arXiv:2501.03575](https://arxiv.org/abs/2501.03575)）。
+- **Optional**：Micheli et al. (2023), *Transformers are Sample-Efficient World Models*（IRIS，[arXiv:2209.00588](https://arxiv.org/abs/2209.00588)）——离散 token 路线的对照；Yang et al. (2024), *Learning Interactive Real-World Simulators*（UniSim，[arXiv:2310.06114](https://arxiv.org/abs/2310.06114)）；Google DeepMind 的 Genie 2（[博客](https://deepmind.google/discover/blog/genie-2-a-large-scale-foundation-world-model/)）与 Genie 3（[博客](https://deepmind.google/discover/blog/genie-3-a-new-frontier-for-world-models/)）；Decart & Etched 的 Oasis（[项目页](https://oasis-model.github.io/)）。
+
+## Hands-on
+
+Lab 7 的 video world model 是一个**开环**预测器，但把它改造成可交互的世界只需要两步：
+
+1. **加入动作条件**：给每帧加一个全局"风力"动作 $a_t \in \mathbb{R}^2$（在模拟器里扰动速度），把 $a_t$ 拼接进 ConvGRU 的输入（Lab 7 思考题 3）。
+2. **写一个交互循环**：用 `ipywidgets` 的四个方向按钮产生 $a_t$，每按一次就让模型生成一帧并刷新图像——你就得到了一个"由神经网络运行的小游戏"。
+
+然后亲自检验三个要求：同一起点按不同方向，未来是否正确地不同（可控性）；每帧生成耗时多少毫秒（实时性）；连续按 50 次后画面是否还保持三个形状（一致性 / 漂移）。
+
+**Open Lab**：<ColabBadge lab="lab07_video_world_model" />
+
+## Check Your Understanding
+
+1. 交互式世界模型与模块 10 的开环视频生成，在训练和推理上各有什么不同？
+2. Genie 的 latent action 码本为什么要做得这么小（8 个）？做大会怎样？
+3. GameNGen 为什么在训练时给上下文帧加噪声？不加会怎样？
+4. DIAMOND 的结果对"世界模型该在哪个空间里建模"这个问题有什么启示？
+
+<details>
+<summary>显示答案</summary>
+
+1. 训练上，交互式模型必须以动作为条件，而且要让模型见过"自己生成的、有瑕疵的"上下文（加噪、Diffusion Forcing 等），因为推理时它一直在吃自己的输出；开环视频生成通常一次生成整段、以文本或首帧为条件。推理上，交互式模型每帧都要在几十毫秒内完成，并且动作是在线到达的，不能预先知道整条动作序列。
+2. 小码本是一个信息瓶颈：它只够编码"少数几种可控的变化"（左、右、跳……），迫使 latent action 捕捉的是智能体造成的变化，而不是背景中的随机变化。码本过大时，编码器可以把下一帧的全部细节塞进 latent action，解码器"抄答案"即可重建，latent action 就失去了"动作"的语义，人也无法用按键去控制它。
+3. 训练时上下文是真实帧，推理时上下文是模型自己生成的帧，两者分布不同（exposure bias）。给上下文加随机强度的噪声并告诉模型噪声强度，相当于让它见过"不完美的过去"，学会把有瑕疵的上下文拉回数据流形，而不是把瑕疵一帧帧放大。不加噪声时，GameNGen 报告画面在几十帧内迅速崩坏。
+4. DIAMOND 显示，保留像素细节的扩散世界模型能训练出比离散 token / 模糊重建世界模型更好的 agent——某些对决策关键的信息恰恰是小而细的视觉细节（例如 Atari 里的子弹或得分），压缩得过狠的 latent 会把它们丢掉。这并不否定 latent 世界模型（它们更快、更适合规划），而是说明"表征里保留了什么"必须以下游决策来检验。
+</details>
+
+## Takeaway
+
+- 交互式世界模型 = 以动作为条件、逐帧自回归、实时运行的生成模型，它让神经网络取代了模拟器。
+- 可控性、实时性、一致性是三个同时成立的硬约束；每个代表系统都在其中做了取舍。
+- 生成得逼真不等于物理正确，也不等于能支撑决策——下游效用需要单独评估。
+
+## Next Module
+
+[模块 11：世界模型 + 策略](./11-world-model-policy.mdx)——把世界模型与策略接成完整 MBRL 闭环。

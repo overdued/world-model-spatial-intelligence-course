@@ -2,7 +2,9 @@
 
 **English** | [中文](README.md)
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab04_mpc_cem_planning/notebook.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab04_mpc_cem_planning/notebook_en.ipynb)
+
+> The notebook for this page is [`notebook_en.ipynb`](notebook_en.ipynb) (English). The original Chinese notebook is [`notebook.ipynb`](notebook.ipynb); both run the same code.
 
 ## Goal
 
@@ -42,12 +44,12 @@ A world model moves trial-and-error into "imagination": at the current state, sa
 
 ```bash
 pip install -r requirements.txt
-jupyter nbconvert --execute --to notebook --inplace notebook.ipynb
+jupyter nbconvert --execute --to notebook --inplace notebook_en.ipynb
 ```
 
 **Colab**
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab04_mpc_cem_planning/notebook.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab04_mpc_cem_planning/notebook_en.ipynb)
 
 ## Experiment
 

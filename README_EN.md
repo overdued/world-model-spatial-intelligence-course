@@ -54,7 +54,7 @@ All 11 labs are runnable (CPU only; one-click execution on the free Colab tier):
 | [Lab 9 · World Model + Policy](labs/lab09_world_model_policy/) | Tiny Dreamer: training actor-critic in imagination | CPU ~45s |
 | [Lab 10 · OOD / Drift Evaluation](labs/lab10_ood_drift_evaluation/) | ID/Mild/Strong OOD + Failure Gallery | CPU ~2.5min |
 
-Every lab's README carries an **Open in Colab** badge. Lab status is maintained centrally in [`labs/manifest.json`](labs/manifest.json). For the final project see [capstone/](capstone/) (Build Your Own World Model).
+Every lab's README carries an **Open in Colab** badge. The notebooks for Labs 0–2 are in English; Labs 3–10 ship an English notebook (`notebook_en.ipynb`) alongside the Chinese original, and the English site links to it. Lab status is maintained centrally in [`labs/manifest.json`](labs/manifest.json). For the final project see [capstone/](capstone/) (Build Your Own World Model).
 
 ## University Sources
 
