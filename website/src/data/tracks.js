@@ -119,6 +119,15 @@ export const tracks = {
         oneLinerEn: 'Diffusion/flow-based generation, interactive video worlds, and closed-loop drift.',
       },
       {
+        id: 'a10b',
+        title: 'Interactive World Models',
+        slug: '10b-interactive-world-models',
+        estTime: '60 分钟',
+        estTimeEn: '60 min',
+        oneLiner: '从视频生成到可以玩的世界：GameNGen、DIAMOND、Genie——可控性、实时性与一致性。',
+        oneLinerEn: 'From video generation to playable worlds: GameNGen, DIAMOND, Genie — controllability, real time and consistency.',
+      },
+      {
         id: 'a11',
         title: 'World Model + Policy',
         slug: '11-world-model-policy',

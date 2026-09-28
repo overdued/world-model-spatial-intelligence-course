@@ -1,0 +1,101 @@
+---
+title: Interactive World Models
+sidebar_label: 10b · Interactive World Models
+description: From "generate a video" to "a world you can play" — GameNGen, DIAMOND, Genie 2/3, Oasis and Cosmos; controllability, real time and consistency.
+---
+
+<ModuleProgress id="a10b" label="Interactive World Models" />
+
+## Why this matters
+
+The video world models of Module 10 answer "given the past, what will the future look like". Since 2024 a more radical route has appeared: **let the model replace the simulator outright**. GameNGen "ran" DOOM in real time at 20 FPS with a diffusion model, DIAMOND trained reinforcement-learning agents for Atari entirely inside a diffusion world model, Genie 2 / Genie 3 generate 3D worlds from an image or a sentence that you can explore with a keyboard, and NVIDIA Cosmos packages the same idea as a "world foundation model" platform for robotics and autonomous driving. A generative model you can **interact with in real time** is both a new content medium and an unlimited data source for training embodied agents, provided it is controllable enough, fast enough and consistent enough.
+
+## Visual Intuition
+
+![Interactive world model](/img/interactive-world-model.svg)
+
+Unlike the open-loop video generation of Module 10, this is a **closed loop**: the player (or agent) gives a new action every frame, the model generates only **the next frame**, the frame is shown immediately, and the player reacts with the next action. The generated frames are fed back into the model as context, which is exactly where drift comes from. The three boxes at the bottom are the three requirements this route has to meet at the same time.
+
+## Core Idea
+
+**Three things separate video prediction from interactive simulation.**
+
+**1. Controllability: actions must actually change the future.** The most direct approach is to train on action-labeled data: GameNGen first has an RL agent play DOOM and records "frames + key presses", and DIAMOND uses the agent's own interaction data on Atari. But internet video has no action labels. Genie's answer is the **latent action**: train an inverse-dynamics encoder that infers "what action happened" from two consecutive frames, with a tiny discrete codebook (Genie uses 8 codes) as a bottleneck that forces it to encode only "controllable change". At inference, human key presses are mapped onto these 8 latent actions. The standard test of controllability: from the same starting point, do different action sequences produce futures that are **correctly different**?
+
+**2. Real time: sampling speed is a hard constraint.** 24 FPS leaves about 42 ms per frame, while standard diffusion iterates dozens to hundreds of denoising steps. Real systems compress this in several ways: generate one frame rather than a whole clip, generate in a low-dimensional latent, distill the number of denoising steps down to a handful (GameNGen uses 4 DDIM steps at inference), and use causal attention + a KV cache so each frame only computes the increment. This is also one reason [flow matching](../fundamentals/generative-models.mdx) is popular: the straighter the paths, the fewer steps you need.
+
+**3. Consistency: leave and come back, and the world is still the same world.** Autoregressive generation has two natural enemies. The first is **drift**: small flaws in a generated frame become the next step's input, while training only ever showed real frames (exposure bias). GameNGen's countermeasure is to **add random noise to the context frames** during training and pass the noise level to the model as a condition, so it learns to correct flaws instead of amplifying them; **Diffusion Forcing** generalizes this idea by giving every token in the sequence its own independent noise level. The second is **forgetting**: the context window covers only a few seconds, so turn around and turn back and the room may have changed. Early models (GameNGen, Oasis) remember only a few seconds; Genie 3 reports visual consistency on the scale of minutes. Explicit memory (retrieving past frames, maintaining a 3D or map state) is the current research frontier, and it is the same problem as [spatial memory](../spatial/08-spatial-memory.mdx) in Track B.
+
+**Why this matters for world-model research.** Interactive world models turn "can a world model support decision making" into a question you can test directly: DIAMOND trains agents entirely in imagination on Atari 100k with very strong results, showing that **visual details** (the pixels a diffusion model keeps and a VAE often smears away) really matter for the downstream policy; UniSim and Cosmos apply interactive simulation to training and evaluating robot policies. But looking realistic is not the same as being physically correct, nor as supporting planning; controllability, consistency and downstream utility have to be evaluated separately ([Module 12](./12-ood-drift-evaluation.mdx)).
+
+## Key Concepts
+
+- **Action-conditioned autoregressive generation**: each step generates only the next frame, conditioned on past frames and actions.
+- **Latent action model**: infers discrete actions from unlabeled video without supervision (Genie).
+- **Context noise augmentation**: noise the context frames during training to curb autoregressive drift (GameNGen); Diffusion Forcing's independent per-token noise is its generalization.
+- **Few-step sampling**: distillation, few-step DDIM, flow matching; fitting generation into a budget of tens of milliseconds per frame.
+- **Long-horizon consistency / memory**: how to keep the world state beyond the context window; the "leave and come back" test.
+- **Training agents in imagination**: DIAMOND, the pixel-level version of the same idea as Dreamer.
+
+## Core Equations
+
+An interactive world model factorizes the video distribution over time into per-frame conditionals:
+
+$$p_\theta(x_{1:T} \mid a_{1:T}) = \prod_{t} p_\theta\big(x_{t+1} \mid x_{t-K+1:t},\, a_{t-K+1:t}\big)$$
+
+Each factor is a conditional diffusion (or flow-matching) model. The GameNGen-style training objective with context noise:
+
+$$\mathcal{L} = \mathbb{E}\,\big\| \epsilon - \epsilon_\theta\big(x^{(\tau)}_{t+1},\, \tau,\, \tilde{x}_{t-K+1:t},\, \sigma,\, a_{t-K+1:t}\big) \big\|^2, \qquad \tilde{x} = x + \sigma\,\xi$$
+
+where $\tau$ is the diffusion step of the target frame and $\sigma$ is the context noise level (sampled at random and passed in as a condition). Genie extracts latent actions from consecutive frames through a VQ bottleneck:
+
+$$\tilde{a}_t = \mathrm{VQ}\big(\mathrm{enc}(x_{\le t},\, x_{t+1})\big) \in \{1, \dots, |A|\}, \qquad \hat{x}_{t+1} = \mathrm{dec}(x_{\le t},\, \tilde{a}_{\le t})$$
+
+## University Lecture
+
+| Course | Lecture | Link |
+|---|---|---|
+| UPenn CIS 6280 World Models | L11 Diffusion & Flow Matching; L12–L13 Video World Models I/II (Genie, GameNGen, interaction and drift) | [course homepage](https://jiataogu.me/cis6280-world-models/) (slides released with the semester) |
+
+## Papers
+
+- **Must Read**: Valevski et al. (2024), *Diffusion Models Are Real-Time Game Engines* (GameNGen, [arXiv:2408.14837](https://arxiv.org/abs/2408.14837)); Alonso et al. (2024), *Diffusion for World Modeling: Visual Details Matter in Atari* (DIAMOND, [arXiv:2405.12399](https://arxiv.org/abs/2405.12399)).
+- **Recommended**: Bruce et al. (2024), *Genie: Generative Interactive Environments* ([arXiv:2402.15391](https://arxiv.org/abs/2402.15391)); Chen et al. (2024), *Diffusion Forcing: Next-token Prediction Meets Full-Sequence Diffusion* ([arXiv:2407.01392](https://arxiv.org/abs/2407.01392)); NVIDIA (2025), *Cosmos World Foundation Model Platform for Physical AI* ([arXiv:2501.03575](https://arxiv.org/abs/2501.03575)).
+- **Optional**: Micheli et al. (2023), *Transformers are Sample-Efficient World Models* (IRIS, [arXiv:2209.00588](https://arxiv.org/abs/2209.00588)), a contrast from the discrete-token route; Yang et al. (2024), *Learning Interactive Real-World Simulators* (UniSim, [arXiv:2310.06114](https://arxiv.org/abs/2310.06114)); Google DeepMind's Genie 2 ([blog](https://deepmind.google/discover/blog/genie-2-a-large-scale-foundation-world-model/)) and Genie 3 ([blog](https://deepmind.google/discover/blog/genie-3-a-new-frontier-for-world-models/)); Oasis by Decart & Etched ([project page](https://oasis-model.github.io/)).
+
+## Hands-on
+
+Lab 7's video world model is an **open-loop** predictor, but turning it into an interactive world takes only two steps:
+
+1. **Add action conditioning**: give each frame a global "wind" action $a_t \in \mathbb{R}^2$ (perturbing the velocities in the simulator) and concatenate $a_t$ into the ConvGRU input (Lab 7, question 3).
+2. **Write an interaction loop**: use four `ipywidgets` arrow buttons to produce $a_t$; each press makes the model generate one frame and refreshes the image. You now have "a little game run by a neural network".
+
+Then check the three requirements yourself: from the same start, do different directions give correctly different futures (controllability); how many milliseconds does each frame take (real time); after 50 presses in a row, are there still three shapes on screen (consistency / drift)?
+
+**Open Lab**: <ColabBadge lab="lab07_video_world_model" />
+
+## Check Your Understanding
+
+1. How do interactive world models differ from the open-loop video generation of Module 10, in training and at inference?
+2. Why is Genie's latent-action codebook so small (8 codes)? What happens if it is large?
+3. Why does GameNGen add noise to the context frames during training? What happens without it?
+4. What does DIAMOND's result suggest about "which space should a world model model in"?
+
+<details>
+<summary>Show answer</summary>
+
+1. In training, an interactive model must be conditioned on actions and must see "its own flawed, generated" context (noise augmentation, Diffusion Forcing, etc.), because at inference it keeps eating its own outputs; open-loop video generation usually generates a whole clip at once, conditioned on text or a first frame. At inference, an interactive model must finish each frame within tens of milliseconds, and actions arrive online, so the full action sequence is never known in advance.
+2. The small codebook is an information bottleneck: it can only encode "a few kinds of controllable change" (left, right, jump...), which forces latent actions to capture the change caused by the agent rather than random change in the background. With too large a codebook, the encoder can stuff every detail of the next frame into the latent action and the decoder can reconstruct by "copying the answer"; the latent action loses its meaning as an "action", and a human can no longer control it with key presses.
+3. During training the context is real frames; at inference it is the model's own generated frames, and the two distributions differ (exposure bias). Adding noise of random strength to the context and telling the model the noise level lets it see "an imperfect past" and learn to pull flawed context back onto the data manifold, instead of amplifying flaws frame by frame. Without the noise, GameNGen reports that the picture falls apart within tens of frames.
+4. DIAMOND shows that a diffusion world model that keeps pixel details can train better agents than world models based on discrete tokens / blurry reconstructions: some decision-critical information is exactly the small, fine visual detail (for example bullets or the score in Atari) that an over-compressed latent throws away. This does not refute latent world models (they are faster and better suited to planning); it says that "what the representation keeps" has to be tested against downstream decisions.
+</details>
+
+## Takeaway
+
+- Interactive world model = a generative model that is action-conditioned, autoregressive frame by frame, and runs in real time; it lets a neural network replace the simulator.
+- Controllability, real time and consistency are three hard constraints that must hold at once; every flagship system makes its own trade-offs among them.
+- Looking realistic is not the same as being physically correct or supporting decisions; downstream utility has to be evaluated separately.
+
+## Next Module
+
+[Module 11: World Model + Policy](./11-world-model-policy.mdx) — connecting the world model and the policy into the full MBRL loop.
