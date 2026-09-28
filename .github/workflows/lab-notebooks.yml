@@ -63,3 +63,13 @@ jobs:
           jupyter nbconvert --to notebook --execute notebook.ipynb
           --ExecutePreprocessor.timeout=900
           --output-dir "$RUNNER_TEMP/out"
+
+      # Labs 3-10 also ship an English translation of the notebook.
+      - name: Execute English notebook
+        if: hashFiles(format('labs/{0}/notebook_en.ipynb', matrix.lab)) != ''
+        env:
+          MPLBACKEND: Agg
+        run: >
+          jupyter nbconvert --to notebook --execute notebook_en.ipynb
+          --ExecutePreprocessor.timeout=900
+          --output-dir "$RUNNER_TEMP/out"

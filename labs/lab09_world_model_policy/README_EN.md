@@ -2,7 +2,9 @@
 
 **English** | [中文](README.md)
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab09_world_model_policy/notebook.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab09_world_model_policy/notebook_en.ipynb)
+
+> The notebook for this page is [`notebook_en.ipynb`](notebook_en.ipynb) (English). The original Chinese notebook is [`notebook.ipynb`](notebook.ipynb); both run the same code.
 
 The closing-loop experiment of the Scientist track: connect the components from Labs 0–2 (environment, latent dynamics) to a policy, and run a Tiny Dreamer-style experiment — **the policy is trained mainly on the world model's imagined trajectories** — compare sample efficiency against a model-free baseline, and finally reproduce model bias.
 
@@ -45,11 +47,11 @@ flowchart LR
 
 ```bash
 pip install -r requirements.txt
-jupyter nbconvert --execute --to notebook --inplace notebook.ipynb
-# or interactively: jupyter notebook notebook.ipynb
+jupyter nbconvert --execute --to notebook --inplace notebook_en.ipynb
+# or interactively: jupyter notebook notebook_en.ipynb
 ```
 
-**Colab**: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab09_world_model_policy/notebook.ipynb) (the first cell installs dependencies automatically; no GPU needed)
+**Colab**: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab09_world_model_policy/notebook_en.ipynb) (the first cell installs dependencies automatically; no GPU needed)
 
 ## Experiment
 

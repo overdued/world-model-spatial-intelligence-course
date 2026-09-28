@@ -2,7 +2,9 @@
 
 **English** | [中文](README.md)
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab06_dynamic_4d_worlds/notebook.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab06_dynamic_4d_worlds/notebook_en.ipynb)
+
+> The notebook for this page is [`notebook_en.ipynb`](notebook_en.ipynb) (English). The original Chinese notebook is [`notebook.ipynb`](notebook.ipynb); both run the same code.
 
 Spatial track: adding the time axis to static 3D representations. On a three-object dynamic point-cloud scene generated in code (a rigid cube / an orbiting sphere / a breathing deforming blob, with noisy observations), you will complete **motion estimation (centroid tracking + hand-written ICP registration + scene flow) → temporal interpolation → MLP dynamics learning → extrapolation 10 frames into the future**, visualizing the entire pipeline with 3D animations.
 
@@ -41,11 +43,11 @@ flowchart TD
 
 ```bash
 pip install -r requirements.txt
-jupyter nbconvert --execute --to notebook --inplace notebook.ipynb
-# or interactively: jupyter notebook notebook.ipynb
+jupyter nbconvert --execute --to notebook --inplace notebook_en.ipynb
+# or interactively: jupyter notebook notebook_en.ipynb
 ```
 
-**Colab**: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab06_dynamic_4d_worlds/notebook.ipynb) (the first cell installs dependencies automatically; no GPU needed)
+**Colab**: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/overdued/world-model-spatial-intelligence-course/blob/main/labs/lab06_dynamic_4d_worlds/notebook_en.ipynb) (the first cell installs dependencies automatically; no GPU needed)
 
 ## Experiment
 
