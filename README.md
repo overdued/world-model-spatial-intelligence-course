@@ -77,6 +77,62 @@ Observation → World State → Representation → Dynamics → Prediction → P
 └── scripts/      ← 下载 / 链接检查 / 元数据 / 索引维护脚本
 ```
 
+## 延伸资源
+
+**参考实现**（完成对应 Lab 后的下一步）
+
+- Lab 2 → [lucas-maes/le-wm](https://github.com/lucas-maes/le-wm)（LeWorldModel：单卡即可从像素训练的 JEPA 世界模型）
+- Lab 3 / Lab 9 → [danijar/dreamerv3](https://github.com/danijar/dreamerv3)（DreamerV3 官方实现）
+- Lab 4 → [nicklashansen/tdmpc2](https://github.com/nicklashansen/tdmpc2)（TD-MPC2）· [gaoyuezhou/dino_wm](https://github.com/gaoyuezhou/dino_wm)（DINO-WM）
+- Lab 5 → [nerfstudio-project/nerfstudio](https://github.com/nerfstudio-project/nerfstudio) · [nerfstudio-project/gsplat](https://github.com/nerfstudio-project/gsplat)
+- Lab 7 → [simchowitzlabpublic/nano-world-model](https://github.com/simchowitzlabpublic/nano-world-model)（极简视频世界模型）· [eloialonso/diamond](https://github.com/eloialonso/diamond)（扩散世界模型）
+- Lab 8 → [facebookresearch/habitat-lab](https://github.com/facebookresearch/habitat-lab)（具身导航仿真）
+
+**博客与文章**
+
+*世界模型入门*
+- [World Models 交互式论文](https://worldmodels.github.io/)（Ha & Schmidhuber, 2018）
+- [World Models](https://rohitbandaru.github.io/blog/World-Models/)（Rohit Bandaru）
+- ['World Models,' an Old Idea in AI, Mount a Comeback](https://www.quantamagazine.org/world-models-an-old-idea-in-ai-mount-a-comeback-20250902/)（Quanta Magazine, 2025）
+- [The Dream Machines: Learning to Simulate and Act in the Physical World](https://richardcsuwandi.github.io/blog/2025/dream-machines/)（Richard Cornelius Suwandi, 2025）
+- [Beyond the Hype: How I See World Models Evolving in 2025](https://knightnemo.github.io/blog/posts/wm_2025/)（Nemo）
+- [A Path Towards Autonomous Machine Intelligence](https://openreview.net/forum?id=BZ5a1r-kVsf)（Yann LeCun，JEPA 立场论文）
+
+*JEPA 与隐空间世界模型*
+- [Deep Dive into Yann LeCun's JEPA](https://rohitbandaru.github.io/blog/JEPA-Deep-Dive/)（Rohit Bandaru）
+- [SIGReg from First Principles: A Step-by-Step Construction of an Anti-Collapse Regularizer for JEPAs](https://rezabyt.github.io/blogposts/sigreg-tutorial.html)（Reza Bayat, 2026）
+
+*视频与交互式世界模型*
+- [Towards Video World Models](https://www.xunhuang.me/blogs/world_model.html)（Xun Huang）
+- [Diffusion Models for Video Generation](https://lilianweng.github.io/posts/2024-04-12-diffusion-video/)（Lilian Weng, 2024）
+- [Genie 2: A Large-Scale Foundation World Model](https://deepmind.google/discover/blog/genie-2-a-large-scale-foundation-world-model/)（Google DeepMind）
+- [Genie 3: A New Frontier for World Models](https://deepmind.google/discover/blog/genie-3-a-new-frontier-for-world-models/)（Google DeepMind）
+
+*基于模型的强化学习与智能体*
+- [DreamerV3 项目页](https://danijar.com/project/dreamerv3/)（Hafner et al.）
+- [Model-Based Reinforcement Learning: Theory and Practice](https://bair.berkeley.edu/blog/2019/12/12/mbpo/)（Michael Janner, BAIR Blog, 2019）
+- [Do Agents Need a World Model?](https://richardcsuwandi.github.io/blog/2025/agents-world-models/)（Richard Cornelius Suwandi, 2025）
+
+*机制性世界模型与科学发现*
+- [World Models for Scientific Discovery](https://richardcsuwandi.github.io/blog/2026/wm-discovery/)（Richard Cornelius Suwandi, 2026）
+
+*空间智能与 3D*
+- [From Words to Worlds: Spatial Intelligence is AI's Next Frontier](https://drfeifei.substack.com/p/from-words-to-worlds-spatial-intelligence)（Fei-Fei Li）
+- [Marble: A Multimodal World Model](https://www.worldlabs.ai/blog/marble-world-model)（World Labs）
+- [NeRF Tutorial, ECCV 2022](https://sites.google.com/berkeley.edu/nerf-tutorial/home)
+- [Introduction to 3D Gaussian Splatting](https://huggingface.co/blog/gaussian-splatting)（Hugging Face）
+- [Road to 3D Gaussian Splatting](https://nazirnayal.xyz/blog/2024/road-to-3dgs/)（Nazir Nayal, 2024）
+
+**相关 Awesome 列表**
+
+- [knightnemo/Awesome-World-Models](https://github.com/knightnemo/Awesome-World-Models)：世界模型论文总表
+- [leofan90/Awesome-World-Models](https://github.com/leofan90/Awesome-World-Models)：具身智能与自动驾驶中的世界模型
+- [mll-lab-nu/Awesome-Spatial-Intelligence-in-VLM](https://github.com/mll-lab-nu/Awesome-Spatial-Intelligence-in-VLM)：VLM 空间推理
+- [opendilab/awesome-model-based-RL](https://github.com/opendilab/awesome-model-based-RL)：基于模型的强化学习
+- [MrNeRF/awesome-3D-gaussian-splatting](https://github.com/MrNeRF/awesome-3D-gaussian-splatting)：3D Gaussian Splatting
+
+完整可筛选论文列表（含综述与机制性世界模型论文）见课程网站 [Papers](https://overdued.github.io/world-model-spatial-intelligence-course/docs/resources/papers)。
+
 ## Citation
 
 ```bibtex

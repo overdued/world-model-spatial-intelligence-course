@@ -15,6 +15,8 @@ function useConceptLabels() {
     '3D': '3D',
     Robotics: translate({id: 'papersFilter.concept.robotics', message: '机器人', description: 'Paper concept filter chip'}),
     Evaluation: translate({id: 'papersFilter.concept.evaluation', message: '评估', description: 'Paper concept filter chip'}),
+    Theory: translate({id: 'papersFilter.concept.theory', message: '理论', description: 'Paper concept filter chip'}),
+    Survey: translate({id: 'papersFilter.concept.survey', message: '综述', description: 'Paper concept filter chip'}),
   };
 }
 
@@ -30,7 +32,7 @@ function useLevelLabels() {
 /**
  * Filterable curated paper list (data: src/data/papers.js).
  * Filters: concept (Representation / Dynamics / Planning / Video / 3D /
- * Robotics / Evaluation) and level (Foundation / Must Read / Advanced).
+ * Robotics / Evaluation / Theory / Survey) and level (Foundation / Must Read / Advanced).
  * Paper titles/authors are proper nouns and stay in English; filter
  * chips and UI chrome are locale-aware.
  */

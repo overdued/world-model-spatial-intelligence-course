@@ -139,6 +139,14 @@
     "message": "Evaluation",
     "description": "Paper concept filter chip"
   },
+  "papersFilter.concept.theory": {
+    "message": "Theory",
+    "description": "Paper concept filter chip"
+  },
+  "papersFilter.concept.survey": {
+    "message": "Survey",
+    "description": "Paper concept filter chip"
+  },
   "papersFilter.level.all": {
     "message": "All",
     "description": "Paper level filter chip"

@@ -77,6 +77,62 @@ Every knowledge point in the course modules is traced back to a university lectu
 └── scripts/      ← Download / link-check / metadata / index-maintenance scripts
 ```
 
+## Further Resources
+
+**Reference implementations** (the next step after each lab)
+
+- Lab 2 → [lucas-maes/le-wm](https://github.com/lucas-maes/le-wm) (LeWorldModel, a JEPA world model trained from pixels on one GPU)
+- Lab 3 / Lab 9 → [danijar/dreamerv3](https://github.com/danijar/dreamerv3) (official DreamerV3)
+- Lab 4 → [nicklashansen/tdmpc2](https://github.com/nicklashansen/tdmpc2) (TD-MPC2) · [gaoyuezhou/dino_wm](https://github.com/gaoyuezhou/dino_wm) (DINO-WM)
+- Lab 5 → [nerfstudio-project/nerfstudio](https://github.com/nerfstudio-project/nerfstudio) · [nerfstudio-project/gsplat](https://github.com/nerfstudio-project/gsplat)
+- Lab 7 → [simchowitzlabpublic/nano-world-model](https://github.com/simchowitzlabpublic/nano-world-model) (minimal video world model) · [eloialonso/diamond](https://github.com/eloialonso/diamond) (diffusion world model)
+- Lab 8 → [facebookresearch/habitat-lab](https://github.com/facebookresearch/habitat-lab) (embodied navigation simulator)
+
+**Blogs and articles**
+
+*Introductions to world models*
+- [World Models, interactive paper](https://worldmodels.github.io/) (Ha & Schmidhuber, 2018)
+- [World Models](https://rohitbandaru.github.io/blog/World-Models/) (Rohit Bandaru)
+- ['World Models,' an Old Idea in AI, Mount a Comeback](https://www.quantamagazine.org/world-models-an-old-idea-in-ai-mount-a-comeback-20250902/) (Quanta Magazine, 2025)
+- [The Dream Machines: Learning to Simulate and Act in the Physical World](https://richardcsuwandi.github.io/blog/2025/dream-machines/) (Richard Cornelius Suwandi, 2025)
+- [Beyond the Hype: How I See World Models Evolving in 2025](https://knightnemo.github.io/blog/posts/wm_2025/) (Nemo)
+- [A Path Towards Autonomous Machine Intelligence](https://openreview.net/forum?id=BZ5a1r-kVsf) (Yann LeCun, the JEPA position paper)
+
+*JEPA and latent world models*
+- [Deep Dive into Yann LeCun's JEPA](https://rohitbandaru.github.io/blog/JEPA-Deep-Dive/) (Rohit Bandaru)
+- [SIGReg from First Principles: A Step-by-Step Construction of an Anti-Collapse Regularizer for JEPAs](https://rezabyt.github.io/blogposts/sigreg-tutorial.html) (Reza Bayat, 2026)
+
+*Video and interactive world models*
+- [Towards Video World Models](https://www.xunhuang.me/blogs/world_model.html) (Xun Huang)
+- [Diffusion Models for Video Generation](https://lilianweng.github.io/posts/2024-04-12-diffusion-video/) (Lilian Weng, 2024)
+- [Genie 2: A Large-Scale Foundation World Model](https://deepmind.google/discover/blog/genie-2-a-large-scale-foundation-world-model/) (Google DeepMind)
+- [Genie 3: A New Frontier for World Models](https://deepmind.google/discover/blog/genie-3-a-new-frontier-for-world-models/) (Google DeepMind)
+
+*Model-based RL and agents*
+- [DreamerV3 project page](https://danijar.com/project/dreamerv3/) (Hafner et al.)
+- [Model-Based Reinforcement Learning: Theory and Practice](https://bair.berkeley.edu/blog/2019/12/12/mbpo/) (Michael Janner, BAIR Blog, 2019)
+- [Do Agents Need a World Model?](https://richardcsuwandi.github.io/blog/2025/agents-world-models/) (Richard Cornelius Suwandi, 2025)
+
+*Mechanistic world models and science*
+- [World Models for Scientific Discovery](https://richardcsuwandi.github.io/blog/2026/wm-discovery/) (Richard Cornelius Suwandi, 2026)
+
+*Spatial intelligence and 3D*
+- [From Words to Worlds: Spatial Intelligence is AI's Next Frontier](https://drfeifei.substack.com/p/from-words-to-worlds-spatial-intelligence) (Fei-Fei Li)
+- [Marble: A Multimodal World Model](https://www.worldlabs.ai/blog/marble-world-model) (World Labs)
+- [NeRF Tutorial, ECCV 2022](https://sites.google.com/berkeley.edu/nerf-tutorial/home)
+- [Introduction to 3D Gaussian Splatting](https://huggingface.co/blog/gaussian-splatting) (Hugging Face)
+- [Road to 3D Gaussian Splatting](https://nazirnayal.xyz/blog/2024/road-to-3dgs/) (Nazir Nayal, 2024)
+
+**Related awesome lists**
+
+- [knightnemo/Awesome-World-Models](https://github.com/knightnemo/Awesome-World-Models): broad world model paper list
+- [leofan90/Awesome-World-Models](https://github.com/leofan90/Awesome-World-Models): world models for embodied AI and driving
+- [mll-lab-nu/Awesome-Spatial-Intelligence-in-VLM](https://github.com/mll-lab-nu/Awesome-Spatial-Intelligence-in-VLM): spatial reasoning in VLMs
+- [opendilab/awesome-model-based-RL](https://github.com/opendilab/awesome-model-based-RL): model-based reinforcement learning
+- [MrNeRF/awesome-3D-gaussian-splatting](https://github.com/MrNeRF/awesome-3D-gaussian-splatting): 3D Gaussian Splatting
+
+The full filterable paper list, including surveys and mechanistic world model papers, is on the course website: [Papers](https://overdued.github.io/world-model-spatial-intelligence-course/en/docs/resources/papers).
+
 ## Citation
 
 ```bibtex
