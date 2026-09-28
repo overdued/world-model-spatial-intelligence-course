@@ -6,17 +6,17 @@ description: Recurrent State Space Model——Dreamer 系列的骨架，确定�
 
 <ModuleProgress id="a06" label="RSSM" />
 
-## Why this matters
+## 为什么重要
 
 纯确定性模型（GRU）学不会环境的随机性，纯随机模型（VAE 序列版）记不住长程依赖。RSSM 把两者拆开再组合，是 PlaNet 到 DreamerV3 一以贯之的架构骨架——读懂 RSSM 就读懂了半个 MBRL 领域。
 
-## Visual Intuition
+## 直观理解
 
 ![RSSM 结构](/img/rssm.svg)
 
 RSSM 每步有两个状态：确定性状态 $h_t$（GRU 的 hidden state，负责记忆）与随机状态 $z_t$（从高斯/离散分布采样，负责表达不确定性）。观测同时更新两者；预测时只用 prior，推断时用 posterior。
 
-## Core Idea
+## 核心思想
 
 RSSM（Recurrent State Space Model）把潜状态分解为 $(h_t, z_t)$：**确定性路径** $h_t = f_\theta(h_{t-1}, z_{t-1}, a_{t-1})$ 由 GRU 承载，保证长程记忆无损传递；**随机路径** $z_t \sim p_\theta(z_t \mid h_t)$ 承载环境的固有随机性与观测歧义。确定性部分保证 rollout 稳定，随机性部分让模型能表达"同一历史对应多种未来"。
 
@@ -24,7 +24,7 @@ RSSM（Recurrent State Space Model）把潜状态分解为 $(h_t, z_t)$：**确�
 
 DreamerV2 起把 $z_t$ 换成**离散类别分布**（每个维度一个 categorical），实证上在 Atari 类任务更稳、避免 posterior collapse；DreamerV3 又加入 symlog 归一化、free bits 等工程技巧使其跨域免调参。RSSM 的演化史就是一部"如何让随机潜动力学可训练"的工程史。
 
-## Key Concepts
+## 关键概念
 
 - **确定性状态 $h_t$**：GRU 记忆，长程依赖的载体。
 - **随机状态 $z_t$**：表达多模未来与观测歧义。
@@ -32,7 +32,7 @@ DreamerV2 起把 $z_t$ 换成**离散类别分布**（每个维度一个 categor
 - **离散潜变量**：DreamerV2 的关键改动，categorical + straight-through 梯度。
 - **Imagination**：只用 prior 在模型内 rollout，是模块 08 的主角。
 
-## Core Equations
+## 核心公式
 
 RSSM 的四个组件：
 
@@ -40,24 +40,24 @@ $$h_t = f_\theta(h_{t-1}, z_{t-1}, a_{t-1}), \qquad \text{prior: } p_\theta(z_t 
 
 $$\text{posterior: } q_\theta(z_t \mid h_t, o_t), \qquad \text{decoder: } p_\theta(o_t \mid h_t, z_t)$$
 
-## University Lecture
+## 大学课程
 
 | 课程 | Lecture | 链接 |
 |---|---|---|
 | UPenn CIS 6280 World Models | L08 Latent World Models（World Models 2018、自回归预测、动作条件） | [slides](https://jiataogu.me/cis6280-world-models/lectures/lecture-08-latent-world-models.pdf) |
 
-## Papers
+## 论文
 
 - **Must Read**：Hafner et al. (2019), *Learning Latent Dynamics for Planning from Pixels*（PlaNet，[arXiv:1811.04551](https://arxiv.org/abs/1811.04551)）——RSSM 的原始论文。
 - **Recommended**：Hafner et al. (2020), *Dream to Control*（DreamerV1，[arXiv:1912.01603](https://arxiv.org/abs/1912.01603)）；Hafner et al. (2021), *Mastering Atari with Discrete World Models*（DreamerV2，[arXiv:2010.02193](https://arxiv.org/abs/2010.02193)）——看离散潜变量的动机。
 
-## Hands-on
+## 动手实践
 
 Lab 3：实现一个简化版 RSSM（GRU + 随机 latent、prior/posterior 与 KL 训练），可视化 imagination rollout 与 KL 曲线。在等待期间，建议精读 [dreamerv3-torch](https://github.com/NM512/dreamerv3-torch) 的 RSSM 源码（约 200 行）。
 
 **Open Lab**：<ColabBadge lab="lab03_tiny_rssm" />
 
-## Check Your Understanding
+## 自测
 
 1. 为什么不直接用 GRU 的 $h_t$ 当潜状态，还要采样一个 $z_t$？
 2. rollout（imagination）时为什么只能用 prior？
@@ -71,12 +71,12 @@ Lab 3：实现一个简化版 RSSM（GRU + 随机 latent、prior/posterior 与 K
 3. 连续高斯容易被 KL 项压成无信息的固定分布（posterior collapse）；categorical 分布配合 straight-through 梯度与 KL 调度实证更稳，且离散码天然表达"离散的多种未来模式"。
 </details>
 
-## Takeaway
+## 要点回顾
 
 - RSSM = 确定性记忆（GRU）× 随机状态（采样），两者分工解决稳定与多模的矛盾。
 - KL 项强迫 prior 预测 posterior，是 imagination 可用的前提。
 - 从连续到离散潜变量的演化，体现了"让随机动力学可训练"的工程主线。
 
-## Next Module
+## 下一模块
 
-[模块 07：World Models 2018](./07-world-models-2018.mdx)——回到原点，看 RSSM 之前那篇更简单的开山之作。
+[模块 07：World Models（2018）](./07-world-models-2018.mdx)——回到原点，看 RSSM 之前那篇更简单的开山之作。

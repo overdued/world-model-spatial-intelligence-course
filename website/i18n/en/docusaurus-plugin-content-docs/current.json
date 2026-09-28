@@ -3,36 +3,28 @@
     "message": "Next",
     "description": "The label for version current"
   },
-  "sidebar.courseSidebar.category.Track A · World Model Scientist": {
+  "sidebar.courseSidebar.category.trackA": {
     "message": "Track A · World Model Scientist",
-    "description": "The label for category 'Track A · World Model Scientist' in sidebar 'courseSidebar'"
+    "description": "The label for category '路线 A · 世界模型科学家' in sidebar 'courseSidebar'"
   },
-  "sidebar.courseSidebar.category.Track B · Spatial & Embodied Intelligence": {
+  "sidebar.courseSidebar.category.trackB": {
     "message": "Track B · Spatial & Embodied Intelligence",
-    "description": "The label for category 'Track B · Spatial & Embodied Intelligence' in sidebar 'courseSidebar'"
+    "description": "The label for category '路线 B · 空间与具身智能' in sidebar 'courseSidebar'"
   },
-  "sidebar.courseSidebar.category.Foundations": {
+  "sidebar.courseSidebar.category.foundations": {
     "message": "Foundations",
-    "description": "The label for category 'Foundations' in sidebar 'courseSidebar'"
+    "description": "The label for category '基础' in sidebar 'courseSidebar'"
   },
-  "sidebar.courseSidebar.category.Foundations.link.generated-index.title": {
-    "message": "Foundations（地基回查）",
-    "description": "The generated-index page title for category 'Foundations' in sidebar 'courseSidebar'"
-  },
-  "sidebar.courseSidebar.category.Foundations.link.generated-index.description": {
-    "message": "世界模型与空间智能所需的数学与机器学习地基。不是强制起点——学到主线卡壳时按需回查。",
-    "description": "The generated-index page description for category 'Foundations' in sidebar 'courseSidebar'"
-  },
-  "sidebar.courseSidebar.category.Resources": {
+  "sidebar.courseSidebar.category.resources": {
     "message": "Resources",
-    "description": "The label for category 'Resources' in sidebar 'courseSidebar'"
+    "description": "The label for category '资源' in sidebar 'courseSidebar'"
   },
-  "sidebar.courseSidebar.category.Resources.link.generated-index.title": {
+  "sidebar.courseSidebar.category.resources.link.generated-index.title": {
     "message": "Resources",
-    "description": "The generated-index page title for category 'Resources' in sidebar 'courseSidebar'"
+    "description": "The generated-index page title for category '资源' in sidebar 'courseSidebar'"
   },
-  "sidebar.courseSidebar.category.Resources.link.generated-index.description": {
+  "sidebar.courseSidebar.category.resources.link.generated-index.description": {
     "message": "The curated knowledge base behind this course: 11 surveyed university courses, a filtered paper canon, and the raw research archive.",
-    "description": "The generated-index page description for category 'Resources' in sidebar 'courseSidebar'"
+    "description": "The generated-index page description for category '资源' in sidebar 'courseSidebar'"
   }
 }

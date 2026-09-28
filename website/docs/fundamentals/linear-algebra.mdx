@@ -1,6 +1,7 @@
 ---
-title: Linear Algebra
-sidebar_label: Linear Algebra
+sidebar_position: 1
+title: 线性代数
+sidebar_label: 线性代数
 description: 世界模型所需的线性代数最小集：按需回查，不做完整课程。
 ---
 
@@ -13,16 +14,16 @@ description: 世界模型所需的线性代数最小集：按需回查，不做�
 - **向量空间与基底**：状态向量 $s_t$、观测向量 $o_t$ 都是向量空间中的点；换基 = 换坐标系。
 - **矩阵分解**：特征分解理解线性动力学的模式（$s_{t+1} = A s_t$ 中 $A$ 的特征值决定稳定/发散）；SVD 用于降维与最小二乘。
 - **线性最小二乘**：Kalman filter 的更新步本质上是递归加权最小二乘。
-- **坐标变换与齐次坐标**：Track B 的相机模型 $K[R|t]$、刚体变换全靠它。
+- **坐标变换与齐次坐标**：路线 B 的相机模型 $K[R|t]$、刚体变换全靠它。
 
 ## 何时回查
 
 | 主线模块 | 用到的线代 |
 |---|---|
-| Track A 03 State Space Models | 矩阵乘法、协方差矩阵、特征值与稳定性 |
-| Track A 04 Representation Learning | 秩、谱、嵌入空间几何 |
-| Track B 02 Camera and Geometry | 齐次坐标、投影矩阵分解 |
-| Track B 06 State Estimation | 雅可比、最小二乘、协方差传播 |
+| 路线 A 03 状态空间模型 | 矩阵乘法、协方差矩阵、特征值与稳定性 |
+| 路线 A 04 表征学习 | 秩、谱、嵌入空间几何 |
+| 路线 B 02 相机与几何 | 齐次坐标、投影矩阵分解 |
+| 路线 B 06 状态估计 | 雅可比、最小二乘、协方差传播 |
 
 ## 最佳外部资源
 
@@ -34,6 +35,6 @@ description: 世界模型所需的线性代数最小集：按需回查，不做�
 
 能口算 $2\times2$ 矩阵的特征值、能解释 SVD 的几何意义、能写出点到平面距离的向量表达式，即达标。
 
-## Next
+## 下一步
 
-回到主线：[Track A 模块 03](../scientist/03-state-space-models.mdx) 或 [Track B 模块 02](../spatial/02-camera-and-geometry.mdx)
+回到主线：[路线 A 模块 03](../scientist/03-state-space-models.mdx) 或 [路线 B 模块 02](../spatial/02-camera-and-geometry.mdx)

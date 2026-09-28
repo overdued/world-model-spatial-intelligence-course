@@ -1,16 +1,16 @@
 ---
-title: What is a World Model?
-sidebar_label: 01 · What is a World Model?
-description: 世界模型的定义、谱系与全课程地图——这是 Track A 的起点模块。
+title: 什么是世界模型？
+sidebar_label: 01 · 什么是世界模型？
+description: 世界模型的定义、谱系与全课程地图——这是 路线 A 的起点模块。
 ---
 
-<ModuleProgress id="a01" label="What is a World Model?" />
+<ModuleProgress id="a01" label="什么是世界模型？" />
 
-## Why this matters
+## 为什么重要
 
 "世界模型"一词在 2018–2026 年间从一篇 workshop 论文长成横跨 RL、视频生成、3D 与机器人的大领域。不先建立全局地图，后面每个模块都会变成孤立名词。本模块给你这张地图。
 
-## Visual Intuition
+## 直观理解
 
 ![世界模型总览](/img/world-model-overview.svg)
 
@@ -18,17 +18,17 @@ description: 世界模型的定义、谱系与全课程地图——这是 Track 
 
 ![世界模型谱系](/img/world-model-taxonomy.svg)
 
-谱系图展示了本课程覆盖的家族：经典状态空间模型 → 潜空间世界模型（RSSM/Dreamer）→ 生成式视频世界模型 → 空间/4D 世界模型。Track A 沿谱系自左向右推进。
+谱系图展示了本课程覆盖的家族：经典状态空间模型 → 潜空间世界模型（RSSM/Dreamer）→ 生成式视频世界模型 → 空间/4D 世界模型。路线 A 沿谱系自左向右推进。
 
-## Core Idea
+## 核心思想
 
-世界模型是**环境动态的学习表示与预测器**（CIS6280 官方定义）：它学习一个内部状态 $s_t$，以及给定动作 $a_t$ 时状态的演化规律，从而无需真实环境即可"想象"未来轨迹。这个定义有两个关键成分：**表征**（状态怎么表示）与**预测**（状态怎么演化）——Track A 的前半段讲表征，后半段讲预测与使用。
+世界模型是**环境动态的学习表示与预测器**（CIS6280 官方定义）：它学习一个内部状态 $s_t$，以及给定动作 $a_t$ 时状态的演化规律，从而无需真实环境即可"想象"未来轨迹。这个定义有两个关键成分：**表征**（状态怎么表示）与**预测**（状态怎么演化）——路线 A 的前半段讲表征，后半段讲预测与使用。
 
 世界模型不是一个具体模型，而是一个**抽象接口**：任何能回答"在当前状态下执行动作序列会发生什么"的系统都是世界模型。手工物理引擎（MuJoCo）、Kalman filter、Dreamer 的 RSSM、Sora 类视频模型，都是这个接口的不同实现。
 
 它的价值在于**解耦学习与试错**：没有模型的智能体必须在真实世界里试错；有模型的智能体可以在"梦境"（imagination）里试错，把昂贵的真实交互换成廉价的模型内 rollout。这正是 model-based RL 样本效率优势的来源。
 
-## Key Concepts
+## 关键概念
 
 - **Observation（观测）**：智能体实际收到的信号，是状态的有损投影。
 - **State（状态）**：对未来的充分统计量；真实状态通常不可直接观测。
@@ -36,32 +36,32 @@ description: 世界模型的定义、谱系与全课程地图——这是 Track 
 - **Imagination（想象）**：在模型内部 rollout 轨迹而不与真实环境交互。
 - **Interface（接口）**：state / transition / action / evaluation 四要素——Capstone 要求你显式定义它们。
 
-## Core Equations
+## 核心公式
 
 世界模型的概率形式化（trajectory distribution）：
 
 $$p_\theta(\tau) = p(s_0) \prod_{t=0}^{T-1} p_\theta(s_{t+1} \mid s_t, a_t)\, p_\theta(o_t \mid s_t)$$
 
-## University Lecture
+## 大学课程
 
 | 课程 | Lecture | 链接 |
 |---|---|---|
 | UPenn CIS 6280 World Models | L01 World Models: An Overview | [slides](https://jiataogu.me/cis6280-world-models/lectures/lecture-01-world-models-overview.pdf) |
 | UPenn CIS 6280 World Models | L02 History, Foundations, Probabilistic Formulation | [slides](https://jiataogu.me/cis6280-world-models/lectures/lecture-02-world-models-history-foundations-probabilistic-formulation.pdf) |
 
-## Papers
+## 论文
 
 - **Must Read**：Ha & Schmidhuber (2018), *World Models*（[arXiv:1803.10122](https://arxiv.org/abs/1803.10122)）——领域原点，30 页博客式写法，一晚读完。
 - **Recommended**：Hafner et al. (2023), *Mastering Diverse Domains through World Models*（DreamerV3，[arXiv:2301.04104](https://arxiv.org/abs/2301.04104)）——当代标杆，先读摘要与图。
 - **Optional**：Wong et al. (2023), *From Word Models to World Models*（搜索论文名即可）——把世界模型概念推广到语言的视角文章。
 
-## Hands-on
+## 动手实践
 
 <ColabBadge lab="lab00_tiny_world" />
 
 Lab 0 让你从零实现一个符合 Gymnasium 接口的小环境，亲手定义 observation / action / transition——这是理解"世界模型接口"最快的方式。
 
-## Check Your Understanding
+## 自测
 
 1. 世界模型与普通的"回归模型"有什么本质区别？
 2. 为什么说有模型可以提高样本效率？
@@ -75,12 +75,12 @@ Lab 0 让你从零实现一个符合 Gymnasium 接口的小环境，亲手定义
 3. 算。模拟器是"手工编写的世界模型"——它满足 state/transition/action 接口。学习型世界模型的评价标准常常就是"能否替代模拟器"。
 </details>
 
-## Takeaway
+## 要点回顾
 
 - 世界模型 = 可预测的世界表征，核心接口是 state / transition / action / evaluation。
 - 这个领域有一个从经典滤波到生成式视频模型的完整谱系，本课程沿谱系推进。
 - 模型的价值在于把真实试错换成想象试错，代价是模型误差（模块 12 再算这笔账）。
 
-## Next Module
+## 下一模块
 
-[模块 02：Observation, State and POMDP](./02-observation-state-pomdp.mdx)——建模之前，先分清你看到的是观测还是状态。
+[模块 02：观测、状态与 POMDP](./02-observation-state-pomdp.mdx)——建模之前，先分清你看到的是观测还是状态。

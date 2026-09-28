@@ -1,6 +1,7 @@
 ---
-title: Reinforcement Learning
-sidebar_label: Reinforcement Learning
+sidebar_position: 7
+title: 强化学习
+sidebar_label: 强化学习
 description: 世界模型用于决策的最小 RL 背景：这不是一门 RL 课，按需回查。
 ---
 
@@ -10,7 +11,7 @@ description: 世界模型用于决策的最小 RL 背景：这不是一门 RL �
 
 ## 最小知识集
 
-- **MDP**：五元组 $(\mathcal{S}, \mathcal{A}, P, R, \gamma)$；POMDP 是其部分可观测版本（Track A 模块 02 展开）。
+- **MDP**：五元组 $(\mathcal{S}, \mathcal{A}, P, R, \gamma)$；POMDP 是其部分可观测版本（路线 A 模块 02 展开）。
 - **Bellman 方程**：$V^\pi(s) = \mathbb{E}_\pi[r + \gamma V^\pi(s')]$——value 函数的递归定义。
 - **Value / Policy**：$V(s)$、$Q(s,a)$、$\pi(a \mid s)$ 三者的关系；TD-MPC 的"模型 + 值函数"组合就靠这个区分。
 - **Model-free vs Model-based**：本课程的全部内容都属于 model-based 一侧；理解对照即可。
@@ -20,10 +21,10 @@ description: 世界模型用于决策的最小 RL 背景：这不是一门 RL �
 
 | 主线模块 | 用到的 RL |
 |---|---|
-| Track A 02 | MDP/POMDP 形式化 |
-| Track A 08 Dreamer | actor-critic、return 估计 |
-| Track A 09 Planning | 回报最大化的轨迹优化视角 |
-| Track A 11 World Model + Policy | Dyna 架构、model bias |
+| 路线 A 02 | MDP/POMDP 形式化 |
+| 路线 A 08 Dreamer | actor-critic、return 估计 |
+| 路线 A 09 Planning | 回报最大化的轨迹优化视角 |
+| 路线 A 11 世界模型 + 策略 | Dyna 架构、model bias |
 
 ## 最佳外部资源
 
@@ -35,6 +36,6 @@ description: 世界模型用于决策的最小 RL 背景：这不是一门 RL �
 
 能写出 Bellman 方程并解释每一项、能说清 model-free 与 model-based 的样本效率差异来源、能画出 actor-critic 的两个网络各输出什么，即达标。
 
-## Next
+## 下一步
 
-回到主线：[Track A 模块 02](../scientist/02-observation-state-pomdp.mdx)
+回到主线：[路线 A 模块 02](../scientist/02-observation-state-pomdp.mdx)

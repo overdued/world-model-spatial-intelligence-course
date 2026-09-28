@@ -1,16 +1,16 @@
 ---
-title: NeRF and Gaussian Splatting
-sidebar_label: 04 · NeRF and Gaussian Splatting
+title: NeRF 与 Gaussian Splatting
+sidebar_label: 04 · NeRF 与 Gaussian Splatting
 description: 神经辐射场与 3D 高斯泼溅——隐式与显式两条可微渲染路线。
 ---
 
-<ModuleProgress id="b04" label="NeRF and Gaussian Splatting" />
+<ModuleProgress id="b04" label="NeRF 与 Gaussian Splatting" />
 
-## Why this matters
+## 为什么重要
 
 NeRF 与 3D Gaussian Splatting 是当前 3D 场景表示的双子星：一个隐式连续、一个显式实时。它们是"空间世界模型"的存储格式——能渲染就能预测新视角，能预测新视角就是世界模型的空间版。
 
-## Visual Intuition
+## 直观理解
 
 ![NeRF](/img/nerf.svg)
 
@@ -20,7 +20,7 @@ NeRF 用一个 MLP 表示场景：输入 3D 位置与视角方向，输出密度
 
 3DGS 用数十万各向异性高斯基元显式表示场景：每个高斯有位置、协方差、颜色与不透明度。渲染时投影到成像平面、排序、alpha 混合——纯光栅化，实时。
 
-## Core Idea
+## 核心思想
 
 **NeRF**（2020）把场景表示为连续函数 $F_\theta: (x, y, z, \theta, \phi) \to (c, \sigma)$：给定空间位置与观察方向，输出颜色与体密度。新视角通过**体渲染**合成：沿光线积分密度加权颜色。训练不需要任何 3D 标注——多视角照片的光度重建误差就是全部监督，多视角一致性（模块 01 的核心约束）在这里变成训练信号。位置编码（positional encoding）解决 MLP 的频谱偏差，让网络能表达高频细节。
 
@@ -28,7 +28,7 @@ NeRF 用一个 MLP 表示场景：输入 3D 位置与视角方向，输出密度
 
 世界模型视角下，两者都是**可查询的世界状态**：给定任意相机位姿输出观测——这正是 state → observation 接口的空间版。其局限（per-scene 优化、静态假设）分别由前馈式重建（DUSt3R/VGGT）与模块 05 的 4D 表示攻克。
 
-## Key Concepts
+## 关键概念
 
 - **辐射场**：位置 + 方向 → 颜色 + 密度的连续场。
 - **体渲染方程**：沿光线的密度加权颜色积分，可微。
@@ -36,32 +36,32 @@ NeRF 用一个 MLP 表示场景：输入 3D 位置与视角方向，输出密度
 - **3D 高斯参数化**：位置 / 协方差 / 球谐颜色 / 不透明度。
 - **自适应密度控制**：3DGS 训练中的基元增删机制。
 
-## Core Equations
+## 核心公式
 
 体渲染方程：
 
 $$C(r) = \int_{t_n}^{t_f} T(t)\, \sigma(r(t))\, c(r(t), d)\, dt, \qquad T(t) = \exp\Big(-\int_{t_n}^{t} \sigma(r(s))\, ds\Big)$$
 
-## University Lecture
+## 大学课程
 
 | 课程 | Lecture | 链接 |
 |---|---|---|
 | CMU 16-825 Learning for 3D Vision | L08–L09（体渲染推导 + NeRF）、L11（3DGS），A3/A4 手写实现 | [课程主页](https://learning3d.github.io/) |
 | Stanford CS231A | L16 NeRF、L17 Gaussian Splatting | [课程主页](https://web.stanford.edu/class/cs231a/) |
 
-## Papers
+## 论文
 
 - **Must Read**：Mildenhall et al. (2020), *NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis*（[arXiv:2003.08934](https://arxiv.org/abs/2003.08934)）。
 - **Recommended**：Kerbl et al. (2023), *3D Gaussian Splatting for Real-Time Radiance Field Rendering*（[arXiv:2308.04079](https://arxiv.org/abs/2308.04079)）。
 - **Optional**：[nerfstudio](https://docs.nerf.studio/) 文档——工程生态入口；Wang et al. (2024), *DUSt3R: Geometric 3D Vision Made Easy*（[arXiv:2312.14132](https://arxiv.org/abs/2312.14132)）——前馈式重建新范式。
 
-## Hands-on
+## 动手实践
 
 Lab 5：先用简化 NeRF 跑通体渲染管线，再用 3DGS 完成实时渲染，输出 PSNR 与速度-质量对比报告。
 
 **Open Lab**：<ColabBadge lab="lab05_nerf_gaussian_splatting" />
 
-## Check Your Understanding
+## 自测
 
 1. NeRF 的训练监督信号是什么？为什么不需要 3D ground truth？
 2. 3DGS 为什么比 NeRF 快？
@@ -75,12 +75,12 @@ Lab 5：先用简化 NeRF 跑通体渲染管线，再用 3DGS 完成实时渲染
 3. NeRF 类隐式场连续紧凑，适合作为可微查询接口（如规划中的碰撞/可见性查询）；3DGS 显式可编辑、实时渲染，适合数字孪生、AR 与需要交互帧率的闭环仿真。两者都还在向动态与可交互扩展（模块 05）。
 </details>
 
-## Takeaway
+## 要点回顾
 
 - NeRF = 隐式连续辐射场 + 可微体渲染；3DGS = 显式高斯基元 + 实时光栅化。
 - 多视角一致性是两者的共同监督信号，无需 3D 标注。
 - 可渲染的世界状态是空间世界模型的存储层——模块 05 给它加上时间轴。
 
-## Next Module
+## 下一模块
 
-[模块 05：Dynamic 3D / 4D Worlds](./05-dynamic-4d-worlds.mdx)——让世界动起来。
+[模块 05：动态 3D / 4D 世界](./05-dynamic-4d-worlds.mdx)——让世界动起来。
